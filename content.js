@@ -21,21 +21,21 @@ window.PORTFOLIO = {
     ]
   },
   worksIntro: {
-    countLabel: "約7本のゲームを制作",
+    countLabel: "約10本のゲームを制作",
     description: "各作品の紹介・スクリーンショット・プレイ動画は、順次公開予定です。"
   },
   // 作品の追加例はREADMEの「作品を追加する」を参照してください。
   games: [],
   skillGroups: [
     { title: "プログラミング言語", subtitle: "LANGUAGES", items: [
-      { name: "C / C++", experience: "1年半", description: "", projects: "" },
-      { name: "C#", experience: "1年", description: "", projects: "" }
+      { name: "C / C++", experience: "1年半", description: "使用IDE : Visual Studio2019, VS Code", projects: "DirectX9 : " },
+      { name: "C#", experience: "1年", description: "使用IDE : Visual Studio2019", projects: "Unity : " }
     ] }
   ],
   // date に参加年や日付、description に展示した作品などを追記できます。
   events: [
-    { date: "", title: "SAPPORO GAME ODYSSAY", type: "出展", description: "", url: "" },
-    { date: "", title: "SAPPORO GAME CAMP", type: "参加", description: "Game Jam", url: "" },
-    { date: "", title: "Global Game Jam", type: "参加", description: "", url: "" }
+      { date: "", title: "SAPPORO GAME ODYSSAY", type: "出展", description: "", url: "https://www.sapporo-game-odyssey.jp/" },
+      { date: "", title: "SAPPORO GAME CAMP", type: "参加", description: "2026年度Game Jamに参加。Unity, C#を用いて2日でゲームを作成。", url: "https://sapporo-game-camp.com/2026/" },
+      { date: "", title: "Global Game Jam", type: "参加", description: "", url: "https://www.infiniteloop.co.jp/pr-blog/2026/01/global-game-jam-sapporo-2026/" }
   ]
 };
