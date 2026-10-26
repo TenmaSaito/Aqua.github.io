@@ -2,7 +2,13 @@
   const config = window.PORTFOLIO?.presentation || {};
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const top = document.getElementById('back-top');
-  const updateTop = () => { top.hidden = scrollY < 480; };
+  top.hidden = false;
+  const updateTop = () => {
+    const visible = scrollY >= 480;
+    top.classList.toggle('is-shown', visible);
+    top.inert = !visible;
+    top.setAttribute('aria-hidden', String(!visible));
+  };
   addEventListener('scroll', updateTop, {passive:true}); updateTop();
   top.addEventListener('click', () => {
     window.scrollTo({top:0, behavior:reduced.matches ? 'instant' : 'smooth'});

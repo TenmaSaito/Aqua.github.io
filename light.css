@@ -75,3 +75,35 @@ dialog::backdrop { background:#16445e66; }
 @media(max-width:850px) { .event { grid-template-columns:100px 70px minmax(0,1fr); gap:18px; padding:26px; } }
 @media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } #events .section-heading h2 { font-size:28px; } .event { grid-template-columns:100px 70px; padding:24px 20px; min-height:0; gap:15px; } .event>div { grid-column:1/-1; } .event h3 { font-size:21px; } .event p { font-size:14px; } }
 @media(prefers-reduced-motion:reduce) { .splash-drop { animation:none; } }
+
+/* 操作に応じた動き。タッチ端末と動きを抑える設定でも操作性を維持します。 */
+#back-top { opacity:0; visibility:hidden; pointer-events:none; transform:translateY(12px); transition:opacity .35s ease,transform .35s ease,visibility 0s linear .35s,background-color .2s; }
+#back-top.is-shown { opacity:1; visibility:visible; pointer-events:auto; transform:translateY(0); transition-delay:0s; }
+@media(prefers-reduced-motion:no-preference) {
+  .button,.filters button,.close,.contact button,#splash-skip { transition:transform .2s ease,box-shadow .25s ease,background-color .25s ease,border-color .25s ease; }
+  .event,.skill,.work-visual,.contact input { transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease,background-color .3s ease; }
+  .text-link,.work-title,nav a { transition:color .2s ease,transform .25s ease; }
+  .link-icon { transition:transform .3s ease; }
+  .button:active,.filters button:active,.close:active,.contact button:active,#splash-skip:active { transform:scale(.96); }
+  .text-link:active,.work-title:active { transform:translateY(2px); }
+  #back-top.is-shown:active { transform:translateY(2px) scale(.94); }
+  dialog[open] { animation:dialog-arrive .28s ease-out; }
+  .works .work { animation:card-arrive .4s ease-out both; }
+  .works .work:nth-child(2) { animation-delay:.05s; }
+  .works .work:nth-child(3) { animation-delay:.1s; }
+  @keyframes dialog-arrive { from { opacity:0; transform:translateY(14px) scale(.98); } to { opacity:1; transform:none; } }
+  @keyframes card-arrive { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference) {
+  .button:hover { transform:translateY(-3px); box-shadow:0 12px 26px #247c9c30; }
+  .event:hover { transform:translateY(-4px); box-shadow:0 16px 38px #237e9620; border-color:#90c9da; }
+  .skill:hover { transform:translateX(5px); background:#ffffff45; }
+  .work:hover .work-visual { transform:translateY(-5px); box-shadow:0 14px 26px #277c9620; }
+  .text-link:hover { transform:translateY(-2px); color:#0b7894; }
+  .text-link:hover .link-icon { transform:rotate(-8deg) scale(1.12); }
+  .filters button:hover { transform:translateY(-2px); box-shadow:0 5px 12px #276e8a18; }
+  nav a:hover { transform:translateY(-2px); }
+  #back-top.is-shown:hover { transform:translateY(-4px); background:#fff; }
+}
+.contact input:focus { border-color:#428fa9; box-shadow:0 0 0 4px #74cbdf26; }
+@media(prefers-reduced-motion:reduce) { #back-top { transition:none; transform:none; } }
