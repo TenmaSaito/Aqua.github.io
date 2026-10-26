@@ -384,6 +384,9 @@ dialog::backdrop { background:#02091b99; }
 .peach,.lavender { background:linear-gradient(135deg,var(--surface-solid),var(--surface-soft)); color:var(--green); }
 .visual-symbol { text-shadow:none; }
 footer { border-color:var(--line); }
+footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
+.footer-socials { flex-basis:100%; justify-content:center; gap:24px; padding-top:12px; }
+.footer-socials .text-link { font-size:13px; }
 .skip { background:var(--accent); color:var(--accent-ink); }
 
 /* 円に注いで満水になってから本文へ移る。完了はanimationendと同期。 */
@@ -439,7 +442,7 @@ footer { border-color:var(--line); }
     <section id="events" class="section"><div class="section-heading"><div><p class="eyebrow">04 / ACTIVITY LOG</p><h2>参加・出展イベント</h2></div><p>制作の外に広がる活動の記録。</p></div><div id="event-list"></div></section>
     <section id="internships" class="section"><div class="section-heading"><div><p class="eyebrow">05 / INTERNSHIPS</p><h2>インターン参加経験</h2></div><p>現場での経験と、学んだこと。</p></div><div id="internship-list"></div></section>
   </main>
-  <footer><a class="brand" href="#">PLAY / CREATE</a><p id="copyright"></p><a href="#">ページの先頭へ ↑</a></footer>
+  <footer><a class="brand" href="#">PLAY / CREATE</a><p id="copyright"></p><a href="#">ページの先頭へ ↑</a><nav id="footer-socials" class="footer-socials" aria-label="SNSと外部サービス"></nav></footer>
   <dialog id="work-dialog" aria-labelledby="dialog-title"><button id="close-dialog" class="close" aria-label="作品の詳細を閉じる">閉じる ×</button><div id="dialog-content"></div></dialog>
   <noscript>作品情報の表示にはJavaScriptを有効にしてください。</noscript>
   <button id="back-top" type="button" aria-label="ページの先頭に戻る" hidden><span aria-hidden="true">↑</span><small>TOP</small></button>
@@ -462,7 +465,9 @@ window.PORTFOLIO = {
     interests: "",
     email: "251315@st.yoshi-g.ac.jp",
     links: [
-      { label: "GitHub", url: "https://github.com/TenmaSaito", icon: "" }
+      { label: "GitHub", url: "https://github.com/TenmaSaito", icon: "" },
+      { label: "X", url: "", icon: "" },
+      { label: "Steam", url: "", icon: "" }
     ]
   },
   worksIntro: {
@@ -498,7 +503,7 @@ window.PORTFOLIO = {
   const data = window.PORTFOLIO;
   const $ = id => document.getElementById(id);
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text) n.textContent = text; if (className) n.className = className; return n; };
-  const safeURL = value => { try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
+  const safeURL = value => { if (typeof value !== 'string' || !value.trim()) return null; try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
   const addLinks = (container, links = []) => links.forEach(link => {
     const url = safeURL(link.url); if (!url) return;
     const a = el('a', '', 'text-link'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
@@ -520,6 +525,8 @@ window.PORTFOLIO = {
   $('sample-notice').hidden = !data.sampleMode;
   [['名前', [p.name, p.nameReading && `（${p.nameReading}）`].filter(Boolean).join('\n')], ['学校・所属', schoolText], ['卒業', p.graduation], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
+  addLinks($('footer-socials'), p.links);
+  $('footer-socials').hidden = !$('footer-socials').childElementCount;
   const contact = el('div', '', 'contact');
   const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';
   const emailInput = el('input'); emailInput.id = 'contact-email'; emailInput.type = 'email'; emailInput.readOnly = true; emailInput.value = p.email || ''; emailInput.placeholder = 'メールアドレスは準備中です';

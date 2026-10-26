@@ -3,7 +3,7 @@
   const data = window.PORTFOLIO;
   const $ = id => document.getElementById(id);
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text) n.textContent = text; if (className) n.className = className; return n; };
-  const safeURL = value => { try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
+  const safeURL = value => { if (typeof value !== 'string' || !value.trim()) return null; try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
   const addLinks = (container, links = []) => links.forEach(link => {
     const url = safeURL(link.url); if (!url) return;
     const a = el('a', '', 'text-link'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
@@ -25,6 +25,8 @@
   $('sample-notice').hidden = !data.sampleMode;
   [['名前', [p.name, p.nameReading && `（${p.nameReading}）`].filter(Boolean).join('\n')], ['学校・所属', schoolText], ['卒業', p.graduation], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
+  addLinks($('footer-socials'), p.links);
+  $('footer-socials').hidden = !$('footer-socials').childElementCount;
   const contact = el('div', '', 'contact');
   const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';
   const emailInput = el('input'); emailInput.id = 'contact-email'; emailInput.type = 'email'; emailInput.readOnly = true; emailInput.value = p.email || ''; emailInput.placeholder = 'メールアドレスは準備中です';

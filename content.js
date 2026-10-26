@@ -17,7 +17,9 @@ window.PORTFOLIO = {
     interests: "",
     email: "251315@st.yoshi-g.ac.jp",
     links: [
-      { label: "GitHub", url: "https://github.com/TenmaSaito", icon: "" }
+      { label: "GitHub", url: "https://github.com/TenmaSaito", icon: "" },
+      { label: "X", url: "", icon: "" },
+      { label: "Steam", url: "", icon: "" }
     ]
   },
   worksIntro: {
