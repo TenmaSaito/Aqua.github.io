@@ -588,28 +588,24 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 .footer-socials .text-link { font-size:13px; }
 .skip { background:var(--accent); color:var(--accent-ink); }
 
-/* 円に注いで満水になってから本文へ移る。完了はanimationendと同期。 */
-#splash { background:var(--paper); color:var(--ink); opacity:1; transition:opacity .6s cubic-bezier(.4,0,.7,1); }
+/* ページ全体に注いで満水になってから本文へ移る。 */
+#splash { --splash-water:#b9e4f0; --splash-deep:#a6d8ec; background:var(--paper); color:var(--ink); opacity:1; overflow:hidden; isolation:isolate; transition:opacity .6s cubic-bezier(.4,0,.7,1); }
+[data-theme="dark"] #splash { --splash-water:#173d5d; --splash-deep:#132d50; }
+#splash .splash-content { position:relative; z-index:3; }
 #splash.splash-fading { opacity:0; }
 .intro-active>header,.intro-active>main,.intro-active>footer { opacity:0; }
 .intro-active.intro-revealing>header,.intro-active.intro-revealing>main,.intro-active.intro-revealing>footer { opacity:1; transition:opacity .75s ease-out; }
-.liquid-loader { width:160px; height:160px; margin:40px auto 28px; position:relative; }
-.has-floater .liquid-loader { margin-top:104px; }
-.loader-floater { position:absolute; z-index:2; left:50%; top:-90px; width:112px; height:112px; margin-left:-56px; pointer-events:none; animation:mascot-rise var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) both; }
+.liquid-loader { position:absolute; inset:-60px 0 0; z-index:1; pointer-events:none; }
+.loader-floater { position:absolute; z-index:2; left:30%; top:-90px; width:112px; height:112px; margin-left:-56px; pointer-events:none; }
 .loader-floater img { display:block; width:112px; height:112px; object-fit:contain; filter:drop-shadow(0 3px 3px #fff6); transform-origin:50% 75%; animation:mascot-bob 1.6s ease-in-out infinite alternate; }
-@keyframes mascot-rise { from { transform:translateY(184px); } to { transform:translateY(-16px); } }
 @keyframes mascot-bob { from { transform:translateY(1px) rotate(-3deg); } to { transform:translateY(-4px) rotate(3deg); } }
-.splash-full .loader-floater { transform:translateY(-16px); animation:none; }
-.loader-circle { width:100%; height:100%; border-radius:50%; border:2px solid var(--border); overflow:hidden; position:relative; background:var(--surface); box-shadow:0 8px 35px var(--shadow),inset 0 0 20px #fff3; }
-.loader-fill { position:absolute; inset:0; background:linear-gradient(var(--water),var(--water-deep)); animation:liquid-fill var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) forwards; }
-@keyframes liquid-fill { from { transform:translateY(115%); } to { transform:translateY(-10%); } }
-.loader-wave { position:absolute; top:-11px; left:-50%; width:200%; height:28px; background:var(--water); border-radius:45%; animation:loader-swell 1s ease-in-out infinite alternate; }
-@keyframes loader-swell { from { transform:translateX(-12px) rotate(-4deg); } to { transform:translateX(12px) rotate(4deg); } }
-.loader-pour { position:absolute; top:-38px; left:calc(50% - 3px); width:6px; height:110px; z-index:1; background:linear-gradient(90deg,var(--water),#ffffffa0,var(--water)); border-radius:6px; animation:pour-in .25s ease-out both; }
+.loader-fill { position:absolute; inset:0; background:linear-gradient(var(--splash-water),var(--splash-deep)); animation:liquid-fill var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) forwards; }
+@keyframes liquid-fill { from { transform:translateY(calc(100% + 48px)); } to { transform:translateY(-40px); } }
+.loader-wave { position:absolute; top:-47px; left:0; width:100%; height:48px; fill:var(--splash-water); }
+.loader-pour { position:absolute; top:0; right:20%; width:7px; height:100%; z-index:0; background:linear-gradient(90deg,var(--water),#ffffffa0,var(--water)); border-radius:0 0 6px 6px; animation:pour-in .4s ease-out both; opacity:.55; }
 @keyframes pour-in { from { transform:scaleY(0); transform-origin:top; } to { transform:scaleY(1); transform-origin:top; } }
-.loader-shine { position:absolute; width:25%; height:55%; top:17%; left:14%; border-left:3px solid #ffffffa0; border-radius:50%; transform:rotate(20deg); }
 .splash-full .loader-pour { opacity:0; transition:opacity .12s; }
-.splash-full .loader-fill { transform:translateY(-10%); animation:none; }
+.splash-full .loader-fill { transform:translateY(-40px); animation:none; }
 #splash-title { color:var(--ink); }
 #splash-subtitle,#splash-status,#splash-skip { color:var(--muted); }
 #splash-status { font-size:11px; margin:18px 0 0; }
@@ -635,7 +631,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 
 </head>
 <body>
-  <div id="splash" hidden role="dialog" aria-modal="true" aria-label="イントロダクション"><div class="splash-content"><div class="liquid-loader" aria-hidden="true"><div class="loader-pour"></div><div class="loader-circle"><div class="loader-fill"><i class="loader-wave"></i></div><span class="loader-shine"></span></div><div class="loader-floater" hidden><img id="splash-floating-image" alt="" width="112" height="112"></div></div><img id="splash-image" alt="" hidden><p id="splash-title"></p><p id="splash-subtitle"></p><p id="splash-status" role="status">水を満たしています</p><button id="splash-skip" type="button">スキップ →</button></div></div>
+  <div id="splash" hidden role="dialog" aria-modal="true" aria-label="イントロダクション"><div class="loader-pour" aria-hidden="true"></div><div class="liquid-loader" aria-hidden="true"><div class="loader-fill"><svg class="loader-wave" viewBox="0 0 1440 48" preserveAspectRatio="none"><path d="M0 24 C180 0 360 0 540 24 S900 48 1080 24 S1320 0 1440 24 V48 H0 Z"/></svg><div class="loader-floater" hidden><img id="splash-floating-image" alt="" width="112" height="112"></div></div></div><div class="splash-content"><img id="splash-image" alt="" hidden><p id="splash-title"></p><p id="splash-subtitle"></p><p id="splash-status" role="status">水を満たしています</p><button id="splash-skip" type="button">スキップ →</button></div></div>
   <a class="skip" href="#main">本文へ移動</a>
   <header class="header"><a class="brand" href="#">PLAY / CREATE<span>GAME CREATOR PORTFOLIO</span></a><div class="header-controls"><nav aria-label="メインナビゲーション"><a href="#works">作品</a><a href="#about">プロフィール</a><a href="#skills">技術</a><a href="#events">活動</a><a href="#internships">インターン</a></nav><button id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="ダークテーマ" hidden><span class="theme-label theme-day">昼の海</span><span class="theme-track" aria-hidden="true"><span class="theme-knob">☀</span></span><span class="theme-label theme-night">夜の海</span></button></div></header>
   <main id="main">
