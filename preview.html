@@ -30,6 +30,92 @@
       const timer = setTimeout(finish, duration + 180);
       element.addEventListener('transitionend', onEnd);
     });
+    // DOMを複製せず、波が通った文字の描画色だけを切り替える。
+    const followWaveText = (water, next) => {
+      const keys = ['ink', 'muted', 'green', 'accent'];
+      const probe = document.createElement('span');
+      probe.className = 'theme-palette'; probe.hidden = true;
+      document.body.append(probe);
+      const palette = theme => {
+        probe.dataset.theme = theme;
+        return Object.fromEntries(keys.map(key => {
+          probe.style.color = `var(--${key})`;
+          return [key, getComputedStyle(probe).color];
+        }));
+      };
+      const previous = palette(root.dataset.theme);
+      const target = palette(next);
+      probe.remove();
+      const highlights = Object.fromEntries(keys.map(key => {
+        root.style.setProperty(`--theme-wave-${key}`, target[key]);
+        const highlight = new Highlight();
+        CSS.highlights.set(`theme-wave-${key}`, highlight);
+        return [key, highlight];
+      }));
+      const eligibility = new WeakMap();
+      const textColor = element => {
+        if (eligibility.has(element)) return eligibility.get(element);
+        let key = null;
+        const style = getComputedStyle(element);
+        if (!element.closest('script,style,svg,button,input,textarea,select,dialog,.theme-water,[hidden]') && style.visibility !== 'hidden') {
+          // カードやボタンなど、独自の背景がある文字は満水後に背景と一緒に補間する。
+          let covered = false;
+          for (let parent = element; parent && parent !== document.body; parent = parent.parentElement) {
+            const surface = getComputedStyle(parent);
+            if (surface.backgroundColor !== 'rgba(0, 0, 0, 0)' || surface.backgroundImage !== 'none') { covered = true; break; }
+          }
+          if (!covered) key = keys.find(name => previous[name] === style.color) || null;
+        }
+        eligibility.set(element, key);
+        return key;
+      };
+      const letters = [];
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      const startX = scrollX, startY = scrollY;
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (!node.textContent.trim()) continue;
+        const key = textColor(node.parentElement);
+        if (!key) continue;
+        const whole = document.createRange(); whole.selectNodeContents(node);
+        const box = whole.getBoundingClientRect();
+        if (!box.width || box.bottom < 0 || box.top > innerHeight) continue;
+        for (let offset = 0; offset < node.length;) {
+          const end = offset + (node.textContent.codePointAt(offset) > 0xffff ? 2 : 1);
+          const range = document.createRange(); range.setStart(node, offset); range.setEnd(node, end);
+          const rect = range.getBoundingClientRect();
+          if (rect.width && rect.bottom >= 0 && rect.top <= innerHeight) letters.push({ range, key, x:(rect.left + rect.right) / 2 + startX, y:(rect.top + rect.bottom) / 2 + startY, active:false });
+          offset = end;
+        }
+      }
+      const svg = water.querySelector('svg'), path = svg.querySelector('path');
+      const points = [];
+      for (let length = 0; length <= path.getTotalLength(); length += 6) {
+        const point = path.getPointAtLength(length); points.push(point);
+        if (point.x >= 1439) break; // SVGの波の上辺だけを採取する。
+      }
+      let frame;
+      const update = () => {
+        const wave = svg.getBoundingClientRect();
+        for (const letter of letters) {
+          const x = Math.max(0, Math.min(1440, (letter.x - scrollX - wave.left) / wave.width * 1440));
+          let low = 0, high = points.length - 1;
+          while (low < high) { const mid = (low + high) >> 1; if (points[mid].x < x) low = mid + 1; else high = mid; }
+          const boundary = wave.top + points[low].y / 48 * wave.height;
+          const active = letter.y - scrollY >= boundary;
+          if (active !== letter.active) {
+            highlights[letter.key][active ? 'add' : 'delete'](letter.range);
+            letter.active = active;
+          }
+        }
+        frame = requestAnimationFrame(update);
+      };
+      frame = requestAnimationFrame(update);
+      return () => {
+        cancelAnimationFrame(frame);
+        keys.forEach(key => { CSS.highlights.delete(`theme-wave-${key}`); root.style.removeProperty(`--theme-wave-${key}`); });
+      };
+    };
     button.hidden = false; sync();
     button.addEventListener('click', async () => {
       if (switching) return;
@@ -37,7 +123,7 @@
       button.setAttribute('aria-disabled', 'true');
       button.setAttribute('aria-busy', 'true');
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || !window.CSS?.highlights || !window.Highlight;
       const water = document.createElement('div');
       water.className = `theme-water${reduced ? ' theme-water-still' : ''}`;
       water.dataset.destination = next;
@@ -49,7 +135,9 @@
         try { localStorage.setItem('aquart-theme', next); } catch {}
         sync();
       };
+      let clearWaveText = () => {};
       try {
+        if (!reduced) clearWaveText = followWaveText(water, next);
         // 初期位置を確定してから、薄い水色の幕を下から満たす。
         water.getBoundingClientRect();
         const filling = waitForTransition(water, reduced ? 'opacity' : 'transform', reduced ? 450 : 1400);
@@ -63,6 +151,7 @@
         await settling;
       } finally {
         applyTheme();
+        clearWaveText();
         water.remove();
         root.classList.remove('theme-changing');
         button.removeAttribute('aria-disabled');
@@ -334,7 +423,7 @@ dialog::backdrop { background:#16445e66; }
 @media(prefers-reduced-motion:reduce) { #back-top { transition:none; transform:none; } }
 </style>
   <style>/* 可読性を保つ最終テーマ。色と余白はここで一元調整します。 */
-:root {
+:root,.theme-palette {
   --paper:#effaff; --ink:#193e50; --muted:#486777; --line:#bcdce7;
   --green:#126c85; --mint:#126c85; --surface:#ffffffc9; --surface-solid:#f8fdff;
   --surface-soft:#deeff6; --accent:#176d88; --accent-ink:#fff; --border:#a8cbd9;
@@ -342,7 +431,7 @@ dialog::backdrop { background:#16445e66; }
   --water:#51b6d2; --water-deep:#237fba; --surface-wave:#52b5d533;
   color-scheme:light;
 }
-:root[data-theme="dark"] {
+:root[data-theme="dark"],.theme-palette[data-theme="dark"] {
   --paper:#0a1530; --ink:#e8f2ff; --muted:#afc5db; --line:#344a69;
   --green:#8ae0ed; --mint:#8ae0ed; --surface:#14243deb; --surface-solid:#12213a;
   --surface-soft:#213858; --accent:#84d4e8; --accent-ink:#0a2437; --border:#4b6887;
@@ -377,6 +466,10 @@ nav a { white-space:nowrap; }
 .theme-water-still.is-filled { opacity:.98; }
 .theme-water-still.is-settling { opacity:0; }
 #theme-toggle[aria-disabled="true"] { cursor:progress; }
+::highlight(theme-wave-ink) { color:var(--theme-wave-ink); }
+::highlight(theme-wave-muted) { color:var(--theme-wave-muted); }
+::highlight(theme-wave-green) { color:var(--theme-wave-green); }
+::highlight(theme-wave-accent) { color:var(--theme-wave-accent); }
 .hero { grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr); gap:48px; padding:64px 0 40px; }
 .hero h1 { font-size:clamp(38px,4.8vw,60px); line-height:1.4; text-shadow:none; }
 .intro { max-width:600px; font-size:15px; }

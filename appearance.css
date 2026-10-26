@@ -1,5 +1,5 @@
 /* 可読性を保つ最終テーマ。色と余白はここで一元調整します。 */
-:root {
+:root,.theme-palette {
   --paper:#effaff; --ink:#193e50; --muted:#486777; --line:#bcdce7;
   --green:#126c85; --mint:#126c85; --surface:#ffffffc9; --surface-solid:#f8fdff;
   --surface-soft:#deeff6; --accent:#176d88; --accent-ink:#fff; --border:#a8cbd9;
@@ -7,7 +7,7 @@
   --water:#51b6d2; --water-deep:#237fba; --surface-wave:#52b5d533;
   color-scheme:light;
 }
-:root[data-theme="dark"] {
+:root[data-theme="dark"],.theme-palette[data-theme="dark"] {
   --paper:#0a1530; --ink:#e8f2ff; --muted:#afc5db; --line:#344a69;
   --green:#8ae0ed; --mint:#8ae0ed; --surface:#14243deb; --surface-solid:#12213a;
   --surface-soft:#213858; --accent:#84d4e8; --accent-ink:#0a2437; --border:#4b6887;
@@ -42,6 +42,10 @@ nav a { white-space:nowrap; }
 .theme-water-still.is-filled { opacity:.98; }
 .theme-water-still.is-settling { opacity:0; }
 #theme-toggle[aria-disabled="true"] { cursor:progress; }
+::highlight(theme-wave-ink) { color:var(--theme-wave-ink); }
+::highlight(theme-wave-muted) { color:var(--theme-wave-muted); }
+::highlight(theme-wave-green) { color:var(--theme-wave-green); }
+::highlight(theme-wave-accent) { color:var(--theme-wave-accent); }
 .hero { grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr); gap:48px; padding:64px 0 40px; }
 .hero h1 { font-size:clamp(38px,4.8vw,60px); line-height:1.4; text-shadow:none; }
 .intro { max-width:600px; font-size:15px; }
