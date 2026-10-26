@@ -15,7 +15,7 @@
   --water:#4c9cd5; --water-deep:#274a9c; --surface-wave:#73caea22;
   color-scheme:dark;
 }
-body { background:var(--page-bg); color:var(--ink); }
+body { background:var(--page-bg); color:var(--ink); isolation:isolate; }
 body::before { opacity:.15; }
 .header { min-height:112px; padding-top:20px; padding-bottom:20px; gap:24px; flex-wrap:wrap; border-color:var(--line); }
 .header-controls { display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
@@ -30,9 +30,9 @@ nav a { white-space:nowrap; }
 .theme-day { font-weight:bold; }
 [data-theme="dark"] .theme-day { font-weight:normal; }
 [data-theme="dark"] .theme-night { font-weight:bold; }
-.theme-changing body,.theme-changing .event,.theme-changing .skill,.theme-changing .internship-card { transition:background-color 1.2s ease,color 1.2s ease,border-color 1.2s ease; }
-/* 薄い水の幕で旧テーマを覆い、その下で配色を変更してゆっくり透かす。 */
-.theme-water { --wash:#c9e6ed; position:fixed; inset:-60px 0 0; z-index:2147483646; pointer-events:none; background:var(--wash); opacity:.98; transform:translateY(calc(100% + 50px)); transition:transform 1.4s cubic-bezier(.33,.05,.26,1); will-change:transform,opacity; }
+.theme-changing body,.theme-changing body :not(.theme-water, .theme-water *) { transition:background-color 1.2s ease,color 1.2s ease,border-color 1.2s ease,box-shadow 1.2s ease,fill 1.2s ease,stroke 1.2s ease; }
+/* 水は背景の上・本文の下。文字やカードを覆わずに背景だけを満たす。 */
+.theme-water { --wash:#c9e6ed; position:fixed; inset:-60px 0 0; z-index:-1; pointer-events:none; background:var(--wash); opacity:.98; transform:translateY(calc(100% + 50px)); transition:transform 1.4s cubic-bezier(.33,.05,.26,1); will-change:transform,opacity; }
 .theme-water[data-destination="dark"] { --wash:#3d5c74; }
 .theme-water svg { position:absolute; left:0; top:-47px; width:100%; height:48px; fill:var(--wash); overflow:visible; }
 .theme-water.is-filled { transform:translateY(0); }
@@ -188,7 +188,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 @media(max-width:950px) { .header-controls { width:100%; justify-content:space-between; gap:14px; } .header { align-items:flex-start; gap:18px; } }
 @media(max-width:700px) { .hero { grid-template-columns:1fr; padding-top:40px; gap:32px; } .signature { border-left:2px solid var(--border); padding:4px 0 4px 18px; } .hero h1 { font-size:42px; } .header-controls { align-items:flex-start; } nav { gap:14px; font-size:12px; } .header { min-height:0; } .skill-group { grid-template-columns:1fr; } .internship-card { padding:24px; } .internship-card h3 { font-size:21px; } .section-heading>p { max-width:none; } }
 @media(prefers-reduced-motion:reduce) {
-  .theme-knob,.theme-changing body,.theme-changing .event,.theme-changing .skill,.theme-changing .internship-card { transition:none; }
+  .theme-knob { transition:none; }
   .sea-wave { animation:none; }
   #splash { transition:none; }
 }

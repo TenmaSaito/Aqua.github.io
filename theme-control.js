@@ -47,7 +47,7 @@
         const filling = waitForTransition(water, reduced ? 'opacity' : 'transform', reduced ? 450 : 1400);
         water.classList.add('is-filled');
         await filling;
-        // 幕が画面全体を覆った状態で配色を変更し、ゆっくり透かしてなじませる。
+        // 背景が満たされたら、文字・カードの色も補間しながら新テーマへなじませる。
         root.classList.add('theme-changing');
         applyTheme();
         const settling = waitForTransition(water, 'opacity', 1200);
