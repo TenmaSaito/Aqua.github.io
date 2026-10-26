@@ -33,6 +33,7 @@
 
   const splash = document.getElementById('splash');
   const options = config.splash || {};
+  const initialHash = location.hash.slice(1);
   let finished = false;
   let fading = false;
   let timer;
@@ -67,7 +68,18 @@
     if (reduced.matches) { finish(); revealObserver?.disconnect(); document.querySelectorAll('.reveal').forEach(n => n.classList.add('is-visible')); }
   });
   // ハッシュ付きの直接リンクと動きを抑える設定では導入を省略。
-  if (options.enabled === false || reduced.matches || location.hash) { finish(); return; }
+  if (options.enabled === false || reduced.matches || location.hash) {
+    finish();
+    // 外部データで本文が増えた後の見出し位置へ合わせる。
+    if (initialHash) requestAnimationFrame(() => {
+      let id; try { id = decodeURIComponent(initialHash); } catch { return; }
+      const target = document.getElementById(id);
+      target?.classList.add('is-visible');
+      target?.scrollIntoView({behavior:'instant', block:'start'});
+      updateTop();
+    });
+    return;
+  }
   document.getElementById('splash-title').textContent = options.title || 'AQUART';
   document.getElementById('splash-subtitle').textContent = options.subtitle || 'IDEAS FLOW INTO PLAY.';
   if (options.image) {
