@@ -300,6 +300,7 @@ window.PORTFOLIO = {
     name: "齊藤 天眞", nameReading: "さいとう てんま",
     school: "専門学校北海道サイバークリエイターズ大学校",
     course: "ゲームクリエイター学科", specialization: "ゲームプログラマ専攻",
+    graduation: "", // 例: "2028年3月卒業予定"。空なら非表示。
     headline: "心が動く、\n遊びをつくる。",
     intro: "ゲームプログラマを専攻する齊藤天眞のポートフォリオ。制作したゲームや、技術・イベントでの活動を紹介します。",
     bio: "専門学校北海道サイバークリエイターズ大学校で、ゲームプログラマを専攻しています。C/C++・C#を使用し、これまでに約7本のゲームを制作。ゲームジャムへの参加やイベントでの出展も行っています。",
@@ -353,7 +354,7 @@ window.PORTFOLIO = {
   ['headline', 'intro', 'name', 'school', 'bio'].forEach(key => $(key).textContent = p[key]);
   $('school').textContent = schoolText;
   $('sample-notice').hidden = !data.sampleMode;
-  [['名前', [p.name, p.nameReading && `（${p.nameReading}）`].filter(Boolean).join('\n')], ['学校・所属', schoolText], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
+  [['名前', [p.name, p.nameReading && `（${p.nameReading}）`].filter(Boolean).join('\n')], ['学校・所属', schoolText], ['卒業', p.graduation], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
   const contact = el('div', '', 'contact');
   const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';

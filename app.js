@@ -23,7 +23,7 @@
   ['headline', 'intro', 'name', 'school', 'bio'].forEach(key => $(key).textContent = p[key]);
   $('school').textContent = schoolText;
   $('sample-notice').hidden = !data.sampleMode;
-  [['名前', [p.name, p.nameReading && `（${p.nameReading}）`].filter(Boolean).join('\n')], ['学校・所属', schoolText], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
+  [['名前', [p.name, p.nameReading && `（${p.nameReading}）`].filter(Boolean).join('\n')], ['学校・所属', schoolText], ['卒業', p.graduation], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
   const contact = el('div', '', 'contact');
   const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';
