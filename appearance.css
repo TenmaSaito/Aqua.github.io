@@ -30,7 +30,18 @@ nav a { white-space:nowrap; }
 .theme-day { font-weight:bold; }
 [data-theme="dark"] .theme-day { font-weight:normal; }
 [data-theme="dark"] .theme-night { font-weight:bold; }
-.theme-changing body,.theme-changing .event,.theme-changing .skill,.theme-changing .internship-card { transition:background-color .4s ease,color .4s ease,border-color .4s ease; }
+.theme-changing body,.theme-changing .event,.theme-changing .skill,.theme-changing .internship-card { transition:background-color 1.2s ease,color 1.2s ease,border-color 1.2s ease; }
+/* 薄い水の幕で旧テーマを覆い、その下で配色を変更してゆっくり透かす。 */
+.theme-water { --wash:#c9e6ed; position:fixed; inset:-60px 0 0; z-index:2147483646; pointer-events:none; background:var(--wash); opacity:.98; transform:translateY(calc(100% + 50px)); transition:transform 1.4s cubic-bezier(.33,.05,.26,1); will-change:transform,opacity; }
+.theme-water[data-destination="dark"] { --wash:#3d5c74; }
+.theme-water svg { position:absolute; left:0; top:-47px; width:100%; height:48px; fill:var(--wash); overflow:visible; }
+.theme-water.is-filled { transform:translateY(0); }
+.theme-water.is-settling { opacity:0; transition:opacity 1.2s ease-in-out; }
+.theme-water-still { transform:none; opacity:0; transition:opacity .45s ease-in-out; }
+.theme-water-still svg { display:none; }
+.theme-water-still.is-filled { opacity:.98; }
+.theme-water-still.is-settling { opacity:0; }
+#theme-toggle[aria-disabled="true"] { cursor:progress; }
 .hero { grid-template-columns:minmax(0,1.6fr) minmax(220px,1fr); gap:48px; padding:64px 0 40px; }
 .hero h1 { font-size:clamp(38px,4.8vw,60px); line-height:1.4; text-shadow:none; }
 .intro { max-width:600px; font-size:15px; }
