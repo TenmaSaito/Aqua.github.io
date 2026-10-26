@@ -7,8 +7,10 @@ const script = name => '<script>' + read(name).replace(/<\/script/gi, '<\\/scrip
 const html = read('index.html')
   .replace('<link rel="stylesheet" href="./style.css">', () => '<style>' + read('style.css') + '</style>')
   .replace('<link rel="stylesheet" href="./theme.css">', () => '<style>' + read('theme.css') + '</style>')
+  .replace('<link rel="stylesheet" href="./water.css">', () => '<style>' + read('water.css') + '</style>')
   .replace('<script defer src="./content.js"></script>', '')
   .replace('<script defer src="./app.js"></script>', '')
-  .replace('</body>', () => script('content.js') + script('app.js') + '</body>');
-fs.writeFileSync(path.join(__dirname, 'preview.html'), html);
+  .replace('<script defer src="./water.js"></script>', '')
+  .replace('</body>', () => script('content.js') + script('app.js') + script('water.js') + '</body>');
+fs.writeFileSync(path.join(__dirname, 'preview.html'), html.replace(/^[ \t]+$/gm, ''));
 console.log('Updated preview.html');

@@ -100,16 +100,64 @@ dialog::backdrop { background: #03060de6; }
   .hero-art .orbit { width: 260px; left: calc(50% - 130px); }
 }
 </style>
+  <style>/* DEEP CURRENT — 外部画像や動画なしで描画する水のテーマ。 */
+:root { --paper:#061119; --ink:#e9f6fa; --muted:#a5bdc8; --line:#223c49; --green:#76e5e1; --mint:#76e5e1; }
+body { background:radial-gradient(ellipse at 85% 6%,#0b53613d,transparent 40%),radial-gradient(ellipse at 0 55%,#13375b33,transparent 45%),var(--paper); }
+.header { border-color:#76e5e133; }
+.brand::before { content:'≈ '; }
+.notice { color:var(--muted); }
+.water-scene { min-width:0; position:relative; padding-bottom:34px; }
+.hero-art { isolation:isolate; border:1px solid #285462; border-radius:48% 48% 10px 10px / 24% 24% 10px 10px; background:radial-gradient(ellipse at 50% 20%,#124052,#081c2b 55%,#05141f); box-shadow:inset 0 0 65px #010a12,0 22px 70px #0004; }
+.hero-art::before,.hero-art::after { display:none; }
+.art-caption { top:36px; left:30px; color:#b4e7e7; z-index:3; }
+.art-bottom,.art-index { z-index:3; color:#a6dbdf; }
+.water-light { position:absolute; inset:-25%; background:conic-gradient(from 150deg at 40% 0%,transparent 0deg,#9fffea14 12deg,transparent 24deg,#74c9ff12 35deg,transparent 50deg); filter:blur(10px); transform-origin:50% 0; animation:water-light 16s ease-in-out infinite alternate; }
+.liquid-orb { width:210px; height:220px; position:absolute; left:calc(50% - 105px); top:95px; overflow:hidden; border-radius:44% 56% 60% 40% / 50% 40% 60% 50%; border:1px solid #b9ffffa0; background:radial-gradient(ellipse at 28% 20%,#e4ffffa6 0,transparent 14%),radial-gradient(ellipse at 65% 75%,#64d5e563,transparent 48%),radial-gradient(ellipse at 70% 25%,#09617d,#0a364e 55%,#2aa9b278); box-shadow:inset 10px 12px 22px #b1ffff30,inset -12px -15px 22px #020d2690,inset 1px 1px 5px #e6ffffb0,0 0 60px #32d7dd19,0 22px 50px #0005; animation:water-morph 10s ease-in-out infinite alternate; }
+.orb-glint { position:absolute; width:95px; height:38px; left:20px; top:24px; border-top:3px solid #e4ffffb0; border-radius:50%; transform:rotate(-32deg); filter:blur(1px); }
+.orb-current { position:absolute; width:310px; height:110px; top:95px; left:-45px; border-radius:50%; border:2px solid #8dffff60; box-shadow:0 8px 22px #72e9ff22,inset 0 8px 12px #61e7df25; transform:rotate(-22deg); animation:water-current 8s ease-in-out infinite alternate; }
+.water-ripple { position:absolute; width:250px; height:44px; left:calc(50% - 125px); top:335px; border:1px solid #70dbdf50; border-radius:50%; animation:water-ripple 7s ease-out infinite; }
+.ripple-two { animation-delay:-3.5s; }
+.bubbles i { position:absolute; width:7px; height:7px; left:20%; bottom:40px; border:1px solid #b3fff96b; border-radius:50%; box-shadow:inset 1px 1px 2px #e0ffff60; animation:water-bubble 13s linear infinite; }
+.bubbles i:nth-child(2) { left:76%; width:11px; height:11px; animation-delay:-4s; animation-duration:17s; }
+.bubbles i:nth-child(3) { left:38%; width:4px; height:4px; animation-delay:-8s; }
+.bubbles i:nth-child(4) { left:89%; animation-delay:-11s; animation-duration:19s; }
+.bubbles i:nth-child(5) { left:12%; width:4px; height:4px; animation-delay:-6s; animation-duration:15s; }
+.water-waves { position:absolute; width:200%; height:110px; left:-50%; bottom:0; overflow:visible; }
+.wave-back { fill:#197c8b33; stroke:#6adddb3b; stroke-width:1; animation:water-wave 12s ease-in-out infinite alternate; }
+.wave-front { fill:#1469814d; stroke:#8cffff38; stroke-width:1; animation:water-wave 9s ease-in-out -4s infinite alternate-reverse; }
+#motion-toggle { position:absolute; right:0; bottom:0; font-size:11px; color:var(--muted); border:0; border-bottom:1px solid #3f6473; background:transparent; padding:3px 0; }
+#motion-toggle:hover { color:var(--mint); }
+.button { border-radius:3px 20px 3px 20px; clip-path:none; box-shadow:0 5px 24px #76e5e11a; }
+.button:hover { background:#b0f6f0; }
+.work-visual { border-radius:18px 18px 4px 4px; border-color:#315969; }
+.mint { background:radial-gradient(ellipse at 35% 25%,#236c73,#0a2434); color:#90f4ee; }
+.peach { background:radial-gradient(ellipse at 35% 25%,#355b7c,#101c35); color:#abd7fc; }
+.lavender { background:radial-gradient(ellipse at 35% 25%,#464773,#162038); color:#c5cdfb; }
+.experience { background:#12353c; color:#94e5e4; }
+.tags span { background:#0e2530; }
+.event-type { border-color:#3c7388; color:#b0deee; }
+.motion-paused .hero-art *, .water-offscreen .hero-art * { animation-play-state:paused!important; }
+@keyframes water-morph { 0% { border-radius:44% 56% 60% 40% / 50% 40% 60% 50%; transform:translateY(0) rotate(-9deg); } 50% { border-radius:58% 42% 42% 58% / 44% 61% 39% 56%; } 100% { border-radius:48% 52% 58% 42% / 60% 43% 57% 40%; transform:translateY(-14px) rotate(10deg); } }
+@keyframes water-current { to { transform:translateY(-15px) rotate(15deg); } }
+@keyframes water-light { to { transform:rotate(12deg) translateX(4%); opacity:.6; } }
+@keyframes water-ripple { from { transform:scale(.65); opacity:0; } 25% { opacity:.8; } to { transform:scale(1.4); opacity:0; } }
+@keyframes water-bubble { from { transform:translate(0,0); opacity:0; } 15%,75% { opacity:.65; } to { transform:translate(18px,-300px); opacity:0; } }
+@keyframes water-wave { from { transform:translateX(-80px); } to { transform:translateX(80px); } }
+@media(max-width:850px) { .liquid-orb { width:180px; height:190px; left:calc(50% - 90px); top:90px; } .water-ripple { top:285px; width:210px; left:calc(50% - 105px); } }
+@media(max-width:600px) { .hero-art { height:340px; box-shadow:0 16px 45px #0004; } .water-scene { padding-bottom:34px; } .art-caption { top:30px; } .liquid-orb { top:85px; } .water-ripple { top:280px; } }
+@media(prefers-reduced-motion:reduce) { .hero-art * { animation:none!important; } .bubbles i { opacity:.4; } }
+</style>
   <meta name="theme-color" content="#0b0e17">
-  
-  
+
+
+
 </head>
 <body>
   <a class="skip" href="#main">本文へ移動</a>
   <header class="header"><a class="brand" href="#">PLAY / CREATE<span>GAME CREATOR PORTFOLIO</span></a><nav aria-label="メインナビゲーション"><a href="#works">作品</a><a href="#about">プロフィール</a><a href="#skills">技術</a><a href="#events">活動</a></nav></header>
   <main id="main">
     <div id="sample-notice" class="notice">DESIGN PREVIEW — 掲載内容・ビジュアルはすべてサンプルです。</div>
-    <section class="hero"><div><p class="eyebrow">IDEAS INTO PLAY.</p><h1 id="headline"></h1><p id="intro" class="intro"></p><a class="button" href="#works">制作したゲームを見る <span>↗</span></a><div class="signature"><strong id="name"></strong><span id="school"></span></div></div><div class="hero-art" aria-hidden="true"><span class="art-caption">THE NEXT ADVENTURE<br>STARTS WITH AN IDEA.</span><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="game-object"><span>✦</span></div><span class="art-bottom">EXPERIMENT. BUILD. PLAY.</span><span class="art-index">01 / ∞</span></div></section>
+    <section class="hero"><div><p class="eyebrow">IDEAS INTO PLAY.</p><h1 id="headline"></h1><p id="intro" class="intro"></p><a class="button" href="#works">制作したゲームを見る <span>↗</span></a><div class="signature"><strong id="name"></strong><span id="school"></span></div></div><div class="water-scene"><div class="hero-art" aria-hidden="true"><span class="art-caption">DIVE INTO<br>A WORLD OF PLAY.</span><div class="water-light"></div><div class="liquid-orb"><div class="orb-glint"></div><div class="orb-current"></div></div><div class="water-ripple ripple-one"></div><div class="water-ripple ripple-two"></div><div class="bubbles"><i></i><i></i><i></i><i></i><i></i></div><svg class="water-waves" viewBox="0 0 1200 180" preserveAspectRatio="none"><path class="wave-back" d="M0 70 Q150 10 300 70 T600 70 T900 70 T1200 70 V180 H0 Z"/><path class="wave-front" d="M0 110 Q150 50 300 110 T600 110 T900 110 T1200 110 V180 H0 Z"/></svg><span class="art-bottom">IMAGINATION IN MOTION.</span><span class="art-index">AQUART / 01</span></div><button id="motion-toggle" type="button" aria-pressed="false" hidden>水の動きを止める Ⅱ</button></div></section>
     <section id="works" class="section"><div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORKS</p><h2>つくったゲーム</h2></div><p>アイデアを、遊べるかたちに。</p></div><div id="filters" class="filters" role="group" aria-label="作品のカテゴリ"></div><p id="work-count" class="sr-only" aria-live="polite"></p><div id="work-list" class="works"></div></section>
     <section id="about" class="section about"><div><p class="eyebrow">02 / ABOUT ME</p><h2>つくる人について</h2></div><div><p id="bio" class="bio"></p><dl id="profile" class="profile"></dl><div id="socials" class="socials"></div></div></section>
     <section id="skills" class="section"><div class="section-heading"><div><p class="eyebrow">03 / TOOLBOX</p><h2>技術とツール</h2></div><p>使ってきた技術と、できること。</p></div><div id="skill-list" class="skills"></div></section>
@@ -247,6 +295,28 @@ window.PORTFOLIO = {
   data.skillGroups.forEach(group => { const section = el('section', '', 'skill-group'); section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title)); group.items.forEach(item => { const row = el('div', '', 'skill'); row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project')); section.append(row); }); $('skill-list').append(section); });
   data.events.forEach(event => { const row = el('article', '', 'event'); const body = el('div'); body.append(el('h3', event.title), el('p', event.description)); if (event.url) addLinks(body, [{ label: 'イベントを見る', url: event.url }]); row.append(el('span', event.date, 'event-date'), el('span', event.type, 'event-type'), body); $('event-list').append(row); });
   if (!data.events.length) $('event-list').append(el('p', '活動の記録は準備中です。'));
+})();
+</script><script>(() => {
+  const button = document.getElementById('motion-toggle');
+  const scene = document.querySelector('.water-scene');
+  if (!button || !scene) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  const sync = () => {
+    scene.classList.toggle('motion-paused', paused || reduced.matches);
+    button.hidden = reduced.matches;
+    button.setAttribute('aria-pressed', String(paused));
+    button.textContent = paused ? '水の動きを再生する ▷' : '水の動きを止める Ⅱ';
+  };
+  button.addEventListener('click', () => { paused = !paused; sync(); });
+  reduced.addEventListener('change', sync);
+  let visible = true;
+  const visibility = () => scene.classList.toggle('water-offscreen', !visible || document.hidden);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; visibility(); }).observe(scene);
+  }
+  document.addEventListener('visibilitychange', visibility);
+  sync();
 })();
 </script></body>
 </html>

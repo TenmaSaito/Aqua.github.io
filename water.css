@@ -1,0 +1,46 @@
+/* DEEP CURRENT — 外部画像や動画なしで描画する水のテーマ。 */
+:root { --paper:#061119; --ink:#e9f6fa; --muted:#a5bdc8; --line:#223c49; --green:#76e5e1; --mint:#76e5e1; }
+body { background:radial-gradient(ellipse at 85% 6%,#0b53613d,transparent 40%),radial-gradient(ellipse at 0 55%,#13375b33,transparent 45%),var(--paper); }
+.header { border-color:#76e5e133; }
+.brand::before { content:'≈ '; }
+.notice { color:var(--muted); }
+.water-scene { min-width:0; position:relative; padding-bottom:34px; }
+.hero-art { isolation:isolate; border:1px solid #285462; border-radius:48% 48% 10px 10px / 24% 24% 10px 10px; background:radial-gradient(ellipse at 50% 20%,#124052,#081c2b 55%,#05141f); box-shadow:inset 0 0 65px #010a12,0 22px 70px #0004; }
+.hero-art::before,.hero-art::after { display:none; }
+.art-caption { top:36px; left:30px; color:#b4e7e7; z-index:3; }
+.art-bottom,.art-index { z-index:3; color:#a6dbdf; }
+.water-light { position:absolute; inset:-25%; background:conic-gradient(from 150deg at 40% 0%,transparent 0deg,#9fffea14 12deg,transparent 24deg,#74c9ff12 35deg,transparent 50deg); filter:blur(10px); transform-origin:50% 0; animation:water-light 16s ease-in-out infinite alternate; }
+.liquid-orb { width:210px; height:220px; position:absolute; left:calc(50% - 105px); top:95px; overflow:hidden; border-radius:44% 56% 60% 40% / 50% 40% 60% 50%; border:1px solid #b9ffffa0; background:radial-gradient(ellipse at 28% 20%,#e4ffffa6 0,transparent 14%),radial-gradient(ellipse at 65% 75%,#64d5e563,transparent 48%),radial-gradient(ellipse at 70% 25%,#09617d,#0a364e 55%,#2aa9b278); box-shadow:inset 10px 12px 22px #b1ffff30,inset -12px -15px 22px #020d2690,inset 1px 1px 5px #e6ffffb0,0 0 60px #32d7dd19,0 22px 50px #0005; animation:water-morph 10s ease-in-out infinite alternate; }
+.orb-glint { position:absolute; width:95px; height:38px; left:20px; top:24px; border-top:3px solid #e4ffffb0; border-radius:50%; transform:rotate(-32deg); filter:blur(1px); }
+.orb-current { position:absolute; width:310px; height:110px; top:95px; left:-45px; border-radius:50%; border:2px solid #8dffff60; box-shadow:0 8px 22px #72e9ff22,inset 0 8px 12px #61e7df25; transform:rotate(-22deg); animation:water-current 8s ease-in-out infinite alternate; }
+.water-ripple { position:absolute; width:250px; height:44px; left:calc(50% - 125px); top:335px; border:1px solid #70dbdf50; border-radius:50%; animation:water-ripple 7s ease-out infinite; }
+.ripple-two { animation-delay:-3.5s; }
+.bubbles i { position:absolute; width:7px; height:7px; left:20%; bottom:40px; border:1px solid #b3fff96b; border-radius:50%; box-shadow:inset 1px 1px 2px #e0ffff60; animation:water-bubble 13s linear infinite; }
+.bubbles i:nth-child(2) { left:76%; width:11px; height:11px; animation-delay:-4s; animation-duration:17s; }
+.bubbles i:nth-child(3) { left:38%; width:4px; height:4px; animation-delay:-8s; }
+.bubbles i:nth-child(4) { left:89%; animation-delay:-11s; animation-duration:19s; }
+.bubbles i:nth-child(5) { left:12%; width:4px; height:4px; animation-delay:-6s; animation-duration:15s; }
+.water-waves { position:absolute; width:200%; height:110px; left:-50%; bottom:0; overflow:visible; }
+.wave-back { fill:#197c8b33; stroke:#6adddb3b; stroke-width:1; animation:water-wave 12s ease-in-out infinite alternate; }
+.wave-front { fill:#1469814d; stroke:#8cffff38; stroke-width:1; animation:water-wave 9s ease-in-out -4s infinite alternate-reverse; }
+#motion-toggle { position:absolute; right:0; bottom:0; font-size:11px; color:var(--muted); border:0; border-bottom:1px solid #3f6473; background:transparent; padding:3px 0; }
+#motion-toggle:hover { color:var(--mint); }
+.button { border-radius:3px 20px 3px 20px; clip-path:none; box-shadow:0 5px 24px #76e5e11a; }
+.button:hover { background:#b0f6f0; }
+.work-visual { border-radius:18px 18px 4px 4px; border-color:#315969; }
+.mint { background:radial-gradient(ellipse at 35% 25%,#236c73,#0a2434); color:#90f4ee; }
+.peach { background:radial-gradient(ellipse at 35% 25%,#355b7c,#101c35); color:#abd7fc; }
+.lavender { background:radial-gradient(ellipse at 35% 25%,#464773,#162038); color:#c5cdfb; }
+.experience { background:#12353c; color:#94e5e4; }
+.tags span { background:#0e2530; }
+.event-type { border-color:#3c7388; color:#b0deee; }
+.motion-paused .hero-art *, .water-offscreen .hero-art * { animation-play-state:paused!important; }
+@keyframes water-morph { 0% { border-radius:44% 56% 60% 40% / 50% 40% 60% 50%; transform:translateY(0) rotate(-9deg); } 50% { border-radius:58% 42% 42% 58% / 44% 61% 39% 56%; } 100% { border-radius:48% 52% 58% 42% / 60% 43% 57% 40%; transform:translateY(-14px) rotate(10deg); } }
+@keyframes water-current { to { transform:translateY(-15px) rotate(15deg); } }
+@keyframes water-light { to { transform:rotate(12deg) translateX(4%); opacity:.6; } }
+@keyframes water-ripple { from { transform:scale(.65); opacity:0; } 25% { opacity:.8; } to { transform:scale(1.4); opacity:0; } }
+@keyframes water-bubble { from { transform:translate(0,0); opacity:0; } 15%,75% { opacity:.65; } to { transform:translate(18px,-300px); opacity:0; } }
+@keyframes water-wave { from { transform:translateX(-80px); } to { transform:translateX(80px); } }
+@media(max-width:850px) { .liquid-orb { width:180px; height:190px; left:calc(50% - 90px); top:90px; } .water-ripple { top:285px; width:210px; left:calc(50% - 105px); } }
+@media(max-width:600px) { .hero-art { height:340px; box-shadow:0 16px 45px #0004; } .water-scene { padding-bottom:34px; } .art-caption { top:30px; } .liquid-orb { top:85px; } .water-ripple { top:280px; } }
+@media(prefers-reduced-motion:reduce) { .hero-art * { animation:none!important; } .bubbles i { opacity:.4; } }
