@@ -127,6 +127,7 @@
     }
     games.forEach((game, i) => {
       const card = el('article', '', 'work');
+      card.id = `work-${data.games.indexOf(game) + 1}`;
       const visual = el('button', '', `work-visual ${['mint', 'peach', 'lavender'].includes(game.theme) ? game.theme : 'mint'}`);
       visual.type = 'button'; visual.setAttribute('aria-label', `${game.title}の詳細を開く`);
       visual.addEventListener('click', () => openDetail(game, visual));
@@ -152,7 +153,35 @@
     details.append(el('summary', `公開ソースコード / GitHub ${data.sourceProjects.length}件`));
     const links = el('div', '', 'source-links'); addLinks(links, data.sourceProjects); details.append(links); $('work-list').after(details);
   }
-  data.skillGroups.forEach(group => { const section = el('section', '', 'skill-group'); section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title)); group.items.forEach(item => { const row = el('div', '', 'skill'); row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project')); section.append(row); }); $('skill-list').append(section); });
+  data.skillGroups.forEach(group => {
+    const section = el('section', '', 'skill-group');
+    section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title));
+    group.items.forEach(item => {
+      const row = el('div', '', 'skill');
+      row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project'));
+      const related = data.games.filter(game => game.tools.some(tool => (item.languages || []).includes(tool)));
+      if (related.length) {
+        row.append(el('p', '制作したゲーム', 'skill-games-label'));
+        const links = el('ul', '', 'skill-games');
+        related.forEach(game => {
+          const li = el('li');
+          const link = el('a', `${game.title} ↗`);
+          link.href = `#work-${data.games.indexOf(game) + 1}`;
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            [...$('filters').children].forEach((button, i) => button.setAttribute('aria-pressed', String(i === 0)));
+            renderGames('すべて');
+            document.getElementById(link.hash.slice(1)).scrollIntoView({ block: 'center', behavior: 'instant' });
+            openDetail(game, link);
+          });
+          li.append(link); links.append(li);
+        });
+        row.append(links);
+      }
+      section.append(row);
+    });
+    $('skill-list').append(section);
+  });
   data.events.forEach(event => { const row = el('article', '', `event${event.date ? '' : ' event-undated'}`); const body = el('div'); body.append(el('h3', event.title)); if (event.description) body.append(el('p', event.description)); if (event.url) addLinks(body, [{ label: 'イベントを見る', url: event.url }]); if (event.date) row.append(el('span', event.date, 'event-date')); row.append(el('span', event.type, 'event-type'), body); $('event-list').append(row); });
   if (!data.events.length) $('event-list').append(el('p', '活動の記録は準備中です。'));
   const internships = data.internships || [];

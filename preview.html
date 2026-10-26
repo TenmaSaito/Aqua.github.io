@@ -343,6 +343,15 @@ nav a { white-space:nowrap; }
 .motion-paused .sea-wave,.water-offscreen .sea-wave { animation-play-state:paused; }
 #motion-toggle { color:var(--muted); border-color:var(--border); font-size:11px; }
 .about { background:transparent; }
+.profile-panel { min-width:0; padding:30px; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 10px 30px var(--shadow); }
+.profile-panel .bio { margin-top:0; }
+.skill .skill-games-label { margin:22px 0 10px; font-size:12px; font-weight:700; color:var(--muted); }
+.skill-games { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+.skill-games a { display:block; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface-solid); color:var(--ink); font-size:13px; line-height:1.7; text-decoration:none; overflow-wrap:anywhere; transition:background .15s,border-color .15s; }
+.skill-games a:hover { background:var(--surface-soft); border-color:var(--green); }
+.skill-games a:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media(max-width:700px) { .profile-panel { padding:20px; } }
+@media(prefers-reduced-motion:reduce) { .skill-games a { transition:none; } }
 .section-heading>p,.notice,.subtitle,.work-meta,.skill .skill-project,.event p,.works-summary p,.gallery figcaption,.media-caption,footer p,footer>a:last-child { color:var(--muted); }
 .section-heading>p { max-width:340px; }
 .section,.profile dd,.profile dt,.skill { border-color:var(--line); }
@@ -484,7 +493,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
     <section class="hero"><div class="hero-copy"><p class="eyebrow">IDEAS INTO PLAY.</p><h1 id="headline"></h1><p id="intro" class="intro"></p><a class="button" href="#works">制作したゲームを見る <span>↗</span></a></div><div class="signature"><strong id="name"></strong><span id="school"></span></div></section>
     <div class="sea-decoration"><div class="sea-divider" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path class="sea-wave sea-wave-back" d="M-360 40 Q-180 10 0 40 T360 40 T720 40 T1080 40 T1440 40 T1800 40 V80 H-360Z"/><path class="sea-wave sea-wave-front" d="M-360 55 Q-180 25 0 55 T360 55 T720 55 T1080 55 T1440 55 T1800 55 V80 H-360Z"/></svg></div><button id="motion-toggle" type="button" aria-pressed="false" hidden>波の動きを止める Ⅱ</button></div>
     <section id="works" class="section"><div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORKS</p><h2>つくったゲーム</h2></div><p>アイデアを、遊べるかたちに。</p></div><div id="filters" class="filters" role="group" aria-label="作品のカテゴリ"></div><p id="work-count" class="sr-only" aria-live="polite"></p><div id="work-list" class="works"></div></section>
-    <section id="about" class="section about"><div><p class="eyebrow">02 / ABOUT ME</p><h2>つくる人について</h2></div><div><p id="bio" class="bio"></p><dl id="profile" class="profile"></dl><div id="socials" class="socials"></div></div></section>
+    <section id="about" class="section about"><div><p class="eyebrow">02 / ABOUT ME</p><h2>自己紹介</h2></div><div class="profile-panel"><p id="bio" class="bio"></p><dl id="profile" class="profile"></dl><div id="socials" class="socials"></div></div></section>
     <section id="skills" class="section"><div class="section-heading"><div><p class="eyebrow">03 / TOOLBOX</p><h2>技術とツール</h2></div><p>使ってきた技術と、できること。</p></div><div id="skill-list" class="skills"></div></section>
     <section id="events" class="section"><div class="section-heading"><div><p class="eyebrow">04 / ACTIVITY LOG</p><h2>参加・出展イベント</h2></div><p>制作の外に広がる活動の記録。</p></div><div id="event-list"></div></section>
     <section id="internships" class="section"><div class="section-heading"><div><p class="eyebrow">05 / INTERNSHIPS</p><h2>インターン参加経験</h2></div><p>現場での経験と、学んだこと。</p></div><div id="internship-list"></div></section>
@@ -628,8 +637,8 @@ window.PORTFOLIO = {
   ],
   skillGroups: [
     { title: "プログラミング言語", subtitle: "LANGUAGES", items: [
-      { name: "C / C++", experience: "1年半", description: "使用IDE : Visual Studio2019, VS Code", projects: "DirectX9 : " },
-      { name: "C#", experience: "1年", description: "使用IDE : Visual Studio2019", projects: "Unity : " }
+      { name: "C / C++", experience: "1年半", description: "使用IDE : Visual Studio2019, VS Code", projects: "DirectX9", languages: ["C", "C++"] },
+      { name: "C#", experience: "1年", description: "使用IDE : Visual Studio2019", projects: "Unity", languages: ["C#"] }
     ] }
   ],
   // date に参加年や日付、description に展示した作品などを追記できます。
@@ -768,6 +777,7 @@ window.PORTFOLIO = {
     }
     games.forEach((game, i) => {
       const card = el('article', '', 'work');
+      card.id = `work-${data.games.indexOf(game) + 1}`;
       const visual = el('button', '', `work-visual ${['mint', 'peach', 'lavender'].includes(game.theme) ? game.theme : 'mint'}`);
       visual.type = 'button'; visual.setAttribute('aria-label', `${game.title}の詳細を開く`);
       visual.addEventListener('click', () => openDetail(game, visual));
@@ -793,7 +803,35 @@ window.PORTFOLIO = {
     details.append(el('summary', `公開ソースコード / GitHub ${data.sourceProjects.length}件`));
     const links = el('div', '', 'source-links'); addLinks(links, data.sourceProjects); details.append(links); $('work-list').after(details);
   }
-  data.skillGroups.forEach(group => { const section = el('section', '', 'skill-group'); section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title)); group.items.forEach(item => { const row = el('div', '', 'skill'); row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project')); section.append(row); }); $('skill-list').append(section); });
+  data.skillGroups.forEach(group => {
+    const section = el('section', '', 'skill-group');
+    section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title));
+    group.items.forEach(item => {
+      const row = el('div', '', 'skill');
+      row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project'));
+      const related = data.games.filter(game => game.tools.some(tool => (item.languages || []).includes(tool)));
+      if (related.length) {
+        row.append(el('p', '制作したゲーム', 'skill-games-label'));
+        const links = el('ul', '', 'skill-games');
+        related.forEach(game => {
+          const li = el('li');
+          const link = el('a', `${game.title} ↗`);
+          link.href = `#work-${data.games.indexOf(game) + 1}`;
+          link.addEventListener('click', event => {
+            event.preventDefault();
+            [...$('filters').children].forEach((button, i) => button.setAttribute('aria-pressed', String(i === 0)));
+            renderGames('すべて');
+            document.getElementById(link.hash.slice(1)).scrollIntoView({ block: 'center', behavior: 'instant' });
+            openDetail(game, link);
+          });
+          li.append(link); links.append(li);
+        });
+        row.append(links);
+      }
+      section.append(row);
+    });
+    $('skill-list').append(section);
+  });
   data.events.forEach(event => { const row = el('article', '', `event${event.date ? '' : ' event-undated'}`); const body = el('div'); body.append(el('h3', event.title)); if (event.description) body.append(el('p', event.description)); if (event.url) addLinks(body, [{ label: 'イベントを見る', url: event.url }]); if (event.date) row.append(el('span', event.date, 'event-date')); row.append(el('span', event.type, 'event-type'), body); $('event-list').append(row); });
   if (!data.events.length) $('event-list').append(el('p', '活動の記録は準備中です。'));
   const internships = data.internships || [];

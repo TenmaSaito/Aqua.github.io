@@ -47,6 +47,15 @@ nav a { white-space:nowrap; }
 .motion-paused .sea-wave,.water-offscreen .sea-wave { animation-play-state:paused; }
 #motion-toggle { color:var(--muted); border-color:var(--border); font-size:11px; }
 .about { background:transparent; }
+.profile-panel { min-width:0; padding:30px; border:1px solid var(--border); border-radius:18px; background:var(--surface); box-shadow:0 10px 30px var(--shadow); }
+.profile-panel .bio { margin-top:0; }
+.skill .skill-games-label { margin:22px 0 10px; font-size:12px; font-weight:700; color:var(--muted); }
+.skill-games { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+.skill-games a { display:block; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface-solid); color:var(--ink); font-size:13px; line-height:1.7; text-decoration:none; overflow-wrap:anywhere; transition:background .15s,border-color .15s; }
+.skill-games a:hover { background:var(--surface-soft); border-color:var(--green); }
+.skill-games a:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media(max-width:700px) { .profile-panel { padding:20px; } }
+@media(prefers-reduced-motion:reduce) { .skill-games a { transition:none; } }
 .section-heading>p,.notice,.subtitle,.work-meta,.skill .skill-project,.event p,.works-summary p,.gallery figcaption,.media-caption,footer p,footer>a:last-child { color:var(--muted); }
 .section-heading>p { max-width:340px; }
 .section,.profile dd,.profile dt,.skill { border-color:var(--line); }

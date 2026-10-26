@@ -133,8 +133,8 @@ window.PORTFOLIO = {
   ],
   skillGroups: [
     { title: "プログラミング言語", subtitle: "LANGUAGES", items: [
-      { name: "C / C++", experience: "1年半", description: "使用IDE : Visual Studio2019, VS Code", projects: "DirectX9 : " },
-      { name: "C#", experience: "1年", description: "使用IDE : Visual Studio2019", projects: "Unity : " }
+      { name: "C / C++", experience: "1年半", description: "使用IDE : Visual Studio2019, VS Code", projects: "DirectX9", languages: ["C", "C++"] },
+      { name: "C#", experience: "1年", description: "使用IDE : Visual Studio2019", projects: "Unity", languages: ["C#"] }
     ] }
   ],
   // date に参加年や日付、description に展示した作品などを追記できます。
