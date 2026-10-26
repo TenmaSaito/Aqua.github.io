@@ -599,7 +599,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 .loader-floater { position:absolute; z-index:2; left:30%; top:-90px; width:112px; height:112px; margin-left:-56px; pointer-events:none; }
 .loader-floater img { display:block; width:112px; height:112px; object-fit:contain; filter:drop-shadow(0 3px 3px #fff6); transform-origin:50% 75%; animation:mascot-bob 1.6s ease-in-out infinite alternate; }
 @keyframes mascot-bob { from { transform:translateY(1px) rotate(-3deg); } to { transform:translateY(-4px) rotate(3deg); } }
-.loader-fill { position:absolute; inset:0; background:linear-gradient(var(--splash-water),var(--splash-deep)); animation:liquid-fill var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) forwards; }
+.loader-fill { position:absolute; inset:0 0 -100px; background:linear-gradient(var(--splash-water),var(--splash-deep)); animation:liquid-fill var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) forwards; }
 @keyframes liquid-fill { from { transform:translateY(calc(100% + 48px)); } to { transform:translateY(-40px); } }
 .loader-wave { position:absolute; top:-47px; left:0; width:100%; height:48px; fill:var(--splash-water); }
 .loader-pour { position:absolute; top:0; right:20%; width:7px; height:100%; z-index:0; background:linear-gradient(90deg,var(--water),#ffffffa0,var(--water)); border-radius:0 0 6px 6px; animation:pour-in .4s ease-out both; opacity:.55; }
