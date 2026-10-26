@@ -33,12 +33,12 @@ GitHub Pagesで配信できる、ビルド不要の静的サイトです。外�
 ## GitHub Pagesへ公開する
 
 指定の公開先: `https://github.com/TenmaSaito/TenmaSaito.github.io`
-公開先は `https://www.aquart.is-a.dev/` です。`CNAME` と GitHub Pages の Custom domain は `www.aquart.is-a.dev` に統一します。DNS check はユーザー側で通過済みです。HTTPSとサイトの公開状態は別途確認してください。
+現在の公開URLは `https://tenmasaito.github.io/` です。HTTPSで正常表示を確認済みです。未登録の `www.aquart.is-a.dev` は接続エラーとなるため、Custom domain と CNAME を解除しました。is-a.dev 側の登録承認とDNS設定が完了するまで再設定しないでください。
 
 1. 指定の既存リポジトリ `TenmaSaito/TenmaSaito.github.io` を開きます。
 2. このフォルダーの**中身**をリポジトリのルートにアップロードします。`index.html` がルートにあることを確認してください。`preview.cjs` と README は公開動作には不要です。
 3. リポジトリの Settings → Pages で、Source を Deploy from a branch、Branch を main、フォルダーを /(root) に設定して保存します。
-4. Custom domain が `www.aquart.is-a.dev` であることを確認し、公開後に `https://www.aquart.is-a.dev/` を開きます。
+4. Custom domain は空欄のままにし、`https://tenmasaito.github.io/` で表示を確認します。
 5. 更新時は `content.js` や画像を変更してコミットします。反映には時間がかかる場合があります。
 
 GitHubの公式手順: https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
