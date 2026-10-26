@@ -30,11 +30,18 @@ window.PORTFOLIO = {
   games: [
     {
       title: "クリスマステルス大作戦", subtitle: "初の3Dゲーム作品", category: "3Dゲーム", year: "2025", theme: "mint",
-      image: "https://i.ytimg.com/vi/SUQJOdHtpqg/hqdefault.jpg", imageAlt: "クリスマステルス大作戦のプレイ動画サムネイル",
+      image: "assets/works/xmas-stealth-01.png", imageAlt: "クリスマステルス大作戦のタイトル画面",
       description: "C言語とDirectX9で制作した、初の3Dゲーム作品。",
       tools: ["C", "DirectX9"], role: "", period: "2025/11/6 ～ 2025/12/24", team: "",
       detail: "クリスマスをモチーフにした3Dゲームです。公開プレイ動画で、チュートリアルやゲーム画面をご覧いただけます。",
-      highlights: [], screenshots: [{ src: "assets/works/xmas-stealth.png", caption: "プレイ動画から抜粋したゲーム画面" }],
+      highlights: [], screenshots: [
+        { src: "assets/works/xmas-stealth-01.png", caption: "タイトル画面（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth.png", caption: "チュートリアルのゲーム画面（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-02.png", caption: "基本操作のチュートリアル（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-03.png", caption: "オーナメントとツリー（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-04.png", caption: "ゲーム本編（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-05.png", caption: "結果画面（プレイ動画より）" }
+      ],
       video: { youtubeId: "SUQJOdHtpqg", caption: "クリスマステルス大作戦 / プレイ動画" },
       links: [
         { label: "作品データ", url: "https://drive.google.com/drive/folders/1jZpkJw0JxEHW-CpLnkCS39s9V9Ul3zL2" },

@@ -44,34 +44,74 @@
     opener = button;
     const body = $('dialog-content'); body.replaceChildren();
     body.append(el('p', `${game.category} / ${game.year}`, 'eyebrow'));
-    const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title, el('p', game.description, 'bio'));
+    const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title);
+    const layout = el('div', '', 'work-detail-layout');
+    const mediaColumn = el('section', '', 'media-gallery'); mediaColumn.setAttribute('aria-label', `${game.title}の動画とスクリーンショット`);
+    const summary = el('aside', '', 'work-detail-summary'); summary.setAttribute('aria-label', '作品情報');
+    if (game.image) { const cover = el('img', '', 'work-detail-cover'); cover.src = game.image; cover.alt = game.imageAlt || game.title; summary.append(cover); }
+    summary.append(el('p', game.description, 'work-detail-description'));
     const facts = el('dl', '', 'profile');
     [['担当', game.role], ['制作期間', game.period], ['人数', game.team], ['使用技術', game.tools.join(' / ')]].forEach(([k, v]) => { if (v) facts.append(el('dt', k), el('dd', v)); });
-    body.append(facts);
+    summary.append(facts);
+    const tags = el('div', '', 'tags'); game.tools.forEach(tool => tags.append(el('span', tool))); summary.append(tags);
+    const links = el('div', '', 'socials'); addLinks(links, game.links); summary.append(links);
     const shots = game.screenshots?.length ? game.screenshots : game.image ? [{ src: game.image, caption: game.imageAlt || game.title }] : [];
-    if (shots.length || data.sampleMode) {
-      body.append(el('h3', game.screenshots?.length ? 'スクリーンショット' : '作品画像'));
-      const gallery = el('div', '', 'gallery');
-      shots.forEach(shot => { const figure = el('figure'); const img = el('img'); img.src = shot.src; img.alt = shot.caption || `${game.title}のゲーム画面`; img.loading = 'lazy'; figure.append(img); if (shot.caption) figure.append(el('figcaption', shot.caption)); gallery.append(figure); });
-      if (!shots.length) gallery.append(el('div', 'SCREENSHOTS / 作品の画面を複数掲載できます', 'media-placeholder'));
-      body.append(gallery);
-    }
     const video = game.video;
-    if (video?.src || /^[\w-]{11}$/.test(video?.youtubeId || '') || data.sampleMode) {
-      body.append(el('h3', 'プレイ動画'));
-      if (video?.src) {
-        const player = el('video'); player.controls = true; player.preload = 'metadata'; player.playsInline = true; player.src = video.src; if (video.poster) player.poster = video.poster; player.setAttribute('aria-label', `${game.title}のプレイ動画`); body.append(player);
-      } else if (/^[\w-]{11}$/.test(video?.youtubeId || '')) {
-        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.loading = 'lazy'; body.append(frame);
-      } else body.append(el('div', 'PLAY MOVIE / 動画ファイル・YouTubeに対応', 'media-placeholder'));
-      if (video?.caption) body.append(el('p', video.caption, 'media-caption'));
-    }
-    if (game.detail) body.append(el('h3', '作品について'), el('p', game.detail));
+    const media = [];
+    if (video?.src || /^[\w-]{11}$/.test(video?.youtubeId || '')) media.push({type:'video', caption:video.caption || 'プレイ動画', thumbnail:video.poster || game.image});
+    shots.forEach((shot, index) => media.push({type:'image', src:shot.src, caption:shot.caption || `スクリーンショット ${index + 1}`}));
+    const stage = el('div', '', 'media-stage');
+    const caption = el('p', '', 'media-caption'); caption.setAttribute('aria-live', 'polite');
+    const toolbar = el('div', '', 'media-toolbar');
+    const previous = el('button', '‹', 'media-nav'); previous.type = 'button'; previous.setAttribute('aria-label', '前のメディアを表示');
+    const next = el('button', '›', 'media-nav'); next.type = 'button'; next.setAttribute('aria-label', '次のメディアを表示');
+    const position = el('span', '', 'media-position'); position.setAttribute('aria-live', 'polite');
+    toolbar.append(previous, position, next);
+    const rail = el('div', '', 'media-thumbnails'); rail.setAttribute('role', 'group'); rail.setAttribute('aria-label', '動画とスクリーンショットを選択');
+    let selected = -1;
+    const selectMedia = (index, scrollThumbnail = false) => {
+      if (index === selected || !media.length) return;
+      selected = (index + media.length) % media.length;
+      stage.querySelectorAll('video').forEach(player => player.pause());
+      stage.replaceChildren(); // iframeも削除し、画像へ切り替えたら動画を止める。
+      const item = media[selected];
+      if (item.type === 'video' && video.src) {
+        const player = el('video'); player.controls = true; player.preload = 'metadata'; player.playsInline = true; player.src = video.src; if (video.poster) player.poster = video.poster; player.setAttribute('aria-label', `${game.title}のプレイ動画`); stage.append(player);
+      } else if (item.type === 'video') {
+        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; stage.append(frame);
+      } else {
+        const image = el('img'); image.src = item.src; image.alt = item.caption;
+        image.addEventListener('error', () => { if (stage.contains(image)) stage.replaceChildren(el('p', '画像を読み込めませんでした。', 'media-error')); }); stage.append(image);
+      }
+      caption.textContent = item.caption;
+      position.textContent = `${selected + 1} / ${media.length} · ${item.type === 'video' ? 'プレイ動画' : '画像'}`;
+      [...rail.children].forEach((button, i) => button.setAttribute('aria-pressed', String(i === selected)));
+      if (scrollThumbnail) {
+        const thumb = rail.children[selected];
+        if (thumb.offsetLeft < rail.scrollLeft || thumb.offsetLeft + thumb.offsetWidth > rail.scrollLeft + rail.clientWidth) rail.scrollLeft = thumb.offsetLeft - (rail.clientWidth - thumb.offsetWidth) / 2;
+      }
+    };
+    media.forEach((item, index) => {
+      const thumb = el('button', '', 'media-thumb'); thumb.type = 'button'; thumb.setAttribute('aria-label', item.type === 'video' ? 'プレイ動画を表示' : `${item.caption}を表示`); thumb.setAttribute('aria-pressed', 'false');
+      const image = el('img'); image.src = item.type === 'video' ? item.thumbnail || '' : item.src; image.alt = ''; image.loading = 'lazy'; image.addEventListener('error', () => image.remove()); if (image.getAttribute('src')) thumb.append(image);
+      thumb.append(el('span', item.type === 'video' ? '▶ 動画' : `${index + (media[0]?.type === 'video' ? 0 : 1)}`, 'media-thumb-label'));
+      thumb.addEventListener('click', () => selectMedia(index)); rail.append(thumb);
+    });
+    previous.addEventListener('click', () => selectMedia(selected - 1, true)); next.addEventListener('click', () => selectMedia(selected + 1, true));
+    rail.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault(); selectMedia(selected + (event.key === 'ArrowRight' ? 1 : -1), true); rail.children[selected].focus({preventScroll:true});
+    });
+    if (media.length) { mediaColumn.append(stage, rail, toolbar, caption); previous.disabled = next.disabled = media.length < 2; selectMedia(0); }
+    else mediaColumn.append(el('p', '画像・動画は準備中です。', 'empty-message'));
+    layout.append(mediaColumn, summary); body.append(layout);
+    const notes = el('section', '', 'work-detail-notes');
+    if (game.detail) notes.append(el('h3', '作品について'), el('p', game.detail));
     if (game.highlights?.length) {
-      body.append(el('h3', '工夫したところ'));
-      const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); body.append(list);
+      notes.append(el('h3', '工夫したところ'));
+      const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); notes.append(list);
     }
-    const links = el('div', '', 'socials'); addLinks(links, game.links); body.append(links);
+    if (notes.childElementCount) body.append(notes);
     dialog.showModal(); dialog.scrollTop = 0; document.body.classList.add('modal-open');
   };
   $('close-dialog').addEventListener('click', () => dialog.close());

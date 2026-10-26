@@ -91,6 +91,42 @@ nav a { white-space:nowrap; }
 .text-link:hover { color:var(--green); }
 .media-placeholder { color:var(--ink); background:var(--surface-soft); border-color:var(--border); }
 dialog { background:var(--surface-solid); color:var(--ink); border-color:var(--border); }
+dialog#work-dialog { width:min(1180px,calc(100% - 32px)); max-width:none; max-height:calc(100dvh - 32px); padding:28px; }
+#work-dialog .close { position:sticky; top:0; z-index:3; margin-bottom:12px; }
+#work-dialog #dialog-title { font-size:28px; margin:8px 0 24px; overflow-wrap:anywhere; }
+.work-detail-layout { display:grid; grid-template-columns:minmax(0,2.15fr) minmax(250px,1fr); gap:28px; align-items:start; }
+.media-gallery { min-width:0; }
+.media-stage { position:relative; aspect-ratio:16/9; background:#06101d; display:grid; place-items:center; overflow:hidden; border-radius:10px; border:1px solid var(--border); }
+.media-stage img,.media-stage video,.media-stage iframe { position:absolute; inset:0; width:100%; height:100%; display:block; object-fit:contain; border:0; aspect-ratio:auto; }
+.media-error { color:#edf6ff; text-align:center; padding:20px; }
+.media-thumbnails { position:relative; display:flex; gap:8px; overflow-x:auto; padding:12px 2px 10px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; overscroll-behavior-x:contain; }
+.media-thumb { position:relative; flex:0 0 96px; aspect-ratio:16/9; border:2px solid transparent; border-radius:5px; padding:0; background:var(--surface-soft); overflow:hidden; color:var(--ink); }
+.media-thumb img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.media-thumb[aria-pressed="true"] { border-color:var(--green); box-shadow:0 0 0 1px var(--green); }
+.media-thumb:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
+.media-thumb-label { position:absolute; bottom:2px; left:3px; border-radius:3px; padding:1px 5px; color:white; background:#041225cc; font-size:10px; line-height:1.6; }
+.media-toolbar { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-top:4px; }
+.media-nav { width:40px; height:34px; border:1px solid var(--border); border-radius:5px; color:var(--ink); background:var(--surface-soft); font-size:25px; line-height:1; }
+.media-nav:disabled { opacity:.4; cursor:default; }
+.media-position { color:var(--muted); font-size:12px; }
+.media-gallery .media-caption { font-size:12px; line-height:1.7; margin:10px 0 0; min-height:1.7em; }
+.work-detail-summary { min-width:0; }
+.work-detail-cover { width:100%; aspect-ratio:16/9; display:block; object-fit:cover; border:1px solid var(--border); border-radius:8px; margin-bottom:18px; }
+.work-detail-summary .work-detail-description { font-size:14px; margin:0; line-height:1.9; }
+.work-detail-summary .profile { grid-template-columns:76px minmax(0,1fr); font-size:12px; margin:20px 0; }
+.work-detail-summary .tags { margin-bottom:22px; }
+.work-detail-summary .socials { flex-direction:column; align-items:flex-start; gap:14px; }
+.work-detail-notes { border-top:1px solid var(--line); margin-top:30px; padding-top:4px; }
+.work-detail-notes p,.work-detail-notes li { line-height:1.95; }
+@media(hover:hover) { .media-thumb:hover,.media-nav:not(:disabled):hover { border-color:var(--green); } }
+@media(prefers-reduced-motion:no-preference) {
+  .media-thumb,.media-nav { transition:transform .15s ease,border-color .15s ease; }
+  .media-thumb:active,.media-nav:not(:disabled):active { transform:scale(.96); }
+  .media-stage>img { animation:media-appear .18s ease-out; }
+  @keyframes media-appear { from { opacity:.4; } to { opacity:1; } }
+}
+@media(max-width:850px) { .work-detail-layout { grid-template-columns:1fr; gap:26px; } .work-detail-cover { display:none; } }
+@media(max-width:600px) { dialog#work-dialog { width:calc(100% - 20px); max-height:calc(100dvh - 20px); padding:18px; } #work-dialog #dialog-title { font-size:23px; margin-bottom:18px; } .media-thumb { flex-basis:84px; } .work-detail-summary .profile { grid-template-columns:82px minmax(0,1fr); } }
 dialog::backdrop { background:#02091b99; }
 #back-top { color:var(--ink); background:var(--surface-solid); border-color:var(--border); }
 #back-top.is-shown:hover { background:var(--surface-soft); }

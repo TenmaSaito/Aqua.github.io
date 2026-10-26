@@ -387,6 +387,42 @@ nav a { white-space:nowrap; }
 .text-link:hover { color:var(--green); }
 .media-placeholder { color:var(--ink); background:var(--surface-soft); border-color:var(--border); }
 dialog { background:var(--surface-solid); color:var(--ink); border-color:var(--border); }
+dialog#work-dialog { width:min(1180px,calc(100% - 32px)); max-width:none; max-height:calc(100dvh - 32px); padding:28px; }
+#work-dialog .close { position:sticky; top:0; z-index:3; margin-bottom:12px; }
+#work-dialog #dialog-title { font-size:28px; margin:8px 0 24px; overflow-wrap:anywhere; }
+.work-detail-layout { display:grid; grid-template-columns:minmax(0,2.15fr) minmax(250px,1fr); gap:28px; align-items:start; }
+.media-gallery { min-width:0; }
+.media-stage { position:relative; aspect-ratio:16/9; background:#06101d; display:grid; place-items:center; overflow:hidden; border-radius:10px; border:1px solid var(--border); }
+.media-stage img,.media-stage video,.media-stage iframe { position:absolute; inset:0; width:100%; height:100%; display:block; object-fit:contain; border:0; aspect-ratio:auto; }
+.media-error { color:#edf6ff; text-align:center; padding:20px; }
+.media-thumbnails { position:relative; display:flex; gap:8px; overflow-x:auto; padding:12px 2px 10px; scrollbar-width:thin; scrollbar-color:var(--border) transparent; overscroll-behavior-x:contain; }
+.media-thumb { position:relative; flex:0 0 96px; aspect-ratio:16/9; border:2px solid transparent; border-radius:5px; padding:0; background:var(--surface-soft); overflow:hidden; color:var(--ink); }
+.media-thumb img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.media-thumb[aria-pressed="true"] { border-color:var(--green); box-shadow:0 0 0 1px var(--green); }
+.media-thumb:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
+.media-thumb-label { position:absolute; bottom:2px; left:3px; border-radius:3px; padding:1px 5px; color:white; background:#041225cc; font-size:10px; line-height:1.6; }
+.media-toolbar { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-top:4px; }
+.media-nav { width:40px; height:34px; border:1px solid var(--border); border-radius:5px; color:var(--ink); background:var(--surface-soft); font-size:25px; line-height:1; }
+.media-nav:disabled { opacity:.4; cursor:default; }
+.media-position { color:var(--muted); font-size:12px; }
+.media-gallery .media-caption { font-size:12px; line-height:1.7; margin:10px 0 0; min-height:1.7em; }
+.work-detail-summary { min-width:0; }
+.work-detail-cover { width:100%; aspect-ratio:16/9; display:block; object-fit:cover; border:1px solid var(--border); border-radius:8px; margin-bottom:18px; }
+.work-detail-summary .work-detail-description { font-size:14px; margin:0; line-height:1.9; }
+.work-detail-summary .profile { grid-template-columns:76px minmax(0,1fr); font-size:12px; margin:20px 0; }
+.work-detail-summary .tags { margin-bottom:22px; }
+.work-detail-summary .socials { flex-direction:column; align-items:flex-start; gap:14px; }
+.work-detail-notes { border-top:1px solid var(--line); margin-top:30px; padding-top:4px; }
+.work-detail-notes p,.work-detail-notes li { line-height:1.95; }
+@media(hover:hover) { .media-thumb:hover,.media-nav:not(:disabled):hover { border-color:var(--green); } }
+@media(prefers-reduced-motion:no-preference) {
+  .media-thumb,.media-nav { transition:transform .15s ease,border-color .15s ease; }
+  .media-thumb:active,.media-nav:not(:disabled):active { transform:scale(.96); }
+  .media-stage>img { animation:media-appear .18s ease-out; }
+  @keyframes media-appear { from { opacity:.4; } to { opacity:1; } }
+}
+@media(max-width:850px) { .work-detail-layout { grid-template-columns:1fr; gap:26px; } .work-detail-cover { display:none; } }
+@media(max-width:600px) { dialog#work-dialog { width:calc(100% - 20px); max-height:calc(100dvh - 20px); padding:18px; } #work-dialog #dialog-title { font-size:23px; margin-bottom:18px; } .media-thumb { flex-basis:84px; } .work-detail-summary .profile { grid-template-columns:82px minmax(0,1fr); } }
 dialog::backdrop { background:#02091b99; }
 #back-top { color:var(--ink); background:var(--surface-solid); border-color:var(--border); }
 #back-top.is-shown:hover { background:var(--surface-soft); }
@@ -488,11 +524,18 @@ window.PORTFOLIO = {
   games: [
     {
       title: "クリスマステルス大作戦", subtitle: "初の3Dゲーム作品", category: "3Dゲーム", year: "2025", theme: "mint",
-      image: "https://i.ytimg.com/vi/SUQJOdHtpqg/hqdefault.jpg", imageAlt: "クリスマステルス大作戦のプレイ動画サムネイル",
+      image: "assets/works/xmas-stealth-01.png", imageAlt: "クリスマステルス大作戦のタイトル画面",
       description: "C言語とDirectX9で制作した、初の3Dゲーム作品。",
       tools: ["C", "DirectX9"], role: "", period: "2025/11/6 ～ 2025/12/24", team: "",
       detail: "クリスマスをモチーフにした3Dゲームです。公開プレイ動画で、チュートリアルやゲーム画面をご覧いただけます。",
-      highlights: [], screenshots: [{ src: "assets/works/xmas-stealth.png", caption: "プレイ動画から抜粋したゲーム画面" }],
+      highlights: [], screenshots: [
+        { src: "assets/works/xmas-stealth-01.png", caption: "タイトル画面（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth.png", caption: "チュートリアルのゲーム画面（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-02.png", caption: "基本操作のチュートリアル（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-03.png", caption: "オーナメントとツリー（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-04.png", caption: "ゲーム本編（プレイ動画より）" },
+        { src: "assets/works/xmas-stealth-05.png", caption: "結果画面（プレイ動画より）" }
+      ],
       video: { youtubeId: "SUQJOdHtpqg", caption: "クリスマステルス大作戦 / プレイ動画" },
       links: [
         { label: "作品データ", url: "https://drive.google.com/drive/folders/1jZpkJw0JxEHW-CpLnkCS39s9V9Ul3zL2" },
@@ -641,34 +684,74 @@ window.PORTFOLIO = {
     opener = button;
     const body = $('dialog-content'); body.replaceChildren();
     body.append(el('p', `${game.category} / ${game.year}`, 'eyebrow'));
-    const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title, el('p', game.description, 'bio'));
+    const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title);
+    const layout = el('div', '', 'work-detail-layout');
+    const mediaColumn = el('section', '', 'media-gallery'); mediaColumn.setAttribute('aria-label', `${game.title}の動画とスクリーンショット`);
+    const summary = el('aside', '', 'work-detail-summary'); summary.setAttribute('aria-label', '作品情報');
+    if (game.image) { const cover = el('img', '', 'work-detail-cover'); cover.src = game.image; cover.alt = game.imageAlt || game.title; summary.append(cover); }
+    summary.append(el('p', game.description, 'work-detail-description'));
     const facts = el('dl', '', 'profile');
     [['担当', game.role], ['制作期間', game.period], ['人数', game.team], ['使用技術', game.tools.join(' / ')]].forEach(([k, v]) => { if (v) facts.append(el('dt', k), el('dd', v)); });
-    body.append(facts);
+    summary.append(facts);
+    const tags = el('div', '', 'tags'); game.tools.forEach(tool => tags.append(el('span', tool))); summary.append(tags);
+    const links = el('div', '', 'socials'); addLinks(links, game.links); summary.append(links);
     const shots = game.screenshots?.length ? game.screenshots : game.image ? [{ src: game.image, caption: game.imageAlt || game.title }] : [];
-    if (shots.length || data.sampleMode) {
-      body.append(el('h3', game.screenshots?.length ? 'スクリーンショット' : '作品画像'));
-      const gallery = el('div', '', 'gallery');
-      shots.forEach(shot => { const figure = el('figure'); const img = el('img'); img.src = shot.src; img.alt = shot.caption || `${game.title}のゲーム画面`; img.loading = 'lazy'; figure.append(img); if (shot.caption) figure.append(el('figcaption', shot.caption)); gallery.append(figure); });
-      if (!shots.length) gallery.append(el('div', 'SCREENSHOTS / 作品の画面を複数掲載できます', 'media-placeholder'));
-      body.append(gallery);
-    }
     const video = game.video;
-    if (video?.src || /^[\w-]{11}$/.test(video?.youtubeId || '') || data.sampleMode) {
-      body.append(el('h3', 'プレイ動画'));
-      if (video?.src) {
-        const player = el('video'); player.controls = true; player.preload = 'metadata'; player.playsInline = true; player.src = video.src; if (video.poster) player.poster = video.poster; player.setAttribute('aria-label', `${game.title}のプレイ動画`); body.append(player);
-      } else if (/^[\w-]{11}$/.test(video?.youtubeId || '')) {
-        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.loading = 'lazy'; body.append(frame);
-      } else body.append(el('div', 'PLAY MOVIE / 動画ファイル・YouTubeに対応', 'media-placeholder'));
-      if (video?.caption) body.append(el('p', video.caption, 'media-caption'));
-    }
-    if (game.detail) body.append(el('h3', '作品について'), el('p', game.detail));
+    const media = [];
+    if (video?.src || /^[\w-]{11}$/.test(video?.youtubeId || '')) media.push({type:'video', caption:video.caption || 'プレイ動画', thumbnail:video.poster || game.image});
+    shots.forEach((shot, index) => media.push({type:'image', src:shot.src, caption:shot.caption || `スクリーンショット ${index + 1}`}));
+    const stage = el('div', '', 'media-stage');
+    const caption = el('p', '', 'media-caption'); caption.setAttribute('aria-live', 'polite');
+    const toolbar = el('div', '', 'media-toolbar');
+    const previous = el('button', '‹', 'media-nav'); previous.type = 'button'; previous.setAttribute('aria-label', '前のメディアを表示');
+    const next = el('button', '›', 'media-nav'); next.type = 'button'; next.setAttribute('aria-label', '次のメディアを表示');
+    const position = el('span', '', 'media-position'); position.setAttribute('aria-live', 'polite');
+    toolbar.append(previous, position, next);
+    const rail = el('div', '', 'media-thumbnails'); rail.setAttribute('role', 'group'); rail.setAttribute('aria-label', '動画とスクリーンショットを選択');
+    let selected = -1;
+    const selectMedia = (index, scrollThumbnail = false) => {
+      if (index === selected || !media.length) return;
+      selected = (index + media.length) % media.length;
+      stage.querySelectorAll('video').forEach(player => player.pause());
+      stage.replaceChildren(); // iframeも削除し、画像へ切り替えたら動画を止める。
+      const item = media[selected];
+      if (item.type === 'video' && video.src) {
+        const player = el('video'); player.controls = true; player.preload = 'metadata'; player.playsInline = true; player.src = video.src; if (video.poster) player.poster = video.poster; player.setAttribute('aria-label', `${game.title}のプレイ動画`); stage.append(player);
+      } else if (item.type === 'video') {
+        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; stage.append(frame);
+      } else {
+        const image = el('img'); image.src = item.src; image.alt = item.caption;
+        image.addEventListener('error', () => { if (stage.contains(image)) stage.replaceChildren(el('p', '画像を読み込めませんでした。', 'media-error')); }); stage.append(image);
+      }
+      caption.textContent = item.caption;
+      position.textContent = `${selected + 1} / ${media.length} · ${item.type === 'video' ? 'プレイ動画' : '画像'}`;
+      [...rail.children].forEach((button, i) => button.setAttribute('aria-pressed', String(i === selected)));
+      if (scrollThumbnail) {
+        const thumb = rail.children[selected];
+        if (thumb.offsetLeft < rail.scrollLeft || thumb.offsetLeft + thumb.offsetWidth > rail.scrollLeft + rail.clientWidth) rail.scrollLeft = thumb.offsetLeft - (rail.clientWidth - thumb.offsetWidth) / 2;
+      }
+    };
+    media.forEach((item, index) => {
+      const thumb = el('button', '', 'media-thumb'); thumb.type = 'button'; thumb.setAttribute('aria-label', item.type === 'video' ? 'プレイ動画を表示' : `${item.caption}を表示`); thumb.setAttribute('aria-pressed', 'false');
+      const image = el('img'); image.src = item.type === 'video' ? item.thumbnail || '' : item.src; image.alt = ''; image.loading = 'lazy'; image.addEventListener('error', () => image.remove()); if (image.getAttribute('src')) thumb.append(image);
+      thumb.append(el('span', item.type === 'video' ? '▶ 動画' : `${index + (media[0]?.type === 'video' ? 0 : 1)}`, 'media-thumb-label'));
+      thumb.addEventListener('click', () => selectMedia(index)); rail.append(thumb);
+    });
+    previous.addEventListener('click', () => selectMedia(selected - 1, true)); next.addEventListener('click', () => selectMedia(selected + 1, true));
+    rail.addEventListener('keydown', event => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+      event.preventDefault(); selectMedia(selected + (event.key === 'ArrowRight' ? 1 : -1), true); rail.children[selected].focus({preventScroll:true});
+    });
+    if (media.length) { mediaColumn.append(stage, rail, toolbar, caption); previous.disabled = next.disabled = media.length < 2; selectMedia(0); }
+    else mediaColumn.append(el('p', '画像・動画は準備中です。', 'empty-message'));
+    layout.append(mediaColumn, summary); body.append(layout);
+    const notes = el('section', '', 'work-detail-notes');
+    if (game.detail) notes.append(el('h3', '作品について'), el('p', game.detail));
     if (game.highlights?.length) {
-      body.append(el('h3', '工夫したところ'));
-      const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); body.append(list);
+      notes.append(el('h3', '工夫したところ'));
+      const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); notes.append(list);
     }
-    const links = el('div', '', 'socials'); addLinks(links, game.links); body.append(links);
+    if (notes.childElementCount) body.append(notes);
     dialog.showModal(); dialog.scrollTop = 0; document.body.classList.add('modal-open');
   };
   $('close-dialog').addEventListener('click', () => dialog.close());
