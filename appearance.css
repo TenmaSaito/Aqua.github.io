@@ -88,6 +88,7 @@ dialog::backdrop { background:#02091b99; }
 .peach,.lavender { background:linear-gradient(135deg,var(--surface-solid),var(--surface-soft)); color:var(--green); }
 .visual-symbol { text-shadow:none; }
 footer { border-color:var(--line); }
+.skip { background:var(--accent); color:var(--accent-ink); }
 
 /* 円に注いで満水になってから本文へ移る。完了はanimationendと同期。 */
 #splash { background:var(--paper); color:var(--ink); opacity:1; transition:opacity .6s cubic-bezier(.4,0,.7,1); }
