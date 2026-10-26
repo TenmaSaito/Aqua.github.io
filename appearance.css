@@ -116,7 +116,13 @@ nav a { white-space:nowrap; }
 .media-placeholder { color:var(--ink); background:var(--surface-soft); border-color:var(--border); }
 dialog { background:var(--surface-solid); color:var(--ink); border-color:var(--border); }
 dialog#work-dialog { width:min(1180px,calc(100% - 32px)); max-width:none; max-height:calc(100dvh - 32px); padding:28px; }
-#work-dialog .work-dialog-bar { position:sticky; top:0; z-index:5; height:0; display:flex; align-items:flex-start; justify-content:flex-end; overflow:visible; pointer-events:none; }
+#work-dialog .work-dialog-bar { position:sticky; top:-1px; z-index:5; display:flex; align-items:center; gap:20px; padding:0 0 16px; margin-bottom:16px; background:var(--surface-solid); border-bottom:1px solid var(--border); }
+.work-switcher { flex:1; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:0; }
+.work-switcher button { min-width:44px; min-height:44px; padding:8px 14px; border:1px solid var(--border); border-radius:8px; background:var(--surface-soft); color:var(--ink); font-size:13px; }
+.work-switcher button:hover { background:var(--surface); border-color:var(--green); }
+.work-switcher button:disabled { opacity:.45; cursor:default; }
+#work-position { color:var(--muted); font-size:12px; white-space:nowrap; }
+@media(max-width:600px) { #work-dialog .work-dialog-bar { gap:12px; } .work-switcher { gap:8px; } .work-switcher button { padding:8px; font-size:20px; } .work-switcher button span { display:none; } }
 #work-dialog .close { position:relative; float:none; top:auto; z-index:auto; margin:0; pointer-events:auto; }
 #work-dialog #dialog-title { font-size:28px; margin:8px 0 24px; overflow-wrap:anywhere; }
 .work-detail-layout { display:grid; clear:both; grid-template-columns:minmax(0,2.15fr) minmax(250px,1fr); gap:28px; align-items:start; }

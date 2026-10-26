@@ -40,9 +40,21 @@
   $('copyright').textContent = `© ${new Date().getFullYear()} ${p.name}`;
   const dialog = $('work-dialog');
   let opener;
+  let activeGame;
+  let visibleGames = data.games;
+  const workSequence = game => visibleGames.includes(game) ? visibleGames : data.games;
   const openDetail = (game, button) => {
-    opener = button;
-    const body = $('dialog-content'); body.replaceChildren();
+    const switchingWork = dialog.open;
+    if (button) opener = button;
+    activeGame = game;
+    const sequence = workSequence(game), index = sequence.indexOf(game);
+    $('work-position').textContent = `${index + 1} / ${sequence.length}`;
+    $('previous-work').disabled = $('next-work').disabled = sequence.length < 2;
+    $('previous-work').title = sequence[(index - 1 + sequence.length) % sequence.length]?.title || '';
+    $('next-work').title = sequence[(index + 1) % sequence.length]?.title || '';
+    const body = $('dialog-content');
+    body.querySelectorAll('video').forEach(player => player.pause());
+    body.replaceChildren(); // 古いYouTube iframeも破棄し、再生を停止する。
     body.append(el('p', `${game.category} / ${game.year}`, 'eyebrow'));
     const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title);
     const layout = el('div', '', 'work-detail-layout');
@@ -112,12 +124,26 @@
       const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); notes.append(list);
     }
     if (notes.childElementCount) body.append(notes);
-    dialog.showModal(); dialog.scrollTop = 0; document.body.classList.add('modal-open');
+    if (!dialog.open) dialog.showModal();
+    dialog.scrollTop = 0; document.body.classList.add('modal-open');
+    if (switchingWork && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      body.getAnimations().forEach(animation => animation.cancel());
+      body.animate([{opacity:.65,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}], {duration:180,easing:'ease-out'});
+    }
   };
+  const switchWork = step => {
+    if (!activeGame) return;
+    const sequence = workSequence(activeGame);
+    if (sequence.length < 2) return;
+    openDetail(sequence[(sequence.indexOf(activeGame) + step + sequence.length) % sequence.length]);
+  };
+  $('previous-work').addEventListener('click', () => switchWork(-1));
+  $('next-work').addEventListener('click', () => switchWork(1));
   $('close-dialog').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => { $('dialog-content').querySelectorAll('video').forEach(v => v.pause()); $('dialog-content').querySelectorAll('iframe').forEach(f => f.remove()); document.body.classList.remove('modal-open'); opener?.focus(); });
   const renderGames = category => {
     const games = data.games.filter(g => category === 'すべて' || g.category === category);
+    visibleGames = games;
     $('work-list').replaceChildren(); $('work-count').textContent = data.games.length ? `${games.length}件の作品` : '作品詳細は準備中です。';
     if (!games.length) {
       const summary = el('div', '', 'works-summary');

@@ -540,7 +540,13 @@ nav a { white-space:nowrap; }
 .media-placeholder { color:var(--ink); background:var(--surface-soft); border-color:var(--border); }
 dialog { background:var(--surface-solid); color:var(--ink); border-color:var(--border); }
 dialog#work-dialog { width:min(1180px,calc(100% - 32px)); max-width:none; max-height:calc(100dvh - 32px); padding:28px; }
-#work-dialog .work-dialog-bar { position:sticky; top:0; z-index:5; height:0; display:flex; align-items:flex-start; justify-content:flex-end; overflow:visible; pointer-events:none; }
+#work-dialog .work-dialog-bar { position:sticky; top:-1px; z-index:5; display:flex; align-items:center; gap:20px; padding:0 0 16px; margin-bottom:16px; background:var(--surface-solid); border-bottom:1px solid var(--border); }
+.work-switcher { flex:1; display:flex; align-items:center; justify-content:space-between; gap:12px; min-width:0; }
+.work-switcher button { min-width:44px; min-height:44px; padding:8px 14px; border:1px solid var(--border); border-radius:8px; background:var(--surface-soft); color:var(--ink); font-size:13px; }
+.work-switcher button:hover { background:var(--surface); border-color:var(--green); }
+.work-switcher button:disabled { opacity:.45; cursor:default; }
+#work-position { color:var(--muted); font-size:12px; white-space:nowrap; }
+@media(max-width:600px) { #work-dialog .work-dialog-bar { gap:12px; } .work-switcher { gap:8px; } .work-switcher button { padding:8px; font-size:20px; } .work-switcher button span { display:none; } }
 #work-dialog .close { position:relative; float:none; top:auto; z-index:auto; margin:0; pointer-events:auto; }
 #work-dialog #dialog-title { font-size:28px; margin:8px 0 24px; overflow-wrap:anywhere; }
 .work-detail-layout { display:grid; clear:both; grid-template-columns:minmax(0,2.15fr) minmax(250px,1fr); gap:28px; align-items:start; }
@@ -645,7 +651,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
     <section id="internships" class="section"><div class="section-heading"><div><p class="eyebrow">05 / INTERNSHIPS</p><h2>インターン参加経験</h2></div><p>現場での経験と、学んだこと。</p></div><div id="internship-list"></div></section>
   </main>
   <footer><a class="brand" href="#">PLAY / CREATE</a><p id="copyright"></p><a href="#">ページの先頭へ ↑</a><nav id="footer-socials" class="footer-socials" aria-label="SNSと外部サービス"></nav></footer>
-  <dialog id="work-dialog" aria-labelledby="dialog-title"><div class="work-dialog-bar"><button id="close-dialog" class="close" aria-label="作品の詳細を閉じる">閉じる ×</button></div><div id="dialog-content"></div></dialog>
+  <dialog id="work-dialog" aria-labelledby="dialog-title"><div class="work-dialog-bar"><nav class="work-switcher" aria-label="作品を切り替える"><button id="previous-work" type="button" aria-label="前の作品を表示">←<span> 前の作品</span></button><span id="work-position" aria-live="polite"></span><button id="next-work" type="button" aria-label="次の作品を表示"><span>次の作品 </span>→</button></nav><button id="close-dialog" class="close" aria-label="作品の詳細を閉じる" autofocus>閉じる ×</button></div><div id="dialog-content"></div></dialog>
   <noscript>作品情報の表示にはJavaScriptを有効にしてください。</noscript>
   <button id="back-top" type="button" aria-label="ページの先頭に戻る" hidden><span aria-hidden="true">↑</span><small>TOP</small></button>
 <script>// 掲載内容の編集用ファイルです。新しい作品・技術・イベントは配列へ追加します。
@@ -836,9 +842,21 @@ window.PORTFOLIO = {
   $('copyright').textContent = `© ${new Date().getFullYear()} ${p.name}`;
   const dialog = $('work-dialog');
   let opener;
+  let activeGame;
+  let visibleGames = data.games;
+  const workSequence = game => visibleGames.includes(game) ? visibleGames : data.games;
   const openDetail = (game, button) => {
-    opener = button;
-    const body = $('dialog-content'); body.replaceChildren();
+    const switchingWork = dialog.open;
+    if (button) opener = button;
+    activeGame = game;
+    const sequence = workSequence(game), index = sequence.indexOf(game);
+    $('work-position').textContent = `${index + 1} / ${sequence.length}`;
+    $('previous-work').disabled = $('next-work').disabled = sequence.length < 2;
+    $('previous-work').title = sequence[(index - 1 + sequence.length) % sequence.length]?.title || '';
+    $('next-work').title = sequence[(index + 1) % sequence.length]?.title || '';
+    const body = $('dialog-content');
+    body.querySelectorAll('video').forEach(player => player.pause());
+    body.replaceChildren(); // 古いYouTube iframeも破棄し、再生を停止する。
     body.append(el('p', `${game.category} / ${game.year}`, 'eyebrow'));
     const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title);
     const layout = el('div', '', 'work-detail-layout');
@@ -908,12 +926,26 @@ window.PORTFOLIO = {
       const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); notes.append(list);
     }
     if (notes.childElementCount) body.append(notes);
-    dialog.showModal(); dialog.scrollTop = 0; document.body.classList.add('modal-open');
+    if (!dialog.open) dialog.showModal();
+    dialog.scrollTop = 0; document.body.classList.add('modal-open');
+    if (switchingWork && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      body.getAnimations().forEach(animation => animation.cancel());
+      body.animate([{opacity:.65,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}], {duration:180,easing:'ease-out'});
+    }
   };
+  const switchWork = step => {
+    if (!activeGame) return;
+    const sequence = workSequence(activeGame);
+    if (sequence.length < 2) return;
+    openDetail(sequence[(sequence.indexOf(activeGame) + step + sequence.length) % sequence.length]);
+  };
+  $('previous-work').addEventListener('click', () => switchWork(-1));
+  $('next-work').addEventListener('click', () => switchWork(1));
   $('close-dialog').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => { $('dialog-content').querySelectorAll('video').forEach(v => v.pause()); $('dialog-content').querySelectorAll('iframe').forEach(f => f.remove()); document.body.classList.remove('modal-open'); opener?.focus(); });
   const renderGames = category => {
     const games = data.games.filter(g => category === 'すべて' || g.category === category);
+    visibleGames = games;
     $('work-list').replaceChildren(); $('work-count').textContent = data.games.length ? `${games.length}件の作品` : '作品詳細は準備中です。';
     if (!games.length) {
       const summary = el('div', '', 'works-summary');
