@@ -350,6 +350,15 @@ nav a { white-space:nowrap; }
 .event h3,.works-summary .works-total { color:var(--ink); }
 .event-type,.experience,.tags span { background:var(--surface-soft); color:var(--ink); border-color:var(--border); }
 .skills { grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); }
+.work-visual { width:100%; padding:0; aspect-ratio:16/9; background:var(--surface-soft); }
+.work-title { font-size:20px; line-height:1.6; overflow-wrap:anywhere; }
+.work-description { font-size:13px; color:var(--muted); }
+.works-overview { color:var(--muted); font-size:13px; margin:-8px 0 20px; }
+.source-projects { margin-top:32px; padding:20px 24px; border:1px solid var(--border); background:var(--surface); border-radius:14px; }
+.source-projects summary { cursor:pointer; font-size:14px; font-weight:bold; color:var(--ink); }
+.source-projects summary:focus-visible { outline:2px solid var(--green); outline-offset:5px; }
+.source-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:18px; padding-top:24px; }
+.source-links .text-link { overflow-wrap:anywhere; min-width:0; }
 .skill-group { border-top:0; }
 .skill-group h3 { margin-bottom:20px; }
 .skill-group { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; align-content:start; }
@@ -472,10 +481,97 @@ window.PORTFOLIO = {
   },
   worksIntro: {
     countLabel: "約10本のゲームを制作",
-    description: "各作品の紹介・スクリーンショット・プレイ動画は、順次公開予定です。"
+    description: "作品の詳細から、プレイ動画と作品データをご覧いただけます。"
   },
   // 作品の追加例はREADMEの「作品を追加する」を参照してください。
-  games: [],
+  games: [
+    {
+      title: "クリスマステルス大作戦", subtitle: "初の3Dゲーム作品", category: "3Dゲーム", year: "2025", theme: "mint",
+      image: "https://i.ytimg.com/vi/SUQJOdHtpqg/hqdefault.jpg", imageAlt: "クリスマステルス大作戦のプレイ動画サムネイル",
+      description: "C言語とDirectX9で制作した、初の3Dゲーム作品。",
+      tools: ["C", "DirectX9"], role: "", period: "2025/11/6 ～ 2025/12/24", team: "",
+      detail: "クリスマスをモチーフにした3Dゲームです。公開プレイ動画で、チュートリアルやゲーム画面をご覧いただけます。",
+      highlights: [], screenshots: [{ src: "assets/works/xmas-stealth.png", caption: "プレイ動画から抜粋したゲーム画面" }],
+      video: { youtubeId: "SUQJOdHtpqg", caption: "クリスマステルス大作戦 / プレイ動画" },
+      links: [
+        { label: "作品データ", url: "https://drive.google.com/drive/folders/1jZpkJw0JxEHW-CpLnkCS39s9V9Ul3zL2" },
+        { label: "YouTubeで見る", url: "https://youtu.be/SUQJOdHtpqg" }
+      ]
+    },
+    {
+      title: "見習い地図士と不思議な世界", subtitle: "2Dゲーム作品", category: "2Dゲーム", year: "2025", theme: "lavender",
+      image: "https://i.ytimg.com/vi/9B82_kTPxxc/hqdefault.jpg", imageAlt: "見習い地図士と不思議な世界のプレイ動画サムネイル",
+      description: "C言語とDirectX9を使用して制作した2Dゲーム作品。",
+      tools: ["C", "DirectX9"], role: "", period: "2025/6/30 ～ 2025/9/22", team: "",
+      detail: "2025年6月から9月にかけて制作した2Dゲーム作品です。ゲームの様子は、プレイ動画で紹介しています。",
+      highlights: [], screenshots: [],
+      video: { youtubeId: "9B82_kTPxxc", caption: "見習い地図士と不思議な世界 / プレイ動画" },
+      links: [
+        { label: "作品データ", url: "https://drive.google.com/drive/folders/1tuWMl62xEX0VqR3xQqZHnkmMcXe7kfKW" },
+        { label: "YouTubeで見る", url: "https://youtu.be/9B82_kTPxxc" }
+      ]
+    },
+    {
+      title: "十六夜コレクター", subtitle: "2作目の2Dゲーム作品", category: "2Dゲーム", year: "2025", theme: "lavender",
+      image: "https://i.ytimg.com/vi/PDFSXxMC6z4/hqdefault.jpg", imageAlt: "十六夜コレクターのプレイ動画サムネイル",
+      description: "C言語とDirectX9で制作した、2Dゲーム作品の2作目。",
+      tools: ["C", "DirectX9"], role: "", period: "2025/10/2 ～ 2025/10/31", team: "",
+      detail: "2025年10月に制作した2Dゲーム作品です。プレイ動画と作品データを公開しています。",
+      highlights: [], screenshots: [],
+      video: { youtubeId: "PDFSXxMC6z4", caption: "十六夜コレクター / プレイ動画" },
+      links: [
+        { label: "作品データ", url: "https://drive.google.com/drive/folders/1s1luAQwW1Wly6N-Ra9-RZrSyvNf_xYp5" },
+        { label: "YouTubeで見る", url: "https://youtu.be/PDFSXxMC6z4" }
+      ]
+    },
+    {
+      title: "撥条少女", subtitle: "5人チームでの3Dゲーム制作", category: "3Dゲーム", year: "2025", theme: "peach",
+      image: "https://i.ytimg.com/vi/p8u7Jz-R7Iw/hqdefault.jpg", imageAlt: "撥条少女のプレイ動画サムネイル",
+      description: "5人チームで取り組んだ、初の3Dチーム制作作品。",
+      tools: ["C", "DirectX9"], role: "", period: "2025/1/15 ～ 2025/3/19", team: "5名",
+      detail: "C言語とDirectX9を使用した3Dゲームです。プレイ動画では、アームやギミックが登場するゲーム画面をご覧いただけます。",
+      highlights: [], screenshots: [],
+      video: { youtubeId: "p8u7Jz-R7Iw", caption: "撥条少女 / プレイ動画" },
+      links: [
+        { label: "作品データ", url: "https://drive.google.com/drive/folders/17Ku8LNMrUj245HuN-RsVx44b2mPjsanU" },
+        { label: "YouTubeで見る", url: "https://youtu.be/p8u7Jz-R7Iw" }
+      ]
+    },
+    {
+      title: "進め！きんにく！ごりキャット君！", subtitle: "3人チームでの2Dゲーム制作", category: "2Dゲーム", year: "2025", theme: "peach",
+      image: "https://i.ytimg.com/vi/M9hjYlRG0qI/hqdefault.jpg", imageAlt: "進め！きんにく！ごりキャット君！のプレイ動画サムネイル",
+      description: "3人チームで制作した、C言語・DirectX9の2Dゲーム。",
+      tools: ["C", "DirectX9"], role: "", period: "2025/3/24 ～ 2025/3/26", team: "3名",
+      detail: "3人チームで制作した2Dゲームです。プレイ動画では、プロテインで猫を強化する様子を紹介しています。",
+      highlights: [], screenshots: [],
+      video: { youtubeId: "M9hjYlRG0qI", caption: "進め！きんにく！ごりキャット君！ / プレイ動画" },
+      links: [
+        { label: "作品データ", url: "https://drive.google.com/drive/folders/1LGjK1nSxxiqTdOPpTo0CNG_2W1_yYju_" },
+        { label: "YouTubeで見る", url: "https://youtu.be/M9hjYlRG0qI" }
+      ]
+    },
+    {
+      title: "現実逃避だ！タケル君！", subtitle: "初のC++による2Dゲーム", category: "2Dゲーム", year: "2025", theme: "mint",
+      image: "https://i.ytimg.com/vi/GLYZmwaaMjU/hqdefault.jpg", imageAlt: "現実逃避だ！タケル君！のプレイ動画サムネイル",
+      description: "初めてC++を使って制作した2Dゲーム。DirectX9を使用。",
+      tools: ["C++", "DirectX9"], role: "", period: "2025/5/25 ～ 2025/5/28", team: "",
+      detail: "2025年5月に制作した、初めてC++を使用した2Dゲーム作品です。ゲーム画面と動きをプレイ動画で紹介しています。",
+      highlights: [], screenshots: [],
+      video: { youtubeId: "GLYZmwaaMjU", caption: "現実逃避だ！タケル君！ / プレイ動画" },
+      links: [
+        { label: "作品データ", url: "https://drive.google.com/drive/folders/1l29CW07WhpXP6jHDhkMvsW7pNBgtpjLI" },
+        { label: "YouTubeで見る", url: "https://youtu.be/GLYZmwaaMjU" }
+      ]
+    }
+  ],
+  sourceProjects: [
+    { label: "ConnectingVolteccer", url: "https://github.com/TenmaSaito/ConnectingVolteccer" },
+    { label: "cpp_TKG", url: "https://github.com/TenmaSaito/cpp_TKG" },
+    { label: "2DActionGame", url: "https://github.com/TenmaSaito/2DActionGame" },
+    { label: "PunchingHomerun", url: "https://github.com/TenmaSaito/PunchingHomerun" },
+    { label: "GearGirl", url: "https://github.com/TenmaSaito/GearGirl" },
+    { label: "XmaStealth", url: "https://github.com/TenmaSaito/XmaStealth" }
+  ],
   internships: [
     {
       company: "バンダイナムコスタジオ", period: "参加期間：10日間",
@@ -546,11 +642,11 @@ window.PORTFOLIO = {
     body.append(el('p', `${game.category} / ${game.year}`, 'eyebrow'));
     const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title, el('p', game.description, 'bio'));
     const facts = el('dl', '', 'profile');
-    [['担当', game.role], ['制作期間', game.period], ['人数', game.team], ['使用技術', game.tools.join(' / ')]].forEach(([k, v]) => facts.append(el('dt', k), el('dd', v)));
+    [['担当', game.role], ['制作期間', game.period], ['人数', game.team], ['使用技術', game.tools.join(' / ')]].forEach(([k, v]) => { if (v) facts.append(el('dt', k), el('dd', v)); });
     body.append(facts);
     const shots = game.screenshots?.length ? game.screenshots : game.image ? [{ src: game.image, caption: game.imageAlt || game.title }] : [];
     if (shots.length || data.sampleMode) {
-      body.append(el('h3', 'スクリーンショット'));
+      body.append(el('h3', game.screenshots?.length ? 'スクリーンショット' : '作品画像'));
       const gallery = el('div', '', 'gallery');
       shots.forEach(shot => { const figure = el('figure'); const img = el('img'); img.src = shot.src; img.alt = shot.caption || `${game.title}のゲーム画面`; img.loading = 'lazy'; figure.append(img); if (shot.caption) figure.append(el('figcaption', shot.caption)); gallery.append(figure); });
       if (!shots.length) gallery.append(el('div', 'SCREENSHOTS / 作品の画面を複数掲載できます', 'media-placeholder'));
@@ -562,14 +658,17 @@ window.PORTFOLIO = {
       if (video?.src) {
         const player = el('video'); player.controls = true; player.preload = 'metadata'; player.playsInline = true; player.src = video.src; if (video.poster) player.poster = video.poster; player.setAttribute('aria-label', `${game.title}のプレイ動画`); body.append(player);
       } else if (/^[\w-]{11}$/.test(video?.youtubeId || '')) {
-        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; body.append(frame);
+        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.loading = 'lazy'; body.append(frame);
       } else body.append(el('div', 'PLAY MOVIE / 動画ファイル・YouTubeに対応', 'media-placeholder'));
       if (video?.caption) body.append(el('p', video.caption, 'media-caption'));
     }
-    body.append(el('h3', '作品について'), el('p', game.detail), el('h3', '工夫したところ'));
-    const list = el('ul'); (game.highlights || []).forEach(t => list.append(el('li', t))); body.append(list);
+    if (game.detail) body.append(el('h3', '作品について'), el('p', game.detail));
+    if (game.highlights?.length) {
+      body.append(el('h3', '工夫したところ'));
+      const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); body.append(list);
+    }
     const links = el('div', '', 'socials'); addLinks(links, game.links); body.append(links);
-    dialog.showModal(); document.body.classList.add('modal-open');
+    dialog.showModal(); dialog.scrollTop = 0; document.body.classList.add('modal-open');
   };
   $('close-dialog').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => { $('dialog-content').querySelectorAll('video').forEach(v => v.pause()); $('dialog-content').querySelectorAll('iframe').forEach(f => f.remove()); document.body.classList.remove('modal-open'); opener?.focus(); });
@@ -584,7 +683,9 @@ window.PORTFOLIO = {
     }
     games.forEach((game, i) => {
       const card = el('article', '', 'work');
-      const visual = el('div', '', `work-visual ${['mint', 'peach', 'lavender'].includes(game.theme) ? game.theme : 'mint'}`);
+      const visual = el('button', '', `work-visual ${['mint', 'peach', 'lavender'].includes(game.theme) ? game.theme : 'mint'}`);
+      visual.type = 'button'; visual.setAttribute('aria-label', `${game.title}の詳細を開く`);
+      visual.addEventListener('click', () => openDetail(game, visual));
       const placeholder = () => { visual.replaceChildren(el('span', data.sampleMode ? 'SAMPLE / GAME VISUAL' : 'GAME VISUAL', 'visual-label'), el('div', ['◈', '▦', '✦'][i % 3], 'visual-symbol'), el('span', data.sampleMode ? '作品画像をここに配置' : 'スクリーンショット準備中', 'visual-caption')); };
       if (game.image) { const img = el('img'); img.src = game.image; img.alt = game.imageAlt || `${game.title}のスクリーンショット`; img.loading = 'lazy'; img.addEventListener('error', placeholder); visual.append(img); } else placeholder();
       const meta = el('p', `${game.category} / ${game.year}`, 'work-meta');
@@ -598,6 +699,15 @@ window.PORTFOLIO = {
     button.addEventListener('click', () => { [...$('filters').children].forEach(b => b.setAttribute('aria-pressed', String(b === button))); renderGames(category); }); $('filters').append(button);
   }); renderGames('すべて');
   $('filters').hidden = !data.games.length;
+  if (data.games.length) {
+    const overview = el('p', `${data.worksIntro?.countLabel || ''} · 掲載 ${data.games.length}作品`, 'works-overview');
+    $('filters').before(overview);
+  }
+  if (data.sourceProjects?.length) {
+    const details = el('details', '', 'source-projects');
+    details.append(el('summary', `公開ソースコード / GitHub ${data.sourceProjects.length}件`));
+    const links = el('div', '', 'source-links'); addLinks(links, data.sourceProjects); details.append(links); $('work-list').after(details);
+  }
   data.skillGroups.forEach(group => { const section = el('section', '', 'skill-group'); section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title)); group.items.forEach(item => { const row = el('div', '', 'skill'); row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project')); section.append(row); }); $('skill-list').append(section); });
   data.events.forEach(event => { const row = el('article', '', `event${event.date ? '' : ' event-undated'}`); const body = el('div'); body.append(el('h3', event.title)); if (event.description) body.append(el('p', event.description)); if (event.url) addLinks(body, [{ label: 'イベントを見る', url: event.url }]); if (event.date) row.append(el('span', event.date, 'event-date')); row.append(el('span', event.type, 'event-type'), body); $('event-list').append(row); });
   if (!data.events.length) $('event-list').append(el('p', '活動の記録は準備中です。'));

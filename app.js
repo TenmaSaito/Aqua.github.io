@@ -46,11 +46,11 @@
     body.append(el('p', `${game.category} / ${game.year}`, 'eyebrow'));
     const title = el('h2', game.title); title.id = 'dialog-title'; body.append(title, el('p', game.description, 'bio'));
     const facts = el('dl', '', 'profile');
-    [['担当', game.role], ['制作期間', game.period], ['人数', game.team], ['使用技術', game.tools.join(' / ')]].forEach(([k, v]) => facts.append(el('dt', k), el('dd', v)));
+    [['担当', game.role], ['制作期間', game.period], ['人数', game.team], ['使用技術', game.tools.join(' / ')]].forEach(([k, v]) => { if (v) facts.append(el('dt', k), el('dd', v)); });
     body.append(facts);
     const shots = game.screenshots?.length ? game.screenshots : game.image ? [{ src: game.image, caption: game.imageAlt || game.title }] : [];
     if (shots.length || data.sampleMode) {
-      body.append(el('h3', 'スクリーンショット'));
+      body.append(el('h3', game.screenshots?.length ? 'スクリーンショット' : '作品画像'));
       const gallery = el('div', '', 'gallery');
       shots.forEach(shot => { const figure = el('figure'); const img = el('img'); img.src = shot.src; img.alt = shot.caption || `${game.title}のゲーム画面`; img.loading = 'lazy'; figure.append(img); if (shot.caption) figure.append(el('figcaption', shot.caption)); gallery.append(figure); });
       if (!shots.length) gallery.append(el('div', 'SCREENSHOTS / 作品の画面を複数掲載できます', 'media-placeholder'));
@@ -62,14 +62,17 @@
       if (video?.src) {
         const player = el('video'); player.controls = true; player.preload = 'metadata'; player.playsInline = true; player.src = video.src; if (video.poster) player.poster = video.poster; player.setAttribute('aria-label', `${game.title}のプレイ動画`); body.append(player);
       } else if (/^[\w-]{11}$/.test(video?.youtubeId || '')) {
-        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; body.append(frame);
+        const frame = el('iframe'); frame.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`; frame.title = `${game.title}のプレイ動画`; frame.allowFullscreen = true; frame.allow = 'encrypted-media; picture-in-picture'; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.loading = 'lazy'; body.append(frame);
       } else body.append(el('div', 'PLAY MOVIE / 動画ファイル・YouTubeに対応', 'media-placeholder'));
       if (video?.caption) body.append(el('p', video.caption, 'media-caption'));
     }
-    body.append(el('h3', '作品について'), el('p', game.detail), el('h3', '工夫したところ'));
-    const list = el('ul'); (game.highlights || []).forEach(t => list.append(el('li', t))); body.append(list);
+    if (game.detail) body.append(el('h3', '作品について'), el('p', game.detail));
+    if (game.highlights?.length) {
+      body.append(el('h3', '工夫したところ'));
+      const list = el('ul'); game.highlights.forEach(t => list.append(el('li', t))); body.append(list);
+    }
     const links = el('div', '', 'socials'); addLinks(links, game.links); body.append(links);
-    dialog.showModal(); document.body.classList.add('modal-open');
+    dialog.showModal(); dialog.scrollTop = 0; document.body.classList.add('modal-open');
   };
   $('close-dialog').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => { $('dialog-content').querySelectorAll('video').forEach(v => v.pause()); $('dialog-content').querySelectorAll('iframe').forEach(f => f.remove()); document.body.classList.remove('modal-open'); opener?.focus(); });
@@ -84,7 +87,9 @@
     }
     games.forEach((game, i) => {
       const card = el('article', '', 'work');
-      const visual = el('div', '', `work-visual ${['mint', 'peach', 'lavender'].includes(game.theme) ? game.theme : 'mint'}`);
+      const visual = el('button', '', `work-visual ${['mint', 'peach', 'lavender'].includes(game.theme) ? game.theme : 'mint'}`);
+      visual.type = 'button'; visual.setAttribute('aria-label', `${game.title}の詳細を開く`);
+      visual.addEventListener('click', () => openDetail(game, visual));
       const placeholder = () => { visual.replaceChildren(el('span', data.sampleMode ? 'SAMPLE / GAME VISUAL' : 'GAME VISUAL', 'visual-label'), el('div', ['◈', '▦', '✦'][i % 3], 'visual-symbol'), el('span', data.sampleMode ? '作品画像をここに配置' : 'スクリーンショット準備中', 'visual-caption')); };
       if (game.image) { const img = el('img'); img.src = game.image; img.alt = game.imageAlt || `${game.title}のスクリーンショット`; img.loading = 'lazy'; img.addEventListener('error', placeholder); visual.append(img); } else placeholder();
       const meta = el('p', `${game.category} / ${game.year}`, 'work-meta');
@@ -98,6 +103,15 @@
     button.addEventListener('click', () => { [...$('filters').children].forEach(b => b.setAttribute('aria-pressed', String(b === button))); renderGames(category); }); $('filters').append(button);
   }); renderGames('すべて');
   $('filters').hidden = !data.games.length;
+  if (data.games.length) {
+    const overview = el('p', `${data.worksIntro?.countLabel || ''} · 掲載 ${data.games.length}作品`, 'works-overview');
+    $('filters').before(overview);
+  }
+  if (data.sourceProjects?.length) {
+    const details = el('details', '', 'source-projects');
+    details.append(el('summary', `公開ソースコード / GitHub ${data.sourceProjects.length}件`));
+    const links = el('div', '', 'source-links'); addLinks(links, data.sourceProjects); details.append(links); $('work-list').after(details);
+  }
   data.skillGroups.forEach(group => { const section = el('section', '', 'skill-group'); section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title)); group.items.forEach(item => { const row = el('div', '', 'skill'); row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project')); section.append(row); }); $('skill-list').append(section); });
   data.events.forEach(event => { const row = el('article', '', `event${event.date ? '' : ' event-undated'}`); const body = el('div'); body.append(el('h3', event.title)); if (event.description) body.append(el('p', event.description)); if (event.url) addLinks(body, [{ label: 'イベントを見る', url: event.url }]); if (event.date) row.append(el('span', event.date, 'event-date')); row.append(el('span', event.type, 'event-type'), body); $('event-list').append(row); });
   if (!data.events.length) $('event-list').append(el('p', '活動の記録は準備中です。'));

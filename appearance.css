@@ -54,6 +54,15 @@ nav a { white-space:nowrap; }
 .event h3,.works-summary .works-total { color:var(--ink); }
 .event-type,.experience,.tags span { background:var(--surface-soft); color:var(--ink); border-color:var(--border); }
 .skills { grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); }
+.work-visual { width:100%; padding:0; aspect-ratio:16/9; background:var(--surface-soft); }
+.work-title { font-size:20px; line-height:1.6; overflow-wrap:anywhere; }
+.work-description { font-size:13px; color:var(--muted); }
+.works-overview { color:var(--muted); font-size:13px; margin:-8px 0 20px; }
+.source-projects { margin-top:32px; padding:20px 24px; border:1px solid var(--border); background:var(--surface); border-radius:14px; }
+.source-projects summary { cursor:pointer; font-size:14px; font-weight:bold; color:var(--ink); }
+.source-projects summary:focus-visible { outline:2px solid var(--green); outline-offset:5px; }
+.source-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:18px; padding-top:24px; }
+.source-links .text-link { overflow-wrap:anywhere; min-width:0; }
 .skill-group { border-top:0; }
 .skill-group h3 { margin-bottom:20px; }
 .skill-group { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; align-content:start; }
