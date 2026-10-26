@@ -3,6 +3,13 @@
 body { isolation:isolate; background:radial-gradient(ellipse at 12% 0,#ffffffdc,transparent 40%),radial-gradient(ellipse at 100% 35%,#79d9e54d,transparent 50%),linear-gradient(165deg,#f0fbff 0%,#dbf5fa 32%,#c3edf2 68%,#e4f7fc 100%); }
 body::before { content:''; position:fixed; z-index:-1; inset:0; pointer-events:none; opacity:.32; background:radial-gradient(ellipse at 25% 35%,transparent 48%,#ffffffa0 49%,transparent 51%) 0 0/370px 260px,radial-gradient(ellipse at 65% 65%,transparent 48%,#ffffff90 49%,transparent 52%) 100px 60px/430px 310px; mask-image:linear-gradient(90deg,#0008,transparent 40%,#000); }
 #school,.profile dd { white-space:pre-line; }
+.profile dd { overflow-wrap:anywhere; }
+.works-summary { grid-column:1/-1; padding:32px; border:1px solid #ffffffd9; border-radius:20px; background:#ffffff85; }
+.works-summary p { color:var(--muted); font-size:14px; margin:0; }
+.works-summary .works-total { color:var(--ink); font-size:28px; font-weight:bold; margin-bottom:12px; }
+.skills { grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); }
+.event.event-undated { grid-template-columns:76px minmax(0,1fr); }
+.event.event-undated>div { grid-column:auto; }
 #events .section-heading h2 { font-size:36px; }
 #event-list { display:grid; gap:20px; }
 .event { grid-template-columns:115px 76px minmax(0,1fr); gap:28px; padding:32px; min-height:160px; border:1px solid #ffffffd9; border-radius:20px; background:linear-gradient(120deg,#ffffffbd,#eefbfc8c); box-shadow:0 10px 36px #237e9610; backdrop-filter:blur(8px); }
@@ -75,6 +82,7 @@ dialog::backdrop { background:#16445e66; }
 @media(max-width:850px) { .event { grid-template-columns:100px 70px minmax(0,1fr); gap:18px; padding:26px; } }
 @media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } #events .section-heading h2 { font-size:28px; } .event { grid-template-columns:100px 70px; padding:24px 20px; min-height:0; gap:15px; } .event>div { grid-column:1/-1; } .event h3 { font-size:21px; } .event p { font-size:14px; } }
 @media(prefers-reduced-motion:reduce) { .splash-drop { animation:none; } }
+@media(max-width:600px) { .event.event-undated { grid-template-columns:1fr; } .event.event-undated .event-type { justify-self:start; } .works-summary { padding:24px; } .works-summary .works-total { font-size:24px; } }
 
 /* 操作に応じた動き。タッチ端末と動きを抑える設定でも操作性を維持します。 */
 #back-top { opacity:0; visibility:hidden; pointer-events:none; transform:translateY(12px); transition:opacity .35s ease,transform .35s ease,visibility 0s linear .35s,background-color .2s; }

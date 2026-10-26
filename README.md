@@ -10,12 +10,12 @@ GitHub Pagesで配信できる、ビルド不要の静的サイトです。外�
 
 ## 掲載内容を更新する
 
-編集するのは基本的に **content.js** だけです。現在はすべてサンプルです。
+編集するのは基本的に **content.js** だけです。プロフィール・言語の使用歴・参加出展イベントには提供された情報を反映しています。作品の個別情報・参加年・アプリ使用歴は、判明したものから追記できます。
 
 | 項目 | 編集箇所 |
 | --- | --- |
 | 名前・学校・自己紹介 | profile |
-| 学校名と学科・コース（2行表示） | profile.school と profile.course |
+| 学校名・学科・専攻（各行に表示） | profile.school・profile.course・profile.specialization |
 | ブラウザータブのアイコン | site.favicon |
 | 作品 | games |
 | 技術・アプリ・使用歴・できること | skillGroups の items |
@@ -58,4 +58,25 @@ GitHubの公式手順: https://docs.github.com/ja/pages/getting-started-with-git
 
 ## 現在の段階
 
-明るい水色の海をモチーフにしたデザインを公開しています。水滴・波紋・スプラッシュ・フェードインと、ホバー・クリック時の動きを実装済みです。スマートフォン幅でプロフィール・作品の絞り込み・詳細画面を確認しています。掲載情報はサンプルのため、名前・学校名・メール・作品画像／動画・実際の技術や活動を `content.js` で差し替えてください。
+明るい水色の海をモチーフにしたデザインを公開しています。水滴・波紋・スプラッシュ・フェードインと、ホバー・クリック時の動きを実装済みです。プロフィール・技術の使用歴・イベントは実際の情報を掲載しています。作品は「約7本」と紹介し、個別の情報は準備中です。追加・更新は `content.js` で行います。
+
+## 作品を追加する
+
+`games: []` の中に、次のような項目を追加します。複数ある場合は項目の間をカンマで区切ります。ここに示す文字列は書き方の例です。
+
+```js
+games: [
+  {
+    title: "作品名", subtitle: "ジャンルなど", category: "個人制作", year: "2026", theme: "mint",
+    image: "assets/game-cover.webp", imageAlt: "ゲーム画面",
+    description: "作品の概要", tools: ["C++"], role: "担当した内容",
+    period: "制作期間", team: "1名", detail: "ゲームの内容・操作など",
+    highlights: ["実装で工夫したところ"],
+    screenshots: [{ src: "assets/game-screen.webp", caption: "プレイ画面" }],
+    video: { src: "assets/play.mp4", youtubeId: "", poster: "assets/game-cover.webp", caption: "プレイ動画" },
+    links: []
+  }
+]
+```
+
+画像・動画・リンクがまだない場合は、該当するパスを空文字、配列を `[]` にできます。最初の作品を登録すると、概要の準備中表示に代わって作品カードが表示されます。
