@@ -92,9 +92,9 @@ nav a { white-space:nowrap; }
 .media-placeholder { color:var(--ink); background:var(--surface-soft); border-color:var(--border); }
 dialog { background:var(--surface-solid); color:var(--ink); border-color:var(--border); }
 dialog#work-dialog { width:min(1180px,calc(100% - 32px)); max-width:none; max-height:calc(100dvh - 32px); padding:28px; }
-#work-dialog .close { position:sticky; top:0; z-index:3; margin-bottom:12px; }
+#work-dialog .close { position:sticky; float:right; top:0; z-index:3; margin:0 0 10px 16px; }
 #work-dialog #dialog-title { font-size:28px; margin:8px 0 24px; overflow-wrap:anywhere; }
-.work-detail-layout { display:grid; grid-template-columns:minmax(0,2.15fr) minmax(250px,1fr); gap:28px; align-items:start; }
+.work-detail-layout { display:grid; clear:both; grid-template-columns:minmax(0,2.15fr) minmax(250px,1fr); gap:28px; align-items:start; }
 .media-gallery { min-width:0; }
 .media-stage { position:relative; aspect-ratio:16/9; background:#06101d; display:grid; place-items:center; overflow:hidden; border-radius:10px; border:1px solid var(--border); }
 .media-stage img,.media-stage video,.media-stage iframe { position:absolute; inset:0; width:100%; height:100%; display:block; object-fit:contain; border:0; aspect-ratio:auto; }
