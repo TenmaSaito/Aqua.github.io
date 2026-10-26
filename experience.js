@@ -34,15 +34,34 @@
   const splash = document.getElementById('splash');
   const options = config.splash || {};
   let finished = false;
+  let fading = false;
   let timer;
+  let fadeTimer;
   const finish = () => {
     if (finished) return; finished = true; clearTimeout(timer);
+    clearTimeout(fadeTimer);
     const focused = splash.contains(document.activeElement);
     splash.hidden = true;
     document.body.classList.remove('intro-active');
     document.querySelectorAll('[data-intro-inert]').forEach(node => { node.inert = false; node.removeAttribute('data-intro-inert'); });
     if (focused) document.querySelector('.brand').focus({preventScroll:true});
     document.body.classList.add('intro-finished'); reveal();
+    updateTop();
+  };
+  const fadeOut = () => {
+    if (finished || fading) return;
+    fading = true; clearTimeout(timer);
+    document.getElementById('splash-status').textContent = '準備できました';
+    splash.classList.add('splash-full');
+    // 満水状態を短く見せてから、スプラッシュと本文をクロスフェード。
+    fadeTimer = setTimeout(() => {
+      splash.classList.add('splash-fading');
+      document.body.classList.add('intro-revealing');
+      splash.addEventListener('transitionend', event => {
+        if (event.target === splash && event.propertyName === 'opacity') finish();
+      });
+      fadeTimer = setTimeout(finish, 750);
+    }, 180);
   };
   reduced.addEventListener('change', () => {
     if (reduced.matches) { finish(); revealObserver?.disconnect(); document.querySelectorAll('.reveal').forEach(n => n.classList.add('is-visible')); }
@@ -53,12 +72,17 @@
   document.getElementById('splash-subtitle').textContent = options.subtitle || 'IDEAS FLOW INTO PLAY.';
   if (options.image) {
     const image = document.getElementById('splash-image'); image.src = options.image; image.hidden = false;
-    const drop = splash.querySelector('.splash-drop'); drop.hidden = true;
-    image.addEventListener('error', () => { image.hidden = true; drop.hidden = false; });
+    image.addEventListener('error', () => { image.hidden = true; });
   }
   const skip = document.getElementById('splash-skip'); skip.addEventListener('click', finish);
   splash.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); if (event.key === 'Tab') { event.preventDefault(); skip.focus(); } });
   document.querySelectorAll('body > header, body > main, body > footer, .skip, #back-top').forEach(node => { node.inert = true; node.dataset.introInert = ''; });
+  const duration = Math.min(5000, Math.max(1200, Number(options.durationMs) || 2200));
+  splash.style.setProperty('--fill-duration', `${duration}ms`);
+  splash.querySelector('.loader-fill').addEventListener('animationend', event => {
+    if (event.animationName === 'liquid-fill') fadeOut();
+  });
   splash.hidden = false; document.body.classList.add('intro-active'); skip.focus({preventScroll:true});
-  timer = setTimeout(finish, Math.min(4000, Math.max(400, Number(options.durationMs) || 1600)));
+  // アニメーション完了イベントが得られない環境でも本文に到達できるようにする。
+  timer = setTimeout(fadeOut, duration + 300);
 })();

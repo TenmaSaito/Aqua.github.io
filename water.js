@@ -1,6 +1,6 @@
 (() => {
   const button = document.getElementById('motion-toggle');
-  const scene = document.querySelector('.water-scene');
+  const scene = document.querySelector('.sea-decoration');
   if (!button || !scene) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let paused = false;
@@ -8,7 +8,7 @@
     scene.classList.toggle('motion-paused', paused || reduced.matches);
     button.hidden = reduced.matches;
     button.setAttribute('aria-pressed', String(paused));
-    button.textContent = paused ? '水の動きを再生する ▷' : '水の動きを止める Ⅱ';
+    button.textContent = paused ? '波の動きを再生する ▷' : '波の動きを止める Ⅱ';
   };
   button.addEventListener('click', () => { paused = !paused; sync(); });
   reduced.addEventListener('change', sync);

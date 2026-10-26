@@ -3,7 +3,7 @@ window.PORTFOLIO = {
   sampleMode: false,
   site: { favicon: "assets/favicon.svg" },
   presentation: {
-    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 1600 },
+    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 2200 },
     reveal: true
   },
   profile: {
@@ -13,7 +13,7 @@ window.PORTFOLIO = {
     graduation: "", // 例: "2028年3月卒業予定"。空なら非表示。
     headline: "心が動く、\n遊びをつくる。",
     intro: "ゲームプログラマを専攻する齊藤天眞のポートフォリオ。制作したゲームや、技術・イベントでの活動を紹介します。",
-    bio: "専門学校北海道サイバークリエイターズ大学校で、ゲームプログラマを専攻しています。C/C++・C#を使用し、これまでに約7本のゲームを制作。ゲームジャムへの参加やイベントでの出展も行っています。",
+    bio: "専門学校北海道サイバークリエイターズ大学校で、ゲームプログラマを専攻しています。C/C++・C#を使用し、これまでに約10本のゲームを制作。ゲームジャムへの参加やイベントでの出展も行っています。",
     interests: "",
     email: "251315@st.yoshi-g.ac.jp",
     links: [
@@ -26,6 +26,15 @@ window.PORTFOLIO = {
   },
   // 作品の追加例はREADMEの「作品を追加する」を参照してください。
   games: [],
+  internships: [
+    {
+      company: "バンダイナムコスタジオ", period: "参加期間：10日間",
+      title: "C++ / WebAssembly / Android",
+      description: "C++で書いたコードをWebAssembly化し、ブラウザーで動作するよう制作しました。",
+      role: "基底クラスの作成、Androidへの移植。",
+      learnings: [], links: []
+    }
+  ],
   skillGroups: [
     { title: "プログラミング言語", subtitle: "LANGUAGES", items: [
       { name: "C / C++", experience: "1年半", description: "使用IDE : Visual Studio2019, VS Code", projects: "DirectX9 : " },

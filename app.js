@@ -99,4 +99,17 @@
   data.skillGroups.forEach(group => { const section = el('section', '', 'skill-group'); section.append(el('p', group.subtitle, 'eyebrow'), el('h3', group.title)); group.items.forEach(item => { const row = el('div', '', 'skill'); row.append(el('h4', item.name), el('span', item.experience, 'experience'), el('p', item.description), el('p', item.projects, 'skill-project')); section.append(row); }); $('skill-list').append(section); });
   data.events.forEach(event => { const row = el('article', '', `event${event.date ? '' : ' event-undated'}`); const body = el('div'); body.append(el('h3', event.title)); if (event.description) body.append(el('p', event.description)); if (event.url) addLinks(body, [{ label: 'イベントを見る', url: event.url }]); if (event.date) row.append(el('span', event.date, 'event-date')); row.append(el('span', event.type, 'event-type'), body); $('event-list').append(row); });
   if (!data.events.length) $('event-list').append(el('p', '活動の記録は準備中です。'));
+  const internships = data.internships || [];
+  internships.forEach(item => {
+    const card = el('article', '', 'internship-card');
+    if (item.period) card.append(el('p', item.period, 'eyebrow'));
+    card.append(el('h3', item.company));
+    if (item.title) card.append(el('p', item.title, 'internship-title'));
+    if (item.description) card.append(el('p', item.description));
+    if (item.role) { card.append(el('h4', '担当したこと'), el('p', item.role)); }
+    if (item.learnings?.length) { const list = el('ul'); item.learnings.forEach(value => list.append(el('li', value))); card.append(el('h4', '学んだこと'), list); }
+    const links = el('div', '', 'socials'); addLinks(links, item.links); card.append(links);
+    $('internship-list').append(card);
+  });
+  if (!internships.length) $('internship-list').append(el('p', '参加経験の詳細は、順次公開予定です。', 'empty-message'));
 })();
