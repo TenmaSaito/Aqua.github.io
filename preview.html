@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="ゲーム制作の作品・技術・活動を紹介するポートフォリオ。">
   <title>Game Creator Portfolio</title>
+  <link id="site-icon" rel="icon" href="./assets/favicon.svg">
   <style>@charset "UTF-8";
 :root{--paper:#f7f8f4;--ink:#202a28;--muted:#5e6963;--line:#d9dfd7;--green:#205b40;--mint:#c8eb72}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,"Yu Gothic",Meiryo,sans-serif;line-height:1.8}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}a,button{-webkit-tap-highlight-color:transparent}a:focus-visible,button:focus-visible{outline:3px solid var(--green);outline-offset:5px}.header,main,footer{max-width:1240px;margin:auto;padding-left:48px;padding-right:48px}.header{display:flex;justify-content:space-between;align-items:center;min-height:100px;border-bottom:1px solid var(--line)}.brand{font-weight:900;font-size:22px;letter-spacing:-1px;line-height:1.2}.brand span{display:block;font-size:8px;letter-spacing:2px;margin-top:8px}nav{display:flex;gap:28px;font-size:13px;font-weight:bold}nav a:hover,footer a:hover{color:var(--green);text-decoration:underline}.notice{font-size:11px;color:var(--muted);border-bottom:1px solid var(--line);padding:9px 0;letter-spacing:.05em}.hero{padding:68px 0 76px;display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:48px}.eyebrow{font-size:11px;font-weight:bold;letter-spacing:.16em;color:var(--green);margin:0 0 18px}h1{font-size:clamp(38px,4.5vw,62px);line-height:1.4;letter-spacing:-.055em;margin:0 0 24px;white-space:pre-line}h2{font-size:30px;letter-spacing:-.04em;line-height:1.5;margin:0}h3,h4{line-height:1.5}.intro{max-width:400px;font-size:14px;color:var(--muted);margin-bottom:28px}.button{display:inline-flex;gap:38px;align-items:center;background:var(--ink);color:white;padding:13px 20px;font-size:12px}.button:hover{background:var(--green)}.signature{display:flex;flex-direction:column;margin-top:36px;font-size:15px}.signature span{font-size:11px;color:var(--muted);margin-top:3px}.hero-art{height:420px;background:var(--mint);position:relative;overflow:hidden;border-radius:3px;background-image:linear-gradient(#205b4010 1px,transparent 1px),linear-gradient(90deg,#205b4010 1px,transparent 1px);background-size:28px 28px}.art-caption{position:absolute;top:25px;left:25px;font-size:11px;font-weight:bold;line-height:1.5;letter-spacing:.05em}.orbit{position:absolute;width:310px;height:180px;border:1px solid #205b4060;border-radius:50%;top:120px;left:calc(50% - 155px);transform:rotate(-30deg)}.orbit-two{transform:rotate(45deg)}.game-object{position:absolute;left:calc(50% - 77px);top:135px;width:154px;height:154px;display:grid;place-items:center;background:var(--green);color:var(--mint);font-size:100px;transform:rotate(-13deg);border-radius:26px;box-shadow:16px 16px 0 #7eaa4b}.game-object span{transform:rotate(13deg)}.art-bottom,.art-index{position:absolute;bottom:22px;font-size:9px;letter-spacing:.12em;font-weight:bold}.art-bottom{left:25px}.art-index{right:25px}.section{padding:62px 0;border-top:1px solid var(--line)}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:30px}.section-heading .eyebrow{margin-bottom:10px}.section-heading>p{font-size:12px;color:var(--muted);margin:0}.filters{display:flex;gap:8px;margin:0 0 26px;flex-wrap:wrap}.filters button{border:1px solid var(--line);background:transparent;border-radius:30px;padding:6px 19px;font-size:11px}.filters button[aria-pressed=true]{background:var(--ink);color:white;border-color:var(--ink)}.works{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.work-visual{aspect-ratio:4/3;position:relative;overflow:hidden;display:grid;place-items:center}.mint{background:#dfe9d6;color:#3a6048}.peach{background:#f0d9c8;color:#974f37}.lavender{background:#dfdff0;color:#5b5987}.visual-label{position:absolute;left:18px;top:14px;font-size:8px;letter-spacing:.12em}.visual-symbol{font-size:110px;line-height:1;transform:rotate(-12deg)}.visual-caption{position:absolute;bottom:12px;font-size:10px}.work-visual img{width:100%;height:100%;object-fit:cover}.work-meta{font-size:10px;color:var(--muted);margin:18px 0 6px}.work-title{padding:0;border:0;background:transparent;font-size:21px;font-weight:bold;text-align:left;color:var(--ink)}.work-title:hover{text-decoration:underline}.subtitle{font-size:11px;color:var(--muted);margin:3px 0 12px}.work-description{font-size:12px;line-height:1.9}.tags{display:flex;gap:6px;flex-wrap:wrap}.tags span{font-size:10px;border:1px solid var(--line);padding:2px 9px}.about{display:grid;grid-template-columns:1fr 1.5fr;gap:64px}.bio{font-size:15px;line-height:2.1;margin-top:0}.profile{display:grid;grid-template-columns:130px 1fr;font-size:12px;margin:26px 0}.profile dt,.profile dd{margin:0;padding:11px 0;border-bottom:1px solid var(--line)}.profile dt{color:var(--muted)}.socials{display:flex;flex-wrap:wrap;gap:22px}.text-link{font-size:12px;text-decoration:underline;text-underline-offset:4px}.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.skill-group{border-top:2px solid var(--ink);padding-top:22px}.skill-group>.eyebrow{font-size:9px;margin-bottom:5px}.skill-group>h3{margin:0 0 22px;font-size:18px}.skill{padding:17px 0;border-top:1px solid var(--line)}.skill h4{font-size:16px;margin:0 0 6px}.experience{font-size:10px;color:var(--green);background:#e6eddf;padding:3px 7px}.skill p{font-size:12px}.skill .skill-project{font-size:10px;color:var(--muted)}.event{display:grid;grid-template-columns:100px 64px 1fr;gap:25px;align-items:baseline;border-top:1px solid var(--line);padding:24px 0}.event-date{font-size:12px}.event-type{font-size:10px;border:1px solid var(--line);padding:2px 12px;text-align:center}.event h3{margin:0;font-size:16px}.event p{margin:9px 0 0;font-size:12px;color:var(--muted)}footer{border-top:1px solid var(--line);min-height:130px;display:flex;align-items:center;justify-content:space-between;gap:20px}footer p,footer>a:last-child{font-size:10px;color:var(--muted)}footer .brand{font-size:17px}dialog{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:35px;max-width:680px;width:calc(100% - 32px);max-height:85vh;overflow:auto}dialog::backdrop{background:#15241ecc;backdrop-filter:blur(4px)}dialog h2{margin:12px 0 22px}dialog h3{margin-top:28px}dialog p,dialog li{font-size:14px}.close{display:block;margin:0 0 24px auto;background:transparent;border:1px solid var(--line);padding:7px 14px;font-size:12px}.modal-open{overflow:hidden}.skip{position:fixed;top:-100px;left:15px;background:white;padding:12px;z-index:10}.skip:focus{top:10px}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}[hidden]{display:none!important}
 .gallery{display:grid;gap:18px}.gallery figure{margin:0}.gallery img{width:100%;height:auto;display:block}.gallery figcaption,.media-caption{font-size:11px;color:var(--muted)}dialog video,dialog iframe{width:100%;aspect-ratio:16/9;border:0;background:#17251f;display:block}.media-placeholder{min-height:160px;display:grid;place-items:center;text-align:center;padding:24px;background:#e5eddd;border:1px dashed #8da37b;color:var(--green);font-size:11px;letter-spacing:.06em}.work-visual{border-radius:2px 28px 2px 2px}.skill-group>.eyebrow:before{content:'+';margin-right:10px}.section-heading h2:after{content:'.';color:var(--green)}
@@ -149,7 +150,17 @@ body { background:radial-gradient(ellipse at 85% 6%,#0b53613d,transparent 40%),r
 </style>
   <style>/* CLEAR WATER — 明るい水色。最終的な色の調整はこのファイルで行います。 */
 :root { color-scheme:light; --paper:#f2fbfe; --ink:#173f51; --muted:#4c6d7d; --line:#c9e3ed; --green:#126f88; --mint:#126f88; }
-body { background:radial-gradient(ellipse at 95% 0,#bdeefb80,transparent 42%),radial-gradient(ellipse at 0 65%,#cdeff578,transparent 44%),#f4fbfe; }
+body { isolation:isolate; background:radial-gradient(ellipse at 12% 0,#ffffffdc,transparent 40%),radial-gradient(ellipse at 100% 35%,#79d9e54d,transparent 50%),linear-gradient(165deg,#f0fbff 0%,#dbf5fa 32%,#c3edf2 68%,#e4f7fc 100%); }
+body::before { content:''; position:fixed; z-index:-1; inset:0; pointer-events:none; opacity:.32; background:radial-gradient(ellipse at 25% 35%,transparent 48%,#ffffffa0 49%,transparent 51%) 0 0/370px 260px,radial-gradient(ellipse at 65% 65%,transparent 48%,#ffffff90 49%,transparent 52%) 100px 60px/430px 310px; mask-image:linear-gradient(90deg,#0008,transparent 40%,#000); }
+#school,.profile dd { white-space:pre-line; }
+#events .section-heading h2 { font-size:36px; }
+#event-list { display:grid; gap:20px; }
+.event { grid-template-columns:115px 76px minmax(0,1fr); gap:28px; padding:32px; min-height:160px; border:1px solid #ffffffd9; border-radius:20px; background:linear-gradient(120deg,#ffffffbd,#eefbfc8c); box-shadow:0 10px 36px #237e9610; backdrop-filter:blur(8px); }
+.event h3 { font-size:24px; line-height:1.55; }
+.event p { font-size:15px; line-height:1.95; margin-top:14px; }
+.event-date { font-size:15px; font-weight:bold; }
+.event-type { font-size:12px; padding:5px 14px; border-radius:20px; }
+.event .text-link { margin-top:15px; font-size:14px; }
 ::selection { background:#b6eaf5; color:#153c4d; }
 .header { border-color:#c4e3ee; }
 .brand { color:#124e65; }
@@ -211,7 +222,8 @@ dialog::backdrop { background:#16445e66; }
   .reveal.is-visible,.reveal:focus-within { opacity:1; transform:none; }
   @keyframes arrival { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
 }
-@media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } }
+@media(max-width:850px) { .event { grid-template-columns:100px 70px minmax(0,1fr); gap:18px; padding:26px; } }
+@media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } #events .section-heading h2 { font-size:28px; } .event { grid-template-columns:100px 70px; padding:24px 20px; min-height:0; gap:15px; } .event>div { grid-column:1/-1; } .event h3 { font-size:21px; } .event p { font-size:14px; } }
 @media(prefers-reduced-motion:reduce) { .splash-drop { animation:none; } }
 </style>
   <meta name="theme-color" content="#edfaff">
@@ -240,13 +252,14 @@ dialog::backdrop { background:#16445e66; }
 // 下記はすべて記入例です。自分の情報に置き換えてから sampleMode を false にします。
 window.PORTFOLIO = {
   sampleMode: true,
+  site: { favicon: "assets/favicon.svg" }, // PNG・SVG・ICO等のアイコン画像を指定
   presentation: {
     splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 1600 },
     // image に assets/splash.webp 等を指定可能。空なら水滴アニメーションを表示。
     reveal: true
   },
   profile: {
-    name: "あなたの名前", school: "学校名 / 学科・コース名",
+    name: "あなたの名前", school: "学校名", course: "学科・コース名",
     headline: "心が動く、\n遊びをつくる。",
     intro: "ゲーム制作の作品と、その裏側にある技術や挑戦をまとめたポートフォリオです。",
     bio: "ここに自己紹介を記入します。ゲーム制作を始めたきっかけ、得意なこと、大切にしていること、これから挑戦したいことなどを紹介できます。",
@@ -320,11 +333,14 @@ window.PORTFOLIO = {
     a.append(el('span', `${link.label} ↗`)); container.append(a);
   });
   const p = data.profile;
+  const schoolText = [p.school, p.course].filter(Boolean).join('\n');
+  if (data.site?.favicon) document.getElementById('site-icon').href = data.site.favicon;
   document.title = `${p.name} | Game Creator Portfolio`;
   document.querySelector('meta[name="description"]').content = p.intro;
   ['headline', 'intro', 'name', 'school', 'bio'].forEach(key => $(key).textContent = p[key]);
+  $('school').textContent = schoolText;
   $('sample-notice').hidden = !data.sampleMode;
-  [['名前', p.name], ['学校・所属', p.school], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
+  [['名前', p.name], ['学校・所属', schoolText], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
   const contact = el('div', '', 'contact');
   const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';

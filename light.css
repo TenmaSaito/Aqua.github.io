@@ -1,6 +1,16 @@
 /* CLEAR WATER — 明るい水色。最終的な色の調整はこのファイルで行います。 */
 :root { color-scheme:light; --paper:#f2fbfe; --ink:#173f51; --muted:#4c6d7d; --line:#c9e3ed; --green:#126f88; --mint:#126f88; }
-body { background:radial-gradient(ellipse at 95% 0,#bdeefb80,transparent 42%),radial-gradient(ellipse at 0 65%,#cdeff578,transparent 44%),#f4fbfe; }
+body { isolation:isolate; background:radial-gradient(ellipse at 12% 0,#ffffffdc,transparent 40%),radial-gradient(ellipse at 100% 35%,#79d9e54d,transparent 50%),linear-gradient(165deg,#f0fbff 0%,#dbf5fa 32%,#c3edf2 68%,#e4f7fc 100%); }
+body::before { content:''; position:fixed; z-index:-1; inset:0; pointer-events:none; opacity:.32; background:radial-gradient(ellipse at 25% 35%,transparent 48%,#ffffffa0 49%,transparent 51%) 0 0/370px 260px,radial-gradient(ellipse at 65% 65%,transparent 48%,#ffffff90 49%,transparent 52%) 100px 60px/430px 310px; mask-image:linear-gradient(90deg,#0008,transparent 40%,#000); }
+#school,.profile dd { white-space:pre-line; }
+#events .section-heading h2 { font-size:36px; }
+#event-list { display:grid; gap:20px; }
+.event { grid-template-columns:115px 76px minmax(0,1fr); gap:28px; padding:32px; min-height:160px; border:1px solid #ffffffd9; border-radius:20px; background:linear-gradient(120deg,#ffffffbd,#eefbfc8c); box-shadow:0 10px 36px #237e9610; backdrop-filter:blur(8px); }
+.event h3 { font-size:24px; line-height:1.55; }
+.event p { font-size:15px; line-height:1.95; margin-top:14px; }
+.event-date { font-size:15px; font-weight:bold; }
+.event-type { font-size:12px; padding:5px 14px; border-radius:20px; }
+.event .text-link { margin-top:15px; font-size:14px; }
 ::selection { background:#b6eaf5; color:#153c4d; }
 .header { border-color:#c4e3ee; }
 .brand { color:#124e65; }
@@ -62,5 +72,6 @@ dialog::backdrop { background:#16445e66; }
   .reveal.is-visible,.reveal:focus-within { opacity:1; transform:none; }
   @keyframes arrival { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
 }
-@media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } }
+@media(max-width:850px) { .event { grid-template-columns:100px 70px minmax(0,1fr); gap:18px; padding:26px; } }
+@media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } #events .section-heading h2 { font-size:28px; } .event { grid-template-columns:100px 70px; padding:24px 20px; min-height:0; gap:15px; } .event>div { grid-column:1/-1; } .event h3 { font-size:21px; } .event p { font-size:14px; } }
 @media(prefers-reduced-motion:reduce) { .splash-drop { animation:none; } }

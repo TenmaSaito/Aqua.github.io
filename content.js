@@ -2,13 +2,14 @@
 // 下記はすべて記入例です。自分の情報に置き換えてから sampleMode を false にします。
 window.PORTFOLIO = {
   sampleMode: true,
+  site: { favicon: "assets/favicon.svg" }, // PNG・SVG・ICO等のアイコン画像を指定
   presentation: {
     splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 1600 },
     // image に assets/splash.webp 等を指定可能。空なら水滴アニメーションを表示。
     reveal: true
   },
   profile: {
-    name: "あなたの名前", school: "学校名 / 学科・コース名",
+    name: "あなたの名前", school: "学校名", course: "学科・コース名",
     headline: "心が動く、\n遊びをつくる。",
     intro: "ゲーム制作の作品と、その裏側にある技術や挑戦をまとめたポートフォリオです。",
     bio: "ここに自己紹介を記入します。ゲーム制作を始めたきっかけ、得意なこと、大切にしていること、これから挑戦したいことなどを紹介できます。",

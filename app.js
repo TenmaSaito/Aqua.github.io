@@ -16,11 +16,14 @@
     a.append(el('span', `${link.label} ↗`)); container.append(a);
   });
   const p = data.profile;
+  const schoolText = [p.school, p.course].filter(Boolean).join('\n');
+  if (data.site?.favicon) document.getElementById('site-icon').href = data.site.favicon;
   document.title = `${p.name} | Game Creator Portfolio`;
   document.querySelector('meta[name="description"]').content = p.intro;
   ['headline', 'intro', 'name', 'school', 'bio'].forEach(key => $(key).textContent = p[key]);
+  $('school').textContent = schoolText;
   $('sample-notice').hidden = !data.sampleMode;
-  [['名前', p.name], ['学校・所属', p.school], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
+  [['名前', p.name], ['学校・所属', schoolText], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
   const contact = el('div', '', 'contact');
   const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';
