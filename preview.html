@@ -147,12 +147,81 @@ body { background:radial-gradient(ellipse at 85% 6%,#0b53613d,transparent 40%),r
 @media(max-width:600px) { .hero-art { height:340px; box-shadow:0 16px 45px #0004; } .water-scene { padding-bottom:34px; } .art-caption { top:30px; } .liquid-orb { top:85px; } .water-ripple { top:280px; } }
 @media(prefers-reduced-motion:reduce) { .hero-art * { animation:none!important; } .bubbles i { opacity:.4; } }
 </style>
-  <meta name="theme-color" content="#0b0e17">
+  <style>/* CLEAR WATER — 明るい水色。最終的な色の調整はこのファイルで行います。 */
+:root { color-scheme:light; --paper:#f2fbfe; --ink:#173f51; --muted:#4c6d7d; --line:#c9e3ed; --green:#126f88; --mint:#126f88; }
+body { background:radial-gradient(ellipse at 95% 0,#bdeefb80,transparent 42%),radial-gradient(ellipse at 0 65%,#cdeff578,transparent 44%),#f4fbfe; }
+::selection { background:#b6eaf5; color:#153c4d; }
+.header { border-color:#c4e3ee; }
+.brand { color:#124e65; }
+.hero h1 { text-shadow:2px 3px 0 #fff; }
+.hero .eyebrow { color:#16728a; }
+.button { background:#176e89; color:#fff; border-color:#176e89; box-shadow:0 8px 25px #257e9b20; }
+.button:hover { background:#125b73; }
+.signature { border-color:#65bfd2; }
+.hero-art { background:radial-gradient(ellipse at 50% 15%,#ffffff,#d9f4fc 45%,#b8e4f2); border-color:#fff; box-shadow:inset 0 0 50px #ffffff90,0 24px 65px #3e95af18; }
+.art-caption,.art-bottom,.art-index { color:#376b80; }
+.water-light { background:conic-gradient(from 150deg at 40% 0,transparent 0deg,#fff9 12deg,transparent 24deg,#fff8 35deg,transparent 50deg); }
+.liquid-orb { border-color:#fff; background:radial-gradient(ellipse at 28% 20%,#fff 0,transparent 16%),radial-gradient(ellipse at 65% 75%,#aaf5ffb0,transparent 48%),radial-gradient(ellipse at 70% 25%,#d0f6fc,#75c5e0 55%,#c1f5ee); box-shadow:inset 10px 12px 22px #ffffff90,inset -12px -15px 22px #3187b540,inset 1px 1px 5px #fff,0 0 60px #fff8,0 24px 40px #3394ae30; }
+.orb-current { border-color:#ffffffb0; box-shadow:0 8px 22px #fff6,inset 0 8px 12px #fff5; }
+.water-ripple { border-color:#58aacb80; }
+.bubbles i { border-color:#479dc68a; }
+.wave-back { fill:#53b6d52b; stroke:#fff9; }
+.wave-front { fill:#54aacc22; stroke:#fff9; }
+.filters button { color:#466574; background:#ffffff70; }
+.filters button[aria-pressed=true] { color:#fff; background:#176e89; border-color:#176e89; }
+.work-visual { border-color:#c2e3ed; }
+.mint { background:radial-gradient(ellipse at 35% 25%,#e4fcff,#b9e3e9); color:#236c7d; }
+.peach { background:radial-gradient(ellipse at 35% 25%,#ecf9ff,#c3ddf3); color:#3f6e97; }
+.lavender { background:radial-gradient(ellipse at 35% 25%,#f3f4ff,#d0dcf2); color:#5c7097; }
+.visual-symbol { text-shadow:5px 5px 0 #fff6; }
+.tags span { background:#ffffff80; color:#365e70; }
+.skill-group { border-top-color:#81bbcf; }
+.experience { background:#dceff5; color:#23637b; }
+.event h3 { color:var(--ink); }
+.event-type { border-color:#a6cddd; color:#37667d; background:#e3f3fa; }
+.about { background:linear-gradient(110deg,#ffffff50,#e8f7fb40); }
+dialog { background:#f3fbfe; border-color:#9fc6d5; box-shadow:0 20px 90px #103b5466; }
+dialog::backdrop { background:#16445e66; }
+.close { background:#e1f0f5; color:var(--ink); }
+.media-placeholder { background:#e3f3f8; border-color:#78b3c7; color:#316b81; }
+.skip { color:#fff; }
+.text-link { display:inline-flex; align-items:center; gap:9px; }
+.link-icon { display:block; width:24px; height:24px; object-fit:contain; flex-shrink:0; }
+.contact { margin:24px 0; }
+.contact label { display:block; font-size:12px; font-weight:bold; margin-bottom:8px; }
+.contact-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.contact input { min-width:0; flex:1 1 220px; max-width:100%; padding:12px; border:1px solid #abcfdc; background:#ffffffb0; border-radius:8px; font:inherit; font-size:13px; color:var(--ink); }
+.contact input:focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+.contact button { background:#e3f3f8; border:1px solid #abcfdc; border-radius:6px; padding:8px 12px; font-size:12px; }
+.contact-status { font-size:11px; margin:5px 0; min-height:1.8em; }
+#back-top { position:fixed; right:24px; bottom:24px; z-index:10; display:grid; place-items:center; width:56px; height:62px; border:1px solid #fff; border-radius:50% 50% 45% 45%; background:#e0f5f9e8; backdrop-filter:blur(12px); color:#195a73; box-shadow:0 6px 26px #27698026; line-height:1.2; }
+#back-top span { font-size:25px; } #back-top small { font-size:9px; letter-spacing:.12em; }
+#splash { position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 35%,#fff,#d9f2fa); }
+.intro-active { overflow:hidden; }
+.splash-content { text-align:center; padding:24px; }
+.splash-drop { width:90px; height:100px; margin:0 auto 30px; background:radial-gradient(ellipse at 30% 20%,#fff,#b8eaf4 35%,#7cc4de); border:1px solid #fff; border-radius:45% 55% 58% 42%; box-shadow:inset 6px 8px 12px #fff8,0 16px 32px #488dae26; animation:water-morph 2s ease-in-out infinite alternate; }
+#splash-title { font-size:clamp(30px,7vw,54px); font-weight:bold; letter-spacing:.18em; margin:0; color:#225d78; }
+#splash-subtitle { font-size:10px; letter-spacing:.22em; color:#4f7687; }
+#splash-image { max-width:min(70vw,360px); max-height:40vh; object-fit:contain; margin:0 auto 25px; }
+#splash-skip { border:0; border-bottom:1px solid #8fbccf; background:transparent; padding:8px 15px; color:#416a7d; margin-top:30px; font-size:12px; }
+@media(prefers-reduced-motion:no-preference) {
+  .intro-finished .hero>div { animation:arrival .9s ease-out both; }
+  .intro-finished .water-scene { animation-delay:.12s; }
+  .reveal { opacity:0; transform:translateY(25px); transition:opacity .8s ease,transform .8s cubic-bezier(.2,.65,.3,1); }
+  .reveal.is-visible,.reveal:focus-within { opacity:1; transform:none; }
+  @keyframes arrival { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+}
+@media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } }
+@media(prefers-reduced-motion:reduce) { .splash-drop { animation:none; } }
+</style>
+  <meta name="theme-color" content="#edfaff">
+
 
 
 
 </head>
 <body>
+  <div id="splash" hidden role="dialog" aria-modal="true" aria-label="イントロダクション"><div class="splash-content"><div class="splash-drop" aria-hidden="true"></div><img id="splash-image" alt="" hidden><p id="splash-title"></p><p id="splash-subtitle"></p><button id="splash-skip" type="button">スキップ →</button></div></div>
   <a class="skip" href="#main">本文へ移動</a>
   <header class="header"><a class="brand" href="#">PLAY / CREATE<span>GAME CREATOR PORTFOLIO</span></a><nav aria-label="メインナビゲーション"><a href="#works">作品</a><a href="#about">プロフィール</a><a href="#skills">技術</a><a href="#events">活動</a></nav></header>
   <main id="main">
@@ -166,17 +235,27 @@ body { background:radial-gradient(ellipse at 85% 6%,#0b53613d,transparent 40%),r
   <footer><a class="brand" href="#">PLAY / CREATE</a><p id="copyright"></p><a href="#">ページの先頭へ ↑</a></footer>
   <dialog id="work-dialog" aria-labelledby="dialog-title"><button id="close-dialog" class="close" aria-label="作品の詳細を閉じる">閉じる ×</button><div id="dialog-content"></div></dialog>
   <noscript>作品情報の表示にはJavaScriptを有効にしてください。</noscript>
+  <button id="back-top" type="button" aria-label="ページの先頭に戻る" hidden><span aria-hidden="true">↑</span><small>TOP</small></button>
 <script>// このファイルの内容を編集するだけで、サイトの掲載情報を更新できます。
 // 下記はすべて記入例です。自分の情報に置き換えてから sampleMode を false にします。
 window.PORTFOLIO = {
   sampleMode: true,
+  presentation: {
+    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 1600 },
+    // image に assets/splash.webp 等を指定可能。空なら水滴アニメーションを表示。
+    reveal: true
+  },
   profile: {
     name: "あなたの名前", school: "学校名 / 学科・コース名",
     headline: "心が動く、\n遊びをつくる。",
     intro: "ゲーム制作の作品と、その裏側にある技術や挑戦をまとめたポートフォリオです。",
     bio: "ここに自己紹介を記入します。ゲーム制作を始めたきっかけ、得意なこと、大切にしていること、これから挑戦したいことなどを紹介できます。",
     interests: "興味のある分野を記入",
-    links: [] // 例: { label: "GitHub", url: "https://github.com/ユーザー名" }
+    email: "", // 公開する連絡用メールアドレス。空の場合は未設定と表示。
+    links: [
+      { label: "GitHub", url: "https://github.com/TenmaSaito", icon: "" }
+      // icon: "assets/github-icon.png" のように自分のアイコン画像を指定できます。
+    ]
   },
   games: [
     {
@@ -229,7 +308,17 @@ window.PORTFOLIO = {
   const $ = id => document.getElementById(id);
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text) n.textContent = text; if (className) n.className = className; return n; };
   const safeURL = value => { try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
-  const addLinks = (container, links = []) => links.forEach(link => { const url = safeURL(link.url); if (!url) return; const a = el('a', `${link.label} ↗`, 'text-link'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; container.append(a); });
+  const addLinks = (container, links = []) => links.forEach(link => {
+    const url = safeURL(link.url); if (!url) return;
+    const a = el('a', '', 'text-link'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    if (link.icon) {
+      const icon = el('img', '', 'link-icon'); icon.src = link.icon; icon.alt = ''; icon.addEventListener('error', () => icon.remove()); a.append(icon);
+    } else if (new URL(url).hostname === 'github.com') {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('class', 'link-icon'); svg.setAttribute('aria-hidden', 'true');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('fill', 'currentColor'); path.setAttribute('d', 'M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z'); svg.append(path); a.append(svg);
+    }
+    a.append(el('span', `${link.label} ↗`)); container.append(a);
+  });
   const p = data.profile;
   document.title = `${p.name} | Game Creator Portfolio`;
   document.querySelector('meta[name="description"]').content = p.intro;
@@ -237,6 +326,16 @@ window.PORTFOLIO = {
   $('sample-notice').hidden = !data.sampleMode;
   [['名前', p.name], ['学校・所属', p.school], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
+  const contact = el('div', '', 'contact');
+  const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';
+  const emailInput = el('input'); emailInput.id = 'contact-email'; emailInput.type = 'email'; emailInput.readOnly = true; emailInput.value = p.email || ''; emailInput.placeholder = 'メールアドレスは準備中です';
+  const contactRow = el('div', '', 'contact-row'); contactRow.append(emailInput);
+  const contactStatus = el('p', '', 'contact-status'); contactStatus.setAttribute('aria-live', 'polite');
+  if (p.email && emailInput.validity.valid) {
+    const mail = el('a', 'メールを開く ↗', 'text-link'); mail.href = `mailto:${encodeURIComponent(p.email)}`; contactRow.append(mail);
+    const copy = el('button', 'コピー'); copy.type = 'button'; copy.addEventListener('click', async () => { try { await navigator.clipboard.writeText(p.email); contactStatus.textContent = 'コピーしました。'; } catch { emailInput.focus(); emailInput.select(); contactStatus.textContent = 'アドレスを選択しました。コピーしてください。'; } }); contactRow.append(copy);
+  }
+  contact.append(emailLabel, contactRow, contactStatus); $('socials').before(contact);
   $('copyright').textContent = `© ${new Date().getFullYear()} ${p.name}`;
   const dialog = $('work-dialog');
   let opener;
@@ -317,6 +416,64 @@ window.PORTFOLIO = {
   }
   document.addEventListener('visibilitychange', visibility);
   sync();
+})();
+</script><script>(() => {
+  const config = window.PORTFOLIO?.presentation || {};
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const top = document.getElementById('back-top');
+  const updateTop = () => { top.hidden = scrollY < 480; };
+  addEventListener('scroll', updateTop, {passive:true}); updateTop();
+  top.addEventListener('click', () => {
+    window.scrollTo({top:0, behavior:reduced.matches ? 'instant' : 'smooth'});
+    document.querySelector('.brand').focus({preventScroll:true});
+  });
+
+  let revealObserver;
+  const reveal = () => {
+    if (config.reveal === false || reduced.matches || !('IntersectionObserver' in window)) return;
+    revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+    }), {threshold:0.08});
+    document.querySelectorAll('.section').forEach(section => {
+      // すでに表示範囲にある内容は隠さない。JS失敗時も本文は常に表示される。
+      if (section.getBoundingClientRect().top > innerHeight) { section.classList.add('reveal'); revealObserver.observe(section); }
+    });
+  };
+  document.addEventListener('focusin', event => event.target.closest('.reveal')?.classList.add('is-visible'));
+  document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', () => {
+    const id = link.getAttribute('href').slice(1); if (id) document.getElementById(id)?.classList.add('is-visible');
+  }));
+
+  const splash = document.getElementById('splash');
+  const options = config.splash || {};
+  let finished = false;
+  let timer;
+  const finish = () => {
+    if (finished) return; finished = true; clearTimeout(timer);
+    const focused = splash.contains(document.activeElement);
+    splash.hidden = true;
+    document.body.classList.remove('intro-active');
+    document.querySelectorAll('[data-intro-inert]').forEach(node => { node.inert = false; node.removeAttribute('data-intro-inert'); });
+    if (focused) document.querySelector('.brand').focus({preventScroll:true});
+    document.body.classList.add('intro-finished'); reveal();
+  };
+  reduced.addEventListener('change', () => {
+    if (reduced.matches) { finish(); revealObserver?.disconnect(); document.querySelectorAll('.reveal').forEach(n => n.classList.add('is-visible')); }
+  });
+  // ハッシュ付きの直接リンクと動きを抑える設定では導入を省略。
+  if (options.enabled === false || reduced.matches || location.hash) { finish(); return; }
+  document.getElementById('splash-title').textContent = options.title || 'AQUART';
+  document.getElementById('splash-subtitle').textContent = options.subtitle || 'IDEAS FLOW INTO PLAY.';
+  if (options.image) {
+    const image = document.getElementById('splash-image'); image.src = options.image; image.hidden = false;
+    const drop = splash.querySelector('.splash-drop'); drop.hidden = true;
+    image.addEventListener('error', () => { image.hidden = true; drop.hidden = false; });
+  }
+  const skip = document.getElementById('splash-skip'); skip.addEventListener('click', finish);
+  splash.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); if (event.key === 'Tab') { event.preventDefault(); skip.focus(); } });
+  document.querySelectorAll('body > header, body > main, body > footer, .skip, #back-top').forEach(node => { node.inert = true; node.dataset.introInert = ''; });
+  splash.hidden = false; document.body.classList.add('intro-active'); skip.focus({preventScroll:true});
+  timer = setTimeout(finish, Math.min(4000, Math.max(400, Number(options.durationMs) || 1600)));
 })();
 </script></body>
 </html>

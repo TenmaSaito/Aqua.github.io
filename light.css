@@ -1,0 +1,66 @@
+/* CLEAR WATER — 明るい水色。最終的な色の調整はこのファイルで行います。 */
+:root { color-scheme:light; --paper:#f2fbfe; --ink:#173f51; --muted:#4c6d7d; --line:#c9e3ed; --green:#126f88; --mint:#126f88; }
+body { background:radial-gradient(ellipse at 95% 0,#bdeefb80,transparent 42%),radial-gradient(ellipse at 0 65%,#cdeff578,transparent 44%),#f4fbfe; }
+::selection { background:#b6eaf5; color:#153c4d; }
+.header { border-color:#c4e3ee; }
+.brand { color:#124e65; }
+.hero h1 { text-shadow:2px 3px 0 #fff; }
+.hero .eyebrow { color:#16728a; }
+.button { background:#176e89; color:#fff; border-color:#176e89; box-shadow:0 8px 25px #257e9b20; }
+.button:hover { background:#125b73; }
+.signature { border-color:#65bfd2; }
+.hero-art { background:radial-gradient(ellipse at 50% 15%,#ffffff,#d9f4fc 45%,#b8e4f2); border-color:#fff; box-shadow:inset 0 0 50px #ffffff90,0 24px 65px #3e95af18; }
+.art-caption,.art-bottom,.art-index { color:#376b80; }
+.water-light { background:conic-gradient(from 150deg at 40% 0,transparent 0deg,#fff9 12deg,transparent 24deg,#fff8 35deg,transparent 50deg); }
+.liquid-orb { border-color:#fff; background:radial-gradient(ellipse at 28% 20%,#fff 0,transparent 16%),radial-gradient(ellipse at 65% 75%,#aaf5ffb0,transparent 48%),radial-gradient(ellipse at 70% 25%,#d0f6fc,#75c5e0 55%,#c1f5ee); box-shadow:inset 10px 12px 22px #ffffff90,inset -12px -15px 22px #3187b540,inset 1px 1px 5px #fff,0 0 60px #fff8,0 24px 40px #3394ae30; }
+.orb-current { border-color:#ffffffb0; box-shadow:0 8px 22px #fff6,inset 0 8px 12px #fff5; }
+.water-ripple { border-color:#58aacb80; }
+.bubbles i { border-color:#479dc68a; }
+.wave-back { fill:#53b6d52b; stroke:#fff9; }
+.wave-front { fill:#54aacc22; stroke:#fff9; }
+.filters button { color:#466574; background:#ffffff70; }
+.filters button[aria-pressed=true] { color:#fff; background:#176e89; border-color:#176e89; }
+.work-visual { border-color:#c2e3ed; }
+.mint { background:radial-gradient(ellipse at 35% 25%,#e4fcff,#b9e3e9); color:#236c7d; }
+.peach { background:radial-gradient(ellipse at 35% 25%,#ecf9ff,#c3ddf3); color:#3f6e97; }
+.lavender { background:radial-gradient(ellipse at 35% 25%,#f3f4ff,#d0dcf2); color:#5c7097; }
+.visual-symbol { text-shadow:5px 5px 0 #fff6; }
+.tags span { background:#ffffff80; color:#365e70; }
+.skill-group { border-top-color:#81bbcf; }
+.experience { background:#dceff5; color:#23637b; }
+.event h3 { color:var(--ink); }
+.event-type { border-color:#a6cddd; color:#37667d; background:#e3f3fa; }
+.about { background:linear-gradient(110deg,#ffffff50,#e8f7fb40); }
+dialog { background:#f3fbfe; border-color:#9fc6d5; box-shadow:0 20px 90px #103b5466; }
+dialog::backdrop { background:#16445e66; }
+.close { background:#e1f0f5; color:var(--ink); }
+.media-placeholder { background:#e3f3f8; border-color:#78b3c7; color:#316b81; }
+.skip { color:#fff; }
+.text-link { display:inline-flex; align-items:center; gap:9px; }
+.link-icon { display:block; width:24px; height:24px; object-fit:contain; flex-shrink:0; }
+.contact { margin:24px 0; }
+.contact label { display:block; font-size:12px; font-weight:bold; margin-bottom:8px; }
+.contact-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.contact input { min-width:0; flex:1 1 220px; max-width:100%; padding:12px; border:1px solid #abcfdc; background:#ffffffb0; border-radius:8px; font:inherit; font-size:13px; color:var(--ink); }
+.contact input:focus-visible { outline:2px solid var(--green); outline-offset:3px; }
+.contact button { background:#e3f3f8; border:1px solid #abcfdc; border-radius:6px; padding:8px 12px; font-size:12px; }
+.contact-status { font-size:11px; margin:5px 0; min-height:1.8em; }
+#back-top { position:fixed; right:24px; bottom:24px; z-index:10; display:grid; place-items:center; width:56px; height:62px; border:1px solid #fff; border-radius:50% 50% 45% 45%; background:#e0f5f9e8; backdrop-filter:blur(12px); color:#195a73; box-shadow:0 6px 26px #27698026; line-height:1.2; }
+#back-top span { font-size:25px; } #back-top small { font-size:9px; letter-spacing:.12em; }
+#splash { position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 35%,#fff,#d9f2fa); }
+.intro-active { overflow:hidden; }
+.splash-content { text-align:center; padding:24px; }
+.splash-drop { width:90px; height:100px; margin:0 auto 30px; background:radial-gradient(ellipse at 30% 20%,#fff,#b8eaf4 35%,#7cc4de); border:1px solid #fff; border-radius:45% 55% 58% 42%; box-shadow:inset 6px 8px 12px #fff8,0 16px 32px #488dae26; animation:water-morph 2s ease-in-out infinite alternate; }
+#splash-title { font-size:clamp(30px,7vw,54px); font-weight:bold; letter-spacing:.18em; margin:0; color:#225d78; }
+#splash-subtitle { font-size:10px; letter-spacing:.22em; color:#4f7687; }
+#splash-image { max-width:min(70vw,360px); max-height:40vh; object-fit:contain; margin:0 auto 25px; }
+#splash-skip { border:0; border-bottom:1px solid #8fbccf; background:transparent; padding:8px 15px; color:#416a7d; margin-top:30px; font-size:12px; }
+@media(prefers-reduced-motion:no-preference) {
+  .intro-finished .hero>div { animation:arrival .9s ease-out both; }
+  .intro-finished .water-scene { animation-delay:.12s; }
+  .reveal { opacity:0; transform:translateY(25px); transition:opacity .8s ease,transform .8s cubic-bezier(.2,.65,.3,1); }
+  .reveal.is-visible,.reveal:focus-within { opacity:1; transform:none; }
+  @keyframes arrival { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+}
+@media(max-width:600px) { #back-top { right:14px; bottom:14px; width:48px; height:55px; } }
+@media(prefers-reduced-motion:reduce) { .splash-drop { animation:none; } }

@@ -8,9 +8,11 @@ const html = read('index.html')
   .replace('<link rel="stylesheet" href="./style.css">', () => '<style>' + read('style.css') + '</style>')
   .replace('<link rel="stylesheet" href="./theme.css">', () => '<style>' + read('theme.css') + '</style>')
   .replace('<link rel="stylesheet" href="./water.css">', () => '<style>' + read('water.css') + '</style>')
+  .replace('<link rel="stylesheet" href="./light.css">', () => '<style>' + read('light.css') + '</style>')
   .replace('<script defer src="./content.js"></script>', '')
   .replace('<script defer src="./app.js"></script>', '')
   .replace('<script defer src="./water.js"></script>', '')
-  .replace('</body>', () => script('content.js') + script('app.js') + script('water.js') + '</body>');
+  .replace('<script defer src="./experience.js"></script>', '')
+  .replace('</body>', () => script('content.js') + script('app.js') + script('water.js') + script('experience.js') + '</body>');
 fs.writeFileSync(path.join(__dirname, 'preview.html'), html.replace(/^[ \t]+$/gm, ''));
 console.log('Updated preview.html');

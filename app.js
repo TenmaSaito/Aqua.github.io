@@ -4,7 +4,17 @@
   const $ = id => document.getElementById(id);
   const el = (tag, text, className) => { const n = document.createElement(tag); if (text) n.textContent = text; if (className) n.className = className; return n; };
   const safeURL = value => { try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; } };
-  const addLinks = (container, links = []) => links.forEach(link => { const url = safeURL(link.url); if (!url) return; const a = el('a', `${link.label} ↗`, 'text-link'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer'; container.append(a); });
+  const addLinks = (container, links = []) => links.forEach(link => {
+    const url = safeURL(link.url); if (!url) return;
+    const a = el('a', '', 'text-link'); a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    if (link.icon) {
+      const icon = el('img', '', 'link-icon'); icon.src = link.icon; icon.alt = ''; icon.addEventListener('error', () => icon.remove()); a.append(icon);
+    } else if (new URL(url).hostname === 'github.com') {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('class', 'link-icon'); svg.setAttribute('aria-hidden', 'true');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('fill', 'currentColor'); path.setAttribute('d', 'M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.7-1.3-1.7-1.1-.8.1-.8.1-.8 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z'); svg.append(path); a.append(svg);
+    }
+    a.append(el('span', `${link.label} ↗`)); container.append(a);
+  });
   const p = data.profile;
   document.title = `${p.name} | Game Creator Portfolio`;
   document.querySelector('meta[name="description"]').content = p.intro;
@@ -12,6 +22,16 @@
   $('sample-notice').hidden = !data.sampleMode;
   [['名前', p.name], ['学校・所属', p.school], ['興味のある分野', p.interests]].forEach(([label, value]) => { if (value) $('profile').append(el('dt', label), el('dd', value)); });
   addLinks($('socials'), p.links);
+  const contact = el('div', '', 'contact');
+  const emailLabel = el('label', 'メールアドレス'); emailLabel.htmlFor = 'contact-email';
+  const emailInput = el('input'); emailInput.id = 'contact-email'; emailInput.type = 'email'; emailInput.readOnly = true; emailInput.value = p.email || ''; emailInput.placeholder = 'メールアドレスは準備中です';
+  const contactRow = el('div', '', 'contact-row'); contactRow.append(emailInput);
+  const contactStatus = el('p', '', 'contact-status'); contactStatus.setAttribute('aria-live', 'polite');
+  if (p.email && emailInput.validity.valid) {
+    const mail = el('a', 'メールを開く ↗', 'text-link'); mail.href = `mailto:${encodeURIComponent(p.email)}`; contactRow.append(mail);
+    const copy = el('button', 'コピー'); copy.type = 'button'; copy.addEventListener('click', async () => { try { await navigator.clipboard.writeText(p.email); contactStatus.textContent = 'コピーしました。'; } catch { emailInput.focus(); emailInput.select(); contactStatus.textContent = 'アドレスを選択しました。コピーしてください。'; } }); contactRow.append(copy);
+  }
+  contact.append(emailLabel, contactRow, contactStatus); $('socials').before(contact);
   $('copyright').textContent = `© ${new Date().getFullYear()} ${p.name}`;
   const dialog = $('work-dialog');
   let opener;
