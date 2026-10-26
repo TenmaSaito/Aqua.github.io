@@ -594,6 +594,12 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 .intro-active>header,.intro-active>main,.intro-active>footer { opacity:0; }
 .intro-active.intro-revealing>header,.intro-active.intro-revealing>main,.intro-active.intro-revealing>footer { opacity:1; transition:opacity .75s ease-out; }
 .liquid-loader { width:160px; height:160px; margin:40px auto 28px; position:relative; }
+.has-floater .liquid-loader { margin-top:104px; }
+.loader-floater { position:absolute; z-index:2; left:50%; top:-90px; width:112px; height:112px; margin-left:-56px; pointer-events:none; animation:mascot-rise var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) both; }
+.loader-floater img { display:block; width:112px; height:112px; object-fit:contain; filter:drop-shadow(0 3px 3px #fff6); transform-origin:50% 75%; animation:mascot-bob 1.6s ease-in-out infinite alternate; }
+@keyframes mascot-rise { from { transform:translateY(184px); } to { transform:translateY(-16px); } }
+@keyframes mascot-bob { from { transform:translateY(1px) rotate(-3deg); } to { transform:translateY(-4px) rotate(3deg); } }
+.splash-full .loader-floater { transform:translateY(-16px); animation:none; }
 .loader-circle { width:100%; height:100%; border-radius:50%; border:2px solid var(--border); overflow:hidden; position:relative; background:var(--surface); box-shadow:0 8px 35px var(--shadow),inset 0 0 20px #fff3; }
 .loader-fill { position:absolute; inset:0; background:linear-gradient(var(--water),var(--water-deep)); animation:liquid-fill var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) forwards; }
 @keyframes liquid-fill { from { transform:translateY(115%); } to { transform:translateY(-10%); } }
@@ -616,6 +622,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 @media(max-width:950px) { .header-controls { width:100%; justify-content:space-between; gap:14px; } .header { align-items:flex-start; gap:18px; } }
 @media(max-width:700px) { .hero { grid-template-columns:1fr; padding-top:40px; gap:32px; } .signature { border-left:2px solid var(--border); padding:4px 0 4px 18px; } .hero h1 { font-size:42px; } .header-controls { align-items:flex-start; } nav { gap:14px; font-size:12px; } .header { min-height:0; } .skill-group { grid-template-columns:1fr; } .internship-card { padding:24px; } .internship-card h3 { font-size:21px; } .section-heading>p { max-width:none; } }
 @media(prefers-reduced-motion:reduce) {
+  .loader-floater,.loader-floater img { animation:none; }
   .theme-knob { transition:none; }
   .sea-wave { animation:none; }
   #splash { transition:none; }
@@ -628,7 +635,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 
 </head>
 <body>
-  <div id="splash" hidden role="dialog" aria-modal="true" aria-label="イントロダクション"><div class="splash-content"><div class="liquid-loader" aria-hidden="true"><div class="loader-pour"></div><div class="loader-circle"><div class="loader-fill"><i class="loader-wave"></i></div><span class="loader-shine"></span></div></div><img id="splash-image" alt="" hidden><p id="splash-title"></p><p id="splash-subtitle"></p><p id="splash-status" role="status">水を満たしています</p><button id="splash-skip" type="button">スキップ →</button></div></div>
+  <div id="splash" hidden role="dialog" aria-modal="true" aria-label="イントロダクション"><div class="splash-content"><div class="liquid-loader" aria-hidden="true"><div class="loader-pour"></div><div class="loader-circle"><div class="loader-fill"><i class="loader-wave"></i></div><span class="loader-shine"></span></div><div class="loader-floater" hidden><img id="splash-floating-image" alt="" width="112" height="112"></div></div><img id="splash-image" alt="" hidden><p id="splash-title"></p><p id="splash-subtitle"></p><p id="splash-status" role="status">水を満たしています</p><button id="splash-skip" type="button">スキップ →</button></div></div>
   <a class="skip" href="#main">本文へ移動</a>
   <header class="header"><a class="brand" href="#">PLAY / CREATE<span>GAME CREATOR PORTFOLIO</span></a><div class="header-controls"><nav aria-label="メインナビゲーション"><a href="#works">作品</a><a href="#about">プロフィール</a><a href="#skills">技術</a><a href="#events">活動</a><a href="#internships">インターン</a></nav><button id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="ダークテーマ" hidden><span class="theme-label theme-day">昼の海</span><span class="theme-track" aria-hidden="true"><span class="theme-knob">☀</span></span><span class="theme-label theme-night">夜の海</span></button></div></header>
   <main id="main">
@@ -650,7 +657,7 @@ window.PORTFOLIO = {
   sampleMode: false,
   site: { favicon: "assets/favicon.svg" },
   presentation: {
-    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 2200 },
+    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", floatingImage: "assets/mascot.png", durationMs: 2200 },
     reveal: true
   },
   profile: {
@@ -1100,6 +1107,14 @@ window.PORTFOLIO = {
   if (options.image) {
     const image = document.getElementById('splash-image'); image.src = options.image; image.hidden = false;
     image.addEventListener('error', () => { image.hidden = true; });
+  }
+  if (options.floatingImage) {
+    const image = document.getElementById('splash-floating-image');
+    const floater = image.parentElement;
+    image.addEventListener('error', () => { floater.hidden = true; splash.classList.remove('has-floater'); });
+    image.src = options.floatingImage;
+    floater.hidden = false;
+    splash.classList.add('has-floater');
   }
   const skip = document.getElementById('splash-skip'); skip.addEventListener('click', finish);
   splash.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); if (event.key === 'Tab') { event.preventDefault(); skip.focus(); } });

@@ -3,7 +3,7 @@ window.PORTFOLIO = {
   sampleMode: false,
   site: { favicon: "assets/favicon.svg" },
   presentation: {
-    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", durationMs: 2200 },
+    splash: { enabled: true, title: "AQUART", subtitle: "IDEAS FLOW INTO PLAY.", image: "", floatingImage: "assets/mascot.png", durationMs: 2200 },
     reveal: true
   },
   profile: {

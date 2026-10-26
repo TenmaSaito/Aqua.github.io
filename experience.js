@@ -86,6 +86,14 @@
     const image = document.getElementById('splash-image'); image.src = options.image; image.hidden = false;
     image.addEventListener('error', () => { image.hidden = true; });
   }
+  if (options.floatingImage) {
+    const image = document.getElementById('splash-floating-image');
+    const floater = image.parentElement;
+    image.addEventListener('error', () => { floater.hidden = true; splash.classList.remove('has-floater'); });
+    image.src = options.floatingImage;
+    floater.hidden = false;
+    splash.classList.add('has-floater');
+  }
   const skip = document.getElementById('splash-skip'); skip.addEventListener('click', finish);
   splash.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); if (event.key === 'Tab') { event.preventDefault(); skip.focus(); } });
   document.querySelectorAll('body > header, body > main, body > footer, .skip, #back-top').forEach(node => { node.inert = true; node.dataset.introInert = ''; });

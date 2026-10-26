@@ -170,6 +170,12 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 .intro-active>header,.intro-active>main,.intro-active>footer { opacity:0; }
 .intro-active.intro-revealing>header,.intro-active.intro-revealing>main,.intro-active.intro-revealing>footer { opacity:1; transition:opacity .75s ease-out; }
 .liquid-loader { width:160px; height:160px; margin:40px auto 28px; position:relative; }
+.has-floater .liquid-loader { margin-top:104px; }
+.loader-floater { position:absolute; z-index:2; left:50%; top:-90px; width:112px; height:112px; margin-left:-56px; pointer-events:none; animation:mascot-rise var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) both; }
+.loader-floater img { display:block; width:112px; height:112px; object-fit:contain; filter:drop-shadow(0 3px 3px #fff6); transform-origin:50% 75%; animation:mascot-bob 1.6s ease-in-out infinite alternate; }
+@keyframes mascot-rise { from { transform:translateY(184px); } to { transform:translateY(-16px); } }
+@keyframes mascot-bob { from { transform:translateY(1px) rotate(-3deg); } to { transform:translateY(-4px) rotate(3deg); } }
+.splash-full .loader-floater { transform:translateY(-16px); animation:none; }
 .loader-circle { width:100%; height:100%; border-radius:50%; border:2px solid var(--border); overflow:hidden; position:relative; background:var(--surface); box-shadow:0 8px 35px var(--shadow),inset 0 0 20px #fff3; }
 .loader-fill { position:absolute; inset:0; background:linear-gradient(var(--water),var(--water-deep)); animation:liquid-fill var(--fill-duration,2200ms) cubic-bezier(.25,.45,.4,1) forwards; }
 @keyframes liquid-fill { from { transform:translateY(115%); } to { transform:translateY(-10%); } }
@@ -192,6 +198,7 @@ footer { flex-wrap:wrap; padding-top:28px; padding-bottom:18px; }
 @media(max-width:950px) { .header-controls { width:100%; justify-content:space-between; gap:14px; } .header { align-items:flex-start; gap:18px; } }
 @media(max-width:700px) { .hero { grid-template-columns:1fr; padding-top:40px; gap:32px; } .signature { border-left:2px solid var(--border); padding:4px 0 4px 18px; } .hero h1 { font-size:42px; } .header-controls { align-items:flex-start; } nav { gap:14px; font-size:12px; } .header { min-height:0; } .skill-group { grid-template-columns:1fr; } .internship-card { padding:24px; } .internship-card h3 { font-size:21px; } .section-heading>p { max-width:none; } }
 @media(prefers-reduced-motion:reduce) {
+  .loader-floater,.loader-floater img { animation:none; }
   .theme-knob { transition:none; }
   .sea-wave { animation:none; }
   #splash { transition:none; }
