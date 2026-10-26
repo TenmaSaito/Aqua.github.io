@@ -4,7 +4,7 @@ const path = require('node:path');
 const read = name => fs.readFileSync(path.join(__dirname, name), 'utf8');
 // 掲載文中の </script> が HTML の script 要素を終了させないようにします。
 const script = name => '<script>' + read(name).replace(/<\/script/gi, '<\\/script') + '</script>';
-const html = read('index.html')
+const html = read('index.html').replace(/\?v=[^"\s]+/g, '')
   .replace('<link rel="stylesheet" href="./style.css">', () => '<style>' + read('style.css') + '</style>')
   .replace('<link rel="stylesheet" href="./theme.css">', () => '<style>' + read('theme.css') + '</style>')
   .replace('<link rel="stylesheet" href="./water.css">', () => '<style>' + read('water.css') + '</style>')
