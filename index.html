@@ -879,9 +879,11 @@ html[data-theme="dark"] .pending-badge{ color:#ffe9a8; background:rgba(232,195,7
 /* ================================================================
    ★★★  コンテンツ設定（埋め込み版フォールバック） ★★★
    掲載内容の本体は content/ フォルダの分割ファイルです：
-     content/profile.js（プロフィール） / content/works.js（作品）
+     content/profile.js（プロフィール） / content/works.js（作品の導入文＋表示順リスト）
+     content/works/<ゲームID>.js（作品1件ごとのデータ、1作品＝1ファイル）
      content/events.js（活動・インターン） / content/skills.js（技術・ソース一覧）
-   起動時にそれらを読み込んで結合し、表示に使います。
+   起動時にまず content/works.js を読み、その gamesOrder のIDから
+   content/works/<ID>.js を読み込んで作品一覧を組み立て、表示に使います。
    ここにあるのは予備のコピーで、分割ファイルが読み込めない／壊れている
    パートだけをこのコピーで補います（サイトが真っ白にならないための保険）。
    通常、ここの編集は不要です（編集しても分割ファイルが優先されます）。
@@ -893,10 +895,10 @@ const EMBEDDED_CONFIG = {
     school: "専門学校北海道サイバークリエイターズ大学校",
     course: "ゲームクリエイター学科",
     specialization: "ゲームプログラマ専攻",
-    headline: "心が動く、\n遊びをつくる。",
-    copy: "IDEAS FLOW INTO PLAY.",
-    intro: "ゲームプログラマを専攻する齊藤天眞のポートフォリオ。制作したゲームや、技術・イベントでの活動を紹介します。",
-    bio: "専門学校北海道サイバークリエイターズ大学校で、ゲームプログラマを専攻しています。C/C++・C#を使用し、これまでに約10本のゲームを制作。ゲームジャムへの参加やイベントでの出展も行っています。",
+    headline: "水のように\n柔軟な発想を！",
+    copy: "AS FLEXIBLE AS WATER!",
+    intro: "制作したゲームや、技術・イベントでの活動を紹介します。",
+    bio: "専門学校北海道サイバークリエイターズ大学校で、ゲームプログラマを専攻しています。C/C++・C#を使用し、これまでに約10本のゲームを制作。ゲームジャムへの参加・イベントでの出展経験あり。",
     email: "251315@st.yoshi-g.ac.jp",
     github: "https://github.com/TenmaSaito",
     chips: ["C / C++（1年半）", "C#（1年）", "DirectX9", "Unity", "約10本のゲームを制作"]
@@ -1726,9 +1728,16 @@ function startApp(CONFIG){
 
 /* ================================================================
    コンテンツ・ローダー
-   content/ の分割ファイル4本を並列に読み込み、パートごとに検証して
-   結合します。不正・欠落したパートは埋め込み版（EMBEDDED_CONFIG）で
-   補うため、どれか1ファイルを壊してもサイト全体は表示されます。
+   第1段階：content/ の分割ファイル4本（profile / works / events / skills）を
+   並列に読み込みます。content/works.js は作品の導入文と表示順リスト
+   （gamesOrder）だけを持つ小さなファイルです。
+   第2段階：gamesOrder のIDから content/works/<ID>.js（1作品＝1ファイル）の
+   URLを組み立てて並列に読み込み、gamesOrder の順に games 配列を組み立てます。
+   gamesOrder に無い gamesById があれば末尾に追加します（安全策）。
+   パートごとに検証し、不正・欠落したパートは埋め込み版（EMBEDDED_CONFIG）で
+   補います。特に games は、1作品でも読み込み失敗・不足・不正があれば
+   部分的に欠けた状態で表示せず、丸ごと埋め込み版を使います。
+   どれか1ファイルを壊してもサイト全体は表示されます。
    2.5秒以内にそろわない場合も、読み込み済み＋埋め込み版で描画します。
    ================================================================ */
 function aquartValidPart(key, v){
@@ -1737,11 +1746,43 @@ function aquartValidPart(key, v){
   if (key === "games") return Array.isArray(v) && v.length > 0;
   return Array.isArray(v); /* events / internships / skillGroups / sourceProjects */
 }
+function aquartValidGame(g){
+  return !!g && typeof g === "object" && typeof g.id === "string" && g.id.length > 0 && typeof g.title === "string" && g.title.length > 0;
+}
+/* gamesOrder + gamesById から games 配列を組み立てる。
+   gamesOrder のIDが1つでも欠けている／不正な場合は null を返し、
+   呼び出し側が games パート全体を埋め込み版にフォールバックします。 */
+function aquartBuildGames(src){
+  var order = src.gamesOrder, byId = src.gamesById;
+  if (!Array.isArray(order) || order.length === 0) return null;
+  if (!byId || typeof byId !== "object") return null;
+  var games = [], seen = {}, i, id, g;
+  for (i = 0; i < order.length; i++){
+    id = order[i];
+    if (typeof id !== "string" || id.length === 0) return null;
+    if (seen[id]) return null; /* IDの重複は不正として扱う */
+    g = byId[id];
+    if (!aquartValidGame(g) || g.id !== id) return null; /* 欠け・不正はフォールバック */
+    seen[id] = true;
+    games.push(g);
+  }
+  /* 安全策：gamesOrder に無い gamesById があれば末尾に追加する */
+  Object.keys(byId).forEach(function(k){
+    if (!seen[k] && aquartValidGame(byId[k]) && byId[k].id === k) games.push(byId[k]);
+  });
+  return games.length > 0 ? games : null;
+}
 function aquartResolveContent(){
   var src = (window.AQUART_CONTENT && typeof window.AQUART_CONTENT === "object") ? window.AQUART_CONTENT : {};
-  var keys = ["profile", "worksIntro", "games", "sourceProjects", "internships", "skillGroups", "events"];
+  var keys = ["profile", "worksIntro", "sourceProjects", "internships", "skillGroups", "events"];
   var out = {};
   keys.forEach(function(k){ out[k] = aquartValidPart(k, src[k]) ? src[k] : EMBEDDED_CONFIG[k]; });
+  /* games は gamesOrder＋各作品ファイルから組み立てる。旧形式の games 配列が
+     直接ある場合も受け付ける。組み立てに失敗したら埋め込み版を使う。 */
+  var built = aquartBuildGames(src);
+  if (built) out.games = built;
+  else if (aquartValidPart("games", src.games)) out.games = src.games;
+  else out.games = EMBEDDED_CONFIG.games;
   return out;
 }
 var aquartLaunched = false;
@@ -1751,21 +1792,37 @@ function aquartLaunch(){
   startApp(aquartResolveContent());
 }
 (function aquartLoadContent(){
-  var files = ["content/profile.js", "content/works.js", "content/events.js", "content/skills.js"];
   var day = new Date();
   var ver = day.getFullYear() + ("0" + (day.getMonth() + 1)).slice(-2) + ("0" + day.getDate()).slice(-2);
-  var pending = files.length;
   var timer = setTimeout(aquartLaunch, 2500); /* タイムアウトでも埋め込み版で描画 */
-  function done(){
-    pending -= 1;
-    if (pending <= 0) { clearTimeout(timer); aquartLaunch(); }
-  }
-  files.forEach(function(f){
+  function loadScript(url, cb){
     var s = document.createElement("script");
-    s.src = f + "?v=" + ver; /* 日単位のキャッシュ対策 */
-    s.onload = done;
-    s.onerror = done; /* 読めないファイルは埋め込み版で補う */
+    var called = false;
+    s.src = url + "?v=" + ver; /* 日単位のキャッシュ対策 */
+    s.onload = function(){ if (!called) { called = true; cb(); } };
+    s.onerror = function(){ if (!called) { called = true; cb(); } }; /* 読めないファイルは埋め込み版で補う */
     document.head.appendChild(s);
+  }
+  function loadAll(files, cb){
+    if (!files.length) { cb(); return; }
+    var pending = files.length;
+    files.forEach(function(f){
+      loadScript(f, function(){
+        pending -= 1;
+        if (pending <= 0) cb();
+      });
+    });
+  }
+  /* 第1段階：プロフィール／作品の目次／活動／技術 */
+  var baseFiles = ["content/profile.js", "content/works.js", "content/events.js", "content/skills.js"];
+  loadAll(baseFiles, function(){
+    /* 第2段階：gamesOrder のIDから作品ファイルのURLを組み立てて読み込む */
+    var src = (window.AQUART_CONTENT && typeof window.AQUART_CONTENT === "object") ? window.AQUART_CONTENT : {};
+    var order = Array.isArray(src.gamesOrder) ? src.gamesOrder : [];
+    var gameFiles = order.filter(function(id){ return typeof id === "string" && id.length > 0; })
+      .map(function(id){ return "content/works/" + encodeURIComponent(id) + ".js"; });
+    if (!gameFiles.length) { clearTimeout(timer); aquartLaunch(); return; }
+    loadAll(gameFiles, function(){ clearTimeout(timer); aquartLaunch(); });
   });
 })();
 </script>
