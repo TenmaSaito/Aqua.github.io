@@ -334,7 +334,7 @@ html[data-theme="dark"] .hero-whale .whale-stage{ background:radial-gradient(cir
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <p class="kicker reveal">IDEAS FLOW INTO PLAY.</p>
+          <p class="kicker reveal" id="heroCopy">AS FLEXIBLE AS WATER!</p>
           <p class="brand-line reveal" style="--d:.05s">AQUART</p>
           <h1 id="heroHeadline">心が動く、遊びをつくる。</h1>
           <p class="name-line reveal" style="--d:.1s"><span id="heroName"></span><span class="reading" id="heroReading"></span></p>
@@ -637,6 +637,7 @@ dl.facts{ margin:0; text-align:left; }
 .exp-track i{ height:9px; flex:1; border-radius:99px; background:rgba(7,70,88,.13); border:1px solid var(--card-line); }
 html[data-theme="dark"] .exp-track i{ background:rgba(255,255,255,.1); }
 .exp-track i.on{ background:linear-gradient(90deg,#5fd8ef,#17bfe0 55%,#2fe0c2); border-color:transparent; }
+html[data-theme="dark"] .exp-track i.on{ background:linear-gradient(90deg,#5fd8ef,#17bfe0 55%,#2fe0c2); border-color:transparent; }
 .exp-note{ font-size:11.5px; color:var(--muted); margin:0 0 12px; letter-spacing:.06em; }
 .skill p{ margin:0 0 8px; font-size:14px; color:var(--body-text); }
 .skill .skill-env{ font-size:13px; color:var(--muted); }
@@ -1168,6 +1169,7 @@ function startApp(CONFIG){
 
   /* ---------- ヒーロー ---------- */
   var p = CONFIG.profile;
+  $("heroCopy").textContent = p.copy;
   var headline = $("heroHeadline");
   headline.setAttribute("aria-label", p.headline.replace(/\n/g, ""));
   headline.innerHTML = p.headline.split("\n").map(function(line){
