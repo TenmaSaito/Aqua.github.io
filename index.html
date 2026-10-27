@@ -877,11 +877,16 @@ html[data-theme="dark"] .pending-badge{ color:#ffe9a8; background:rgba(232,195,7
 
 <script>
 /* ================================================================
-   ★★★  コンテンツ設定（CONFIG） ★★★
-   掲載内容はすべてここに一元化しています（元の content.js 相当）。
-   作品・イベント・技術は配列に項目を足すだけでページへ自動反映されます。
+   ★★★  コンテンツ設定（埋め込み版フォールバック） ★★★
+   掲載内容の本体は content/ フォルダの分割ファイルです：
+     content/profile.js（プロフィール） / content/works.js（作品）
+     content/events.js（活動・インターン） / content/skills.js（技術・ソース一覧）
+   起動時にそれらを読み込んで結合し、表示に使います。
+   ここにあるのは予備のコピーで、分割ファイルが読み込めない／壊れている
+   パートだけをこのコピーで補います（サイトが真っ白にならないための保険）。
+   通常、ここの編集は不要です（編集しても分割ファイルが優先されます）。
    ================================================================ */
-const CONFIG = {
+const EMBEDDED_CONFIG = {
   profile: {
     name: "齊藤 天眞",
     nameReading: "さいとう てんま",
@@ -1112,8 +1117,10 @@ const CONFIG = {
 
 /* ================================================================
    以下、描画エンジン部分（通常は編集不要）
+   startApp は、コンテンツの解決（分割ファイル or 埋め込み版）が
+   済んでからローダーが呼びます。
    ================================================================ */
-(function(){
+function startApp(CONFIG){
   "use strict";
   var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function(id){ return document.getElementById(id); };
@@ -1652,7 +1659,13 @@ const CONFIG = {
     (host.classList.contains("reveal") ? [host] : host.querySelectorAll(".reveal")).forEach(function(el){ el.classList.add("in"); });
   });
 
-  /* ---------- スプラッシュ：注水＋クジラ ---------- */
+}
+/* ---------- スプラッシュ：注水＋クジラ ----------
+   コンテンツの読み込みを待たず、ページ表示と同時に開始します。 */
+(function(){
+  "use strict";
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(id){ return document.getElementById(id); };
   var splash = $("splash");
   $("splashLogo").innerHTML = "AQUART".split("").map(function(c, i){
     return '<span class="ch" style="animation-delay:' + (0.2 + i * 0.09) + 's">' + c + "</span>";
@@ -1709,6 +1722,51 @@ const CONFIG = {
     requestAnimationFrame(loadTick);
     setTimeout(finishSplash, 6000); /* 保険：必ず本文へ進める */
   }
+})();
+
+/* ================================================================
+   コンテンツ・ローダー
+   content/ の分割ファイル4本を並列に読み込み、パートごとに検証して
+   結合します。不正・欠落したパートは埋め込み版（EMBEDDED_CONFIG）で
+   補うため、どれか1ファイルを壊してもサイト全体は表示されます。
+   2.5秒以内にそろわない場合も、読み込み済み＋埋め込み版で描画します。
+   ================================================================ */
+function aquartValidPart(key, v){
+  if (key === "profile") return !!v && typeof v === "object" && typeof v.name === "string" && v.name.length > 0;
+  if (key === "worksIntro") return !!v && typeof v === "object" && typeof v.countLabel === "string";
+  if (key === "games") return Array.isArray(v) && v.length > 0;
+  return Array.isArray(v); /* events / internships / skillGroups / sourceProjects */
+}
+function aquartResolveContent(){
+  var src = (window.AQUART_CONTENT && typeof window.AQUART_CONTENT === "object") ? window.AQUART_CONTENT : {};
+  var keys = ["profile", "worksIntro", "games", "sourceProjects", "internships", "skillGroups", "events"];
+  var out = {};
+  keys.forEach(function(k){ out[k] = aquartValidPart(k, src[k]) ? src[k] : EMBEDDED_CONFIG[k]; });
+  return out;
+}
+var aquartLaunched = false;
+function aquartLaunch(){
+  if (aquartLaunched) return;
+  aquartLaunched = true;
+  startApp(aquartResolveContent());
+}
+(function aquartLoadContent(){
+  var files = ["content/profile.js", "content/works.js", "content/events.js", "content/skills.js"];
+  var day = new Date();
+  var ver = day.getFullYear() + ("0" + (day.getMonth() + 1)).slice(-2) + ("0" + day.getDate()).slice(-2);
+  var pending = files.length;
+  var timer = setTimeout(aquartLaunch, 2500); /* タイムアウトでも埋め込み版で描画 */
+  function done(){
+    pending -= 1;
+    if (pending <= 0) { clearTimeout(timer); aquartLaunch(); }
+  }
+  files.forEach(function(f){
+    var s = document.createElement("script");
+    s.src = f + "?v=" + ver; /* 日単位のキャッシュ対策 */
+    s.onload = done;
+    s.onerror = done; /* 読めないファイルは埋め込み版で補う */
+    document.head.appendChild(s);
+  });
 })();
 </script>
 </body>
