@@ -748,6 +748,15 @@ dialog#workDialog::backdrop{ background:rgba(3,32,44,.62); backdrop-filter:blur(
 .d-detail h3{ font-size:15px; letter-spacing:.14em; color:var(--aqua); margin:0 0 8px; }
 .d-detail p{ margin:0; color:var(--body-text); font-size:15px; }
 
+/* PCではダイアログを横長に広げ、メディア列を大きく見せる（タブレット以下は現行のまま）。
+   ※ 基本ルール（#dialogContent / .d-layout）と同じ詳細度のため、カスケードで後勝ちさせるよう
+     必ず基本ルールより後ろに置くこと（前に置くと基本値に上書きされて効かなくなる） */
+@media (min-width:1024px){
+  dialog#workDialog{ width:min(1280px, calc(100vw - 64px)); max-width:calc(100vw - 64px); }
+  #dialogContent{ padding:30px 36px 40px; }
+  .d-layout{ grid-template-columns:minmax(0,1.6fr) minmax(0,.78fr); gap:30px; }
+}
+
 /* ---------- メディアギャラリー（動画＋スクリーンショット） ---------- */
 .media-gallery{ min-width:0; width:100%; max-width:100%; }
 .media-stage{ position:relative; aspect-ratio:16/9; border-radius:14px; overflow:hidden; background:#02141c; }
