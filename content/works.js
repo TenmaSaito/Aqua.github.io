@@ -26,6 +26,7 @@ window.AQUART_CONTENT.worksIntro = {
 window.AQUART_CONTENT = window.AQUART_CONTENT || {};
 window.AQUART_CONTENT.gamesOrder = [
   "denryu-connection",
+  "hide-and-run",
   "xmas-stealth",
   "apprentice-mapmaker",
   "izayoi-collector",
