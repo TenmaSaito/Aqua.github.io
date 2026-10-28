@@ -41,7 +41,10 @@
   }
   /* ===== ヒーロー ===== */
   .hero{text-align:center; padding:56px 20px 8px; position:relative}
-  .hero .whale{width:170px; max-width:44vw; height:auto; filter:drop-shadow(0 8px 14px rgba(11,59,77,.25))}
+  .hero .whale-stage{width:min(300px,64vw); margin:0 auto}
+  .hero .whale{width:100%; height:auto; display:block}
+  .whale-bob{animation:whale-bob 2.6s ease-in-out infinite; transform-origin:50% 70%}
+  @keyframes whale-bob{0%,100%{transform:rotate(-2.5deg) translateY(0)} 50%{transform:rotate(2.5deg) translateY(-6px)}}
   .hero h1{margin:10px 0 4px; font-size:clamp(40px,8vw,64px); letter-spacing:.22em; font-weight:800}
   .hero .copy-en{font-weight:800; letter-spacing:.28em; color:#075e7e; font-size:clamp(12px,2.6vw,16px)}
   .hero .copy-ja{margin-top:8px; font-size:clamp(14px,3vw,18px); font-weight:700}
@@ -73,7 +76,7 @@
   /* ===== 泡 ===== */
   .bubble{position:absolute; border-radius:50%; background:rgba(255,255,255,.35); animation:rise linear infinite; pointer-events:none}
   @keyframes rise{from{transform:translateY(30px); opacity:0} 15%{opacity:.8} to{transform:translateY(-110vh); opacity:0}}
-  @media (prefers-reduced-motion: reduce){ .bubble{animation:none} }
+  @media (prefers-reduced-motion: reduce){ .bubble{animation:none} .whale-bob{animation:none} }
 </style>
 <body>
   <!-- 外枠バー：このバーが「各サブページへのジャンプ用」の共通枠 -->
@@ -88,7 +91,19 @@
   </header>
 
   <main class="hero">
-    <img class="whale" src="mascot.png" alt="クジラのマスコット">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="whale" viewBox="0 0 260 205">
+    <path d="M102 42 C94 18 74 8 58 15 C44 21 47 38 61 41 C74 44 88 40 95 50 Z" fill="#54c8ee" stroke="#10303c" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M120 40 C122 14 140 2 158 8 C174 13 172 32 158 37 C144 42 130 38 126 48 Z" fill="#54c8ee" stroke="#10303c" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M212 96 C226 74 252 68 256 84 C259 98 240 112 220 110 Z" fill="#54c8ee" stroke="#10303c" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M218 108 C238 108 256 122 250 136 C245 149 222 146 210 128 Z" fill="#54c8ee" stroke="#10303c" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M24 112 C24 66 62 40 116 40 C168 40 204 70 214 112 Z" fill="#54c8ee" stroke="#10303c" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M24 112 L214 112 C206 158 166 184 116 184 C66 184 30 156 24 112 Z" fill="#ffffff" stroke="#10303c" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M66 114 L66 158 M96 114 L96 172 M126 114 L126 176" stroke="#10303c" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <circle cx="58" cy="84" r="6.5" fill="#10303c"/>
+  </symbol>
+</svg>
+    <div class="whale-stage"><div class="whale-bob"><svg class="whale" role="img" aria-label="AQUARTのシンボル、クジラのマスコット"><use href="#whale"/></svg></div></div>
     <h1>AQUART</h1>
     <div class="copy-en">AS FLEXIBLE AS WATER!</div>
     <div class="copy-ja">水のように柔軟な発想を！</div>
