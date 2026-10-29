@@ -62,10 +62,10 @@ window.AQUART_CONTENT.skillGroups = [
                 "name": "Unity",
                 "category": "GAMEENGINE",
                 "experience": "1年",
-                "expSegments": 7,
+                "expSegments": 6,
                 "maxSegments": 12,
                 "description": "ゲーム制作に必要な操作(オブジェクト配置、スクリプト作成やShader Lab等)はある程度可能で、何本かゲームを作成した経験があります。",
-                "env": "使用バージョン：Unity 4/5",
+                "env": "使用バージョン：Unity 2022.3",
             },
             {
                 "name": "Unreal Engine",
