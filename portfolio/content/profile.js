@@ -33,7 +33,7 @@ window.AQUART_CONTENT.profile = {
 
   // ブランド紹介文（自己紹介の2段落目）です。{copy} の部分には、合い言葉（上の copy の内容）が太字で入ります。
   "brand": "好きな言葉は「ふっかつのじゅもん」。何度くじけそうになっても、何度だってふっかつして挑戦していきます。",
-  "email": "251315@st.yoshi-g.ac.jp",
+  "email": "251315@st.yoshida-g.ac.jp",
   "github": "https://github.com/TenmaSaito",
   "chips": [
     "C / C++（1年半）",
