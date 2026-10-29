@@ -46,7 +46,7 @@ window.AQUART_CONTENT.events = [
     "title": "Global Game Jam",
     "type": "参加",
     "depth": "−390m",
-    "description": "2026年度Global Game Jamに参加。C++を用いて2日で2Dゲームを制作。",
+    "description": "2026年度Global Game Jamに参加。C言語を用いて2日で2Dゲームを制作",
     "url": "https://www.infiniteloop.co.jp/pr-blog/2026/01/global-game-jam-sapporo-2026/",
     "relatedWorkId": "mask-tetris",
     "jumpLabel": "Game Jam作品を見る"
