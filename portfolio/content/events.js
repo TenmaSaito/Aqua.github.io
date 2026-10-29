@@ -26,7 +26,7 @@ window.AQUART_CONTENT.events = [
     "title": "SAPPORO GAME ODYSSAY",
     "type": "出展",
     "depth": "−350m",
-    "description": "",
+    "description": "札幌市地下歩行空間にて、C++で初めて制作した2Dゲームを展示。",
     "url": "https://www.sapporo-game-odyssey.jp/",
     "relatedWorkId": "takeru",
     "jumpLabel": "出展作品を見る"
@@ -46,10 +46,10 @@ window.AQUART_CONTENT.events = [
     "title": "Global Game Jam",
     "type": "参加",
     "depth": "−390m",
-    "description": "",
+    "description": "2026年度Global Game Jamに参加。C言語を用いて2日で2Dゲームを制作",
     "url": "https://www.infiniteloop.co.jp/pr-blog/2026/01/global-game-jam-sapporo-2026/",
     "relatedWorkId": "mask-tetris",
-    "jumpLabel": "作品を見る"
+    "jumpLabel": "Game Jam作品を見る"
   }
 ];
 
@@ -70,6 +70,10 @@ window.AQUART_CONTENT.internships = [
     "title": "C++ / WebAssembly / Android",
     "description": "C++で書いたコードをWebAssembly化し、ブラウザーで動作するよう制作しました。",
     "role": "基底クラスの作成、Androidへの移植。",
-    "learnings": []
+        "learnings": [
+            "AIを用いたコーディングはプロンプトを正しく渡し、壁打ちを繰り返すことで既に実用的な物を出力すると知った。",
+            "GitHub Actionsを用いたCIはコードの確認を自動で行う為、非常に有用だと知った。",
+            "Dockerを用いた仮装コンテナ開発による環境統一は、動作のブレが起きないため大切だと知った。"
+        ]
   }
 ];
