@@ -54,12 +54,22 @@ window.AQUART_CONTENT.events = [
 ];
 
 window.AQUART_CONTENT = window.AQUART_CONTENT || {};
+// 【「学んだこと」の書き方】
+// 下の internships の中の "learnings": [] の [ ] の中に、
+// 学んだことを1行ずつ " " で囲って追加してください。
+// 例： "learnings": [
+//        "学んだこと1",
+//        "学んだこと2"
+//      ]
+// 1件以上書くと、サイトのインターン欄に「学んだこと」として
+// 箇条書きで表示されます（空のうちは表示されません）。
 window.AQUART_CONTENT.internships = [
   {
     "company": "バンダイナムコスタジオ",
     "period": "参加期間：10日間",
     "title": "C++ / WebAssembly / Android",
     "description": "C++で書いたコードをWebAssembly化し、ブラウザーで動作するよう制作しました。",
-    "role": "基底クラスの作成、Androidへの移植。"
+    "role": "基底クラスの作成、Androidへの移植。",
+    "learnings": []
   }
 ];
