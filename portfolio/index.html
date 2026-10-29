@@ -88,8 +88,6 @@ img{ max-width:100%; display:block; }
 }
 @keyframes caustic-drift{ from{ transform:translate3d(-1.5%,-1%,0) scale(1); } to{ transform:translate3d(1.5%,1.2%,0) scale(1.04); } }
 #bubbles{ position:fixed; inset:0; z-index:1; pointer-events:none; }
-body.motion-paused .caustics, body.motion-paused .rays i, body.motion-paused .wave-letter,
-body.motion-paused .whale-bob, body.motion-paused .sea-wave{ animation-play-state:paused !important; }
 
 /* ---------- スプラッシュ：水が満ち、クジラが水面に浮く ---------- */
 #splash{
@@ -203,10 +201,6 @@ section{ padding:96px 0 30px; scroll-margin-top:96px; position:relative; }
 html[data-theme="dark"] .wave-divider path{ fill:rgba(95,216,239,.16); } html[data-theme="dark"] .wave-divider path.back{ fill:rgba(95,216,239,.09); }
 .sea-wave{ animation:wave-slide-x 11s linear infinite; } .sea-wave.back{ animation-duration:17s; animation-direction:reverse; }
 @keyframes wave-slide-x{ from{ transform:translateX(0); } to{ transform:translateX(-180px); } }
-#motionToggle{
-  margin-top:10px; cursor:pointer; font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:.1em;
-  color:var(--muted); background:var(--chip-bg); border:1px solid var(--card-line); border-radius:99px; padding:8px 16px;
-}
 .reveal{ opacity:0; transform:translateY(26px); transition:opacity .85s ease, transform .85s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s); }
 .reveal.in{ opacity:1; transform:translateY(0); }
 .glass{ background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:var(--shadow); }
@@ -352,7 +346,6 @@ html[data-theme="dark"] .hero-whale .whale-stage{ background:radial-gradient(cir
         </div>
       </div>
       <div class="hero-scroll reveal" style="--d:.46s" aria-hidden="true"><span class="line"></span>DIVE — SCROLL</div>
-      <button id="motionToggle" type="button" aria-pressed="false">波の動きを止める ⏸</button>
     </div>
     <svg class="wave-divider" viewBox="0 0 1620 60" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;bottom:0;left:0;margin:0;">
       <path class="back sea-wave" d="M0,38 C240,64 420,8 720,26 C1020,44 1200,60 1440,30 L1620,44 L1620,60 L0,60 Z"/>
@@ -1384,15 +1377,6 @@ function startApp(CONFIG){
     });
   }
 
-  /* ---------- 波の停止／再生 ---------- */
-  var motionBtn = $("motionToggle"), bubblesPaused = false;
-  motionBtn.addEventListener("click", function(){
-    var paused = document.body.classList.toggle("motion-paused");
-    bubblesPaused = paused;
-    motionBtn.setAttribute("aria-pressed", String(paused));
-    motionBtn.textContent = paused ? "波の動きを再生する ▶" : "波の動きを止める ⏸";
-  });
-
   /* ---------- 泡パーティクル ---------- */
   var canvas = $("bubbles"), ctx = canvas.getContext("2d");
   var W, H, bubbles = [], rafId = null;
@@ -1415,16 +1399,14 @@ function startApp(CONFIG){
   }
   function drawBubbles(t){
     ctx.clearRect(0, 0, W, H);
-    if (!bubblesPaused) {
-      bubbles.forEach(function(b, i){
-        b.y -= b.speed;
-        var x = b.x + Math.sin(t / 2600 + b.phase) * b.sway * 0.4;
-        if (b.y < -24) bubbles[i] = makeBubble(false);
-        ctx.beginPath(); ctx.arc(x, b.y, b.r, 0, Math.PI * 2);
-        ctx.strokeStyle = bubbleStroke || "rgba(0,130,165,.4)";
-        ctx.globalAlpha = b.alpha; ctx.lineWidth = 1.1; ctx.stroke(); ctx.globalAlpha = 1;
-      });
-    }
+    bubbles.forEach(function(b, i){
+      b.y -= b.speed;
+      var x = b.x + Math.sin(t / 2600 + b.phase) * b.sway * 0.4;
+      if (b.y < -24) bubbles[i] = makeBubble(false);
+      ctx.beginPath(); ctx.arc(x, b.y, b.r, 0, Math.PI * 2);
+      ctx.strokeStyle = bubbleStroke || "rgba(0,130,165,.4)";
+      ctx.globalAlpha = b.alpha; ctx.lineWidth = 1.1; ctx.stroke(); ctx.globalAlpha = 1;
+    });
     rafId = requestAnimationFrame(drawBubbles);
   }
   /* 泡はスプラッシュの裏で見えないため、初期描画をブロックしないよう
@@ -1712,13 +1694,13 @@ svg.whale-squish{ animation:whale-squish .55s cubic-bezier(.3,.7,.3,1); transfor
    頭の上（噴気孔あたり）から水のジェット＋水滴パーティクルを
    噴き上げ、クジラ本体も小さく弾む。音は鳴らさない。
    パーティクルはクリックのたびに生成し、約1.5秒後に除去する。
-   モーション停止中／prefers-reduced-motion 時は、水滴だけの
+   prefers-reduced-motion 時は、水滴だけの
    ごく控えめな表現に切り替える。
    ================================================================ */
 (function(){
   "use strict";
   var reducedMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-  function isCalm(){ return reducedMq.matches || document.body.classList.contains("motion-paused"); }
+  function isCalm(){ return reducedMq.matches; }
   function rand(a, b){ return a + Math.random() * (b - a); }
 
   function spawnSpout(svg){
