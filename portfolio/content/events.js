@@ -48,7 +48,7 @@ window.AQUART_CONTENT.events = [
     "depth": "−390m",
     "description": "",
     "url": "https://www.infiniteloop.co.jp/pr-blog/2026/01/global-game-jam-sapporo-2026/",
-    "relatedWorkId": "",
+    "relatedWorkId": "mask-tetris",
     "jumpLabel": "作品を見る"
   }
 ];

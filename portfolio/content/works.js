@@ -33,5 +33,6 @@ window.AQUART_CONTENT.gamesOrder = [
   "gear-girl",
   "goricat",
   "takeru",
-  "gamejam-work"
+  "gamejam-work",
+  "mask-tetris"
 ];
