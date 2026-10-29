@@ -19,8 +19,8 @@
 
 window.AQUART_CONTENT = window.AQUART_CONTENT || {};
 window.AQUART_CONTENT.worksIntro = {
-  "countLabel": "約10本のゲームを制作",
-  "description": "作品の詳細から、プレイ動画と作品データをご覧いただけます。"
+  "countLabel": "",
+  "description": ""
 };
 
 window.AQUART_CONTENT = window.AQUART_CONTENT || {};

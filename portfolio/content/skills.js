@@ -53,7 +53,46 @@ window.AQUART_CONTENT.skillGroups = [
         ]
       }
     ]
-  }
+    },
+    {
+        "title": "ゲームエンジン",
+        "subtitle": "GAMEENGINE",
+        "items": [
+            {
+                "name": "Unity",
+                "category": "GAMEENGINE",
+                "experience": "1年",
+                "expSegments": 7,
+                "maxSegments": 12,
+                "description": "ゲーム制作に必要な操作(オブジェクト配置、スクリプト作成やShader Lab等)はある程度可能で、何本かゲームを作成した経験があります。",
+                "env": "使用バージョン：Unity 4/5",
+            },
+            {
+                "name": "Unreal Engine",
+                "category": "GAMEENGINE",
+                "experience": "半年未満",
+                "expSegments": 3,
+                "maxSegments": 12,
+                "description": "絶賛勉強中です。現在はブループリントによる開発勉強ですが、将来的にはVerse言語での開発の勉強をする予定です。",
+                "env": "使用バージョン：UE5",
+            }
+        ]
+    },
+    {
+        "title": "ツール",
+        "subtitle": "TOOL",
+        "items": [
+            {
+                "name": "GitHub",
+                "category": "TOOL",
+                "experience": "1年半",
+                "expSegments": 9,
+                "maxSegments": 12,
+                "description": "ゲーム制作時に使用するバージョン管理ツール。GitHub ActionsによるPRチェックも勉強中です。",
+                "env": "使用App：GitHub Desktop/TortoiseGit",
+            }
+        ]
+    }
 ];
 
 window.AQUART_CONTENT = window.AQUART_CONTENT || {};
