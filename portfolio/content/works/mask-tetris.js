@@ -29,7 +29,7 @@ window.AQUART_CONTENT.gamesById["mask-tetris"] = {
   "imageAlt": "MASK TETRISのタイトル画面",
   "description": "Global Game Jam（GGJ Sapporo 2026）で制作したテトリス系ゲーム。Eキーでブロックをすり抜けて即時設置できる独自ギミックが特徴。",
   "tools": [
-    "C++",
+    "C言語",
     "DirectX"
   ],
   "period": "2026/01/30 ～ 2026/02/01（2日間）",
