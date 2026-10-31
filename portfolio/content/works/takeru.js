@@ -24,7 +24,7 @@ window.AQUART_CONTENT.gamesById["takeru"] = {
   "title": "現実逃避だ！タケル君！",
   "subtitle": "初のC++による2Dゲーム",
   "category": "2Dゲーム",
-  "year": "2025",
+  "year": "2026",
   "image": "assets/work-takeru.jpg",
   "imageAlt": "現実逃避だ！タケル君！のプレイ動画サムネイル",
   "description": "初めてC++を使って制作した2Dゲーム。DirectX9を使用。",
@@ -32,9 +32,9 @@ window.AQUART_CONTENT.gamesById["takeru"] = {
     "C++",
     "DirectX9"
   ],
-  "period": "2025/5/25 ～ 2025/5/28",
+  "period": "2026/5/25 ～ 2026/5/28",
   "team": "",
-  "detail": "2025年5月に制作した、初めてC++を使用した2Dゲーム作品です。ゲーム画面と動きをプレイ動画で紹介しています。",
+  "detail": "2026年5月に制作した、初めてC++を使用した2Dゲーム作品です。ゲーム画面と動きをプレイ動画で紹介しています。",
   "screenshots": [
     {
       "src": "assets/takeru-shot-01.jpg",
