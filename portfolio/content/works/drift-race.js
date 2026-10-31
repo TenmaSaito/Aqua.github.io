@@ -49,6 +49,10 @@ window.AQUART_CONTENT.gamesById["drift-race"] = {
     {
       "label": "ブラウザで遊ぶ",
       "url": "https://tenmasaito.github.io/racegame/"
+    },
+    {
+      "label": "ソースコード（GitHub）",
+      "url": "https://github.com/TenmaSaito/ge-i26-racegame-saito"
     }
   ]
 };
